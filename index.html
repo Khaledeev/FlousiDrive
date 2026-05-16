@@ -6,9 +6,7 @@
     <title>FlousiDrive - Morocco</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
@@ -17,21 +15,13 @@
             theme: {
                 extend: {
                     colors: {
-                        dark: {
-                            900: '#0B101E',
-                            800: '#141B2D',
-                            700: '#1E293B',
-                        },
-                        brand: {
-                            green: '#10B981',
-                            red: '#F43F5E',
-                            blue: '#3B82F6',
-                            gold: '#F59E0B'
-                        }
+                        dark: { 900: '#0B101E', 800: '#141B2D', 700: '#1E293B' },
+                        brand: { green: '#10B981', red: '#F43F5E', blue: '#3B82F6', gold: '#F59E0B', purple: '#8B5CF6', orange: '#F97316' }
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.3s ease-out forwards',
                         'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-slow': 'pulse 3s infinite',
                     },
                     keyframes: {
                         fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
@@ -46,7 +36,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
         
         :root {
-            /* Light Theme Variables */
             color-scheme: light;
             --bg-body: #f3f4f6;
             --text-main: #111827;
@@ -62,9 +51,7 @@
             --fab-dock: rgba(255, 255, 255, 0.95);
             --danger-bg: #fff1f2;
         }
-
         html.dark {
-            /* Dark Theme Variables */
             color-scheme: dark;
             --bg-body: #0B101E;
             --text-main: #F8FAFC;
@@ -80,7 +67,6 @@
             --fab-dock: rgba(20, 27, 45, 0.95);
             --danger-bg: #1A1016;
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-body);
@@ -89,11 +75,8 @@
             overscroll-behavior-y: none;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
         html[dir="rtl"] body { font-family: 'Tajawal', sans-serif; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
-
-        /* Pure CSS Components reacting to Theme Variables */
         .glass-card {
             background-color: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -102,7 +85,6 @@
             box-shadow: var(--shadow-card);
             transition: background-color 0.3s, border-color 0.3s;
         }
-        
         .glass-nav {
             background-color: var(--bg-nav);
             backdrop-filter: blur(20px);
@@ -110,7 +92,6 @@
             border-bottom: 1px solid var(--border-card);
             transition: background-color 0.3s;
         }
-
         .bottom-sheet {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: var(--bg-sheet);
@@ -124,7 +105,6 @@
         }
         html.dark .bottom-sheet { box-shadow: 0 -10px 40px rgba(0,0,0,0.6); }
         .bottom-sheet.active { transform: translateY(0); }
-
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5);
@@ -134,8 +114,6 @@
         }
         html.dark .overlay { background: rgba(0, 0, 0, 0.7); }
         .overlay.active { opacity: 1; pointer-events: auto; }
-
-        /* Premium Input Styling */
         .app-input {
             width: 100%;
             background-color: var(--bg-input);
@@ -157,7 +135,6 @@
             border-color: #3B82F6;
             box-shadow: 0 0 0 2px rgba(59,130,246,0.2), inset 0 2px 4px rgba(0,0,0,0.1);
         }
-        
         .app-label {
             display: block; font-size: 0.75rem; font-weight: 700;
             color: #6b7280;
@@ -165,17 +142,39 @@
             text-transform: uppercase; letter-spacing: 0.05em;
         }
         html.dark .app-label { color: #9ca3af; }
-
         .danger-zone { background-color: var(--danger-bg); transition: background-color 0.3s; }
         .fab-dock-bg { background-color: var(--fab-dock); border: 1px solid var(--border-card); transition: background-color 0.3s; }
         .fab-btn { border-color: var(--fab-border); transition: border-color 0.3s; }
-        
         .stat-box { background-color: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
         html.dark .stat-box { background-color: #0B101E; border: 1px solid rgba(255,255,255,0.05); }
-        
-        /* Modal Action Buttons */
         .action-btn { background-color: #f9fafb; transition: background-color 0.3s; }
         html.dark .action-btn { background-color: #0B101E; }
+
+        /* Platform badge pills */
+        .platform-pill { border-radius: 999px; padding: 4px 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 4px; }
+        .platform-indrive { background: rgba(52,211,153,0.15); color: #10B981; border: 1px solid rgba(52,211,153,0.3); }
+        .platform-bolt { background: rgba(253,224,71,0.15); color: #ca8a04; border: 1px solid rgba(253,224,71,0.3); }
+        .platform-careem { background: rgba(34,197,94,0.15); color: #16a34a; border: 1px solid rgba(34,197,94,0.3); }
+        .platform-heetch { background: rgba(168,85,247,0.15); color: #7c3aed; border: 1px solid rgba(168,85,247,0.3); }
+        .platform-yango { background: rgba(239,68,68,0.15); color: #dc2626; border: 1px solid rgba(239,68,68,0.3); }
+        .platform-other { background: rgba(100,116,139,0.15); color: #475569; border: 1px solid rgba(100,116,139,0.3); }
+
+        /* Ramadan banner */
+        .ramadan-banner { background: linear-gradient(135deg, rgba(251,191,36,0.12), rgba(139,92,246,0.12)); border: 1px solid rgba(251,191,36,0.3); }
+
+        /* Fuel tracker */
+        .fuel-price-card { background: linear-gradient(135deg, var(--bg-card), var(--bg-card)); }
+        
+        /* Weekly summary */
+        .week-day-bar { transition: height 0.6s cubic-bezier(0.16,1,0.3,1); }
+
+        /* Tip calculator highlight */
+        .tip-highlight { animation: tipGlow 1.5s ease-in-out infinite; }
+        @keyframes tipGlow { 0%,100%{box-shadow:0 0 10px rgba(245,158,11,0.2)} 50%{box-shadow:0 0 20px rgba(245,158,11,0.5)} }
+
+        /* City selector */
+        .city-chip { border-radius: 999px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border-input); background: var(--bg-input); }
+        .city-chip.selected { background: #3B82F6; color: white; border-color: #3B82F6; }
     </style>
 </head>
 <body class="antialiased pb-32 selection:bg-brand-blue selection:text-white flex flex-col min-h-screen">
@@ -183,18 +182,20 @@
     <header class="glass-nav sticky top-0 z-40 px-5 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-blue to-brand-green p-[2px]">
-                <img src="https://ui-avatars.com/api/?name=Driver&background=141B2D&color=fff" alt="Profile" class="rounded-full w-full h-full object-cover border-2 border-transparent">
+                <img src="https://ui-avatars.com/api/?name=Driver&background=141B2D&color=fff" alt="Profile" id="header-avatar" class="rounded-full w-full h-full object-cover border-2 border-transparent">
             </div>
             <div>
                 <h1 class="text-sm font-bold tracking-wide text-gray-900 dark:text-white">Flousi<span class="text-brand-green">Drive</span></h1>
                 <p id="header-date" class="text-xs text-gray-500 dark:text-gray-400 font-medium"></p>
             </div>
         </div>
-        
-        <button id="shift-toggle" onclick="toggleShift()" class="relative inline-flex h-8 w-14 items-center rounded-full bg-gray-300 dark:bg-dark-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue border border-gray-200 dark:border-white/10">
-            <span class="sr-only">Toggle shift</span>
-            <span id="shift-knob" class="inline-block h-6 w-6 transform rounded-full bg-white dark:bg-gray-400 transition-transform duration-300 translate-x-1 rtl:-translate-x-1 shadow-md"></span>
-        </button>
+        <div class="flex items-center gap-3">
+            <div id="header-city" class="text-[10px] font-bold text-brand-blue bg-brand-blue/10 px-2 py-1 rounded-lg border border-brand-blue/20 cursor-pointer" onclick="navigate('settings')">📍 Casa</div>
+            <button id="shift-toggle" onclick="toggleShift()" class="relative inline-flex h-8 w-14 items-center rounded-full bg-gray-300 dark:bg-dark-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue border border-gray-200 dark:border-white/10">
+                <span class="sr-only">Toggle shift</span>
+                <span id="shift-knob" class="inline-block h-6 w-6 transform rounded-full bg-white dark:bg-gray-400 transition-transform duration-300 translate-x-1 rtl:-translate-x-1 shadow-md"></span>
+            </button>
+        </div>
     </header>
 
     <div id="modal-overlay" class="overlay" onclick="closeAllSheets()"></div>
@@ -202,7 +203,7 @@
     <main class="flex-1 w-full max-w-lg mx-auto relative px-4 pt-4">
 
         <section id="view-dashboard" class="space-y-5 animate-fade-in block">
-            
+
             <div id="shift-banner" class="hidden glass-card rounded-2xl p-3 flex justify-between items-center border border-brand-green/30 bg-brand-green/5">
                 <div class="flex items-center gap-2 text-brand-green text-sm font-bold tracking-wide">
                     <span class="relative flex h-3 w-3">
@@ -210,8 +211,18 @@
                       <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
                     </span>
                     <span data-i18n="onlineStatus">ONLINE</span>
+                    <span id="active-platform-badge" class="platform-pill platform-indrive ms-1">InDrive</span>
                 </div>
                 <div id="shift-timer" class="text-sm font-mono tracking-widest text-gray-600 dark:text-gray-300">00:00:00</div>
+            </div>
+
+            <div id="ramadan-banner" class="hidden ramadan-banner rounded-2xl p-3 flex items-center gap-3">
+                <span class="text-2xl">🌙</span>
+                <div>
+                    <div class="text-xs font-black text-yellow-600 dark:text-yellow-400" data-i18n="ramadanTitle">رمضان كريم - Ramadan Mode</div>
+                    <div class="text-[10px] text-gray-500 font-medium" data-i18n="ramadanTip">Peak hours: after Iftar (20h-24h) & Suhoor (3h-5h)</div>
+                </div>
+                <button onclick="dismissRamadan()" class="ms-auto text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xs"></i></button>
             </div>
 
             <div class="glass-card rounded-[2rem] p-6 relative overflow-hidden">
@@ -222,32 +233,41 @@
                     <div>
                         <h2 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-2" data-i18n="netProfit">Today's Net Profit</h2>
                         <div class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-300 tracking-tight" id="dash-net" dir="ltr">0.00 MAD</div>
+                        <div id="dash-motivator" class="text-xs text-gray-400 mt-1 font-medium"></div>
                     </div>
                     <div class="stat-box rounded-2xl p-3 text-center min-w-[75px] shadow-inner">
                         <div class="text-[10px] text-gray-500 uppercase font-bold mb-1 tracking-wider" data-i18n="rides">Rides</div>
                         <div class="text-xl font-black text-gray-900 dark:text-white" id="dash-ride-count">0</div>
+                        <div class="text-[9px] text-gray-400 mt-0.5" id="dash-avg-fare">0 MAD avg</div>
                     </div>
                 </div>
 
-                <div class="mt-8 grid grid-cols-2 gap-4 relative z-10 border-t border-gray-200 dark:border-white/5 pt-5">
+                <div class="mt-5 grid grid-cols-3 gap-3 relative z-10 border-t border-gray-200 dark:border-white/5 pt-4">
                     <div>
-                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest" data-i18n="grossIncome">Gross Income</div>
-                        <div class="text-base font-bold text-brand-green flex items-center">
-                            <i class="fa-solid fa-arrow-up-right-dots text-xs me-2 opacity-70"></i>
-                            <span id="dash-gross" dir="ltr">0.00 MAD</span>
+                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest" data-i18n="grossIncome">Gross</div>
+                        <div class="text-sm font-bold text-brand-green flex items-center">
+                            <i class="fa-solid fa-arrow-up-right-dots text-xs me-1 opacity-70"></i>
+                            <span id="dash-gross" dir="ltr">0.00</span>
                         </div>
                     </div>
                     <div>
-                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest" data-i18n="totalExpenses">Total Expenses</div>
-                        <div class="text-base font-bold text-brand-red flex items-center">
-                            <i class="fa-solid fa-arrow-down-right-dots text-xs me-2 opacity-70"></i>
-                            <span id="dash-expenses" dir="ltr">0.00 MAD</span>
+                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest" data-i18n="totalExpenses">Expenses</div>
+                        <div class="text-sm font-bold text-brand-red flex items-center">
+                            <i class="fa-solid fa-arrow-down-right-dots text-xs me-1 opacity-70"></i>
+                            <span id="dash-expenses" dir="ltr">0.00</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest" data-i18n="commLabel">Comm.</div>
+                        <div class="text-sm font-bold text-brand-gold flex items-center">
+                            <i class="fa-solid fa-percent text-xs me-1 opacity-70"></i>
+                            <span id="dash-comm" dir="ltr">0.00</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-card rounded-3xl p-6">
+            <div class="glass-card rounded-3xl p-5">
                 <div class="flex justify-between items-end mb-3">
                     <div>
                         <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1 tracking-wide" data-i18n="dailyTarget">Daily Target</h3>
@@ -258,38 +278,192 @@
                 <div class="w-full stat-box rounded-full h-3 mt-2 shadow-inner overflow-hidden flex" dir="ltr">
                     <div id="goal-bar" class="bg-gradient-to-r from-brand-blue to-brand-green h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
                 </div>
+                <div id="target-remaining" class="text-[10px] text-gray-400 mt-2 font-medium text-end"></div>
             </div>
+
+            <div class="grid grid-cols-3 gap-3">
+                <div class="glass-card rounded-2xl p-3 text-center">
+                    <i class="fa-solid fa-stopwatch text-brand-blue mb-2 text-lg opacity-80"></i>
+                    <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="perHour">Per Hour</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-per-hour" dir="ltr">0 MAD</div>
+                </div>
+                <div class="glass-card rounded-2xl p-3 text-center">
+                    <i class="fa-solid fa-road text-brand-gold mb-2 text-lg opacity-80"></i>
+                    <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="perKm">Per KM</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-per-km" dir="ltr">0 MAD</div>
+                </div>
+                <div class="glass-card rounded-2xl p-3 text-center">
+                    <i class="fa-solid fa-gas-pump text-brand-red mb-2 text-lg opacity-80"></i>
+                    <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="fuelEst">Fuel Est.</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-fuel-est" dir="ltr">0 MAD</div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-5">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide">⛽ <span data-i18n="fuelTracker">Fuel Prices Morocco</span></h3>
+                    <span class="text-[9px] font-bold px-2 py-0.5 rounded-full" id="fuel-updated" style="background:rgba(100,116,139,0.15);color:#94a3b8">
+                        <i class="fa-solid fa-spinner fa-spin me-1" id="fuel-loading-icon"></i>Fetching...
+                    </span>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="stat-box rounded-xl p-3">
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-wider mb-1">🟡 Gasoil S50</div>
+                        <div class="text-sm font-black text-gray-900 dark:text-white" id="fuel-gasoil">
+                            <span class="inline-block w-20 h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+                        </div>
+                        <div class="text-[9px] text-green-500 font-bold mt-0.5" id="fuel-gasoil-trend">Diesel</div>
+                    </div>
+                    <div class="stat-box rounded-xl p-3">
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-wider mb-1">🔴 Essence SP95</div>
+                        <div class="text-sm font-black text-gray-900 dark:text-white" id="fuel-essence">
+                            <span class="inline-block w-20 h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+                        </div>
+                        <div class="text-[9px] text-orange-500 font-bold mt-0.5" id="fuel-essence-trend">Gasoline</div>
+                    </div>
+                </div>
+                <div class="mt-3 text-[9px] text-gray-400 text-center font-medium" id="fuel-source-note">Searching for live prices...</div>
+            </div>
+
+            <!-- ⚡ LIVE API DATA CARD -->
+            <div id="live-data-card" class="glass-card rounded-3xl p-5">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide">⚡ <span id="live-data-title">Live Data</span></h3>
+                    <button onclick="fetchAllLiveData()" id="live-refresh-btn" class="text-[9px] font-bold text-brand-blue bg-brand-blue/10 px-3 py-1 rounded-full border border-brand-blue/20 active:scale-95 transition-all">
+                        <i class="fa-solid fa-rotate-right me-1"></i><span id="live-refresh-text">Refresh</span>
+                    </button>
+                </div>
+
+                <!-- Weather Row -->
+                <div class="stat-box rounded-2xl p-3 mb-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div id="weather-icon" class="text-2xl">🌤️</div>
+                            <div>
+                                <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-0.5" id="weather-city-label">Weather</div>
+                                <div class="text-sm font-black text-gray-900 dark:text-white" id="weather-temp">--°C</div>
+                                <div class="text-[10px] text-gray-400 font-medium" id="weather-desc">Loading...</div>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-1">💧 Humidity</div>
+                            <div class="text-sm font-bold text-brand-blue" id="weather-humidity">--%</div>
+                            <div class="text-[9px] text-gray-400 mt-1" id="weather-wind">Wind: --</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fuel Prices + Exchange Rate Row -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="stat-box rounded-2xl p-3">
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-2">💱 USD/MAD</div>
+                        <div class="text-base font-black text-brand-gold" id="live-usd-mad">--</div>
+                        <div class="text-[9px] text-gray-400 mt-1" id="live-fx-updated">Fetching...</div>
+                    </div>
+                    <div class="stat-box rounded-2xl p-3">
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-2">⛽ AI Fuel</div>
+                        <div class="text-[10px] font-bold text-brand-green leading-relaxed" id="live-fuel-ai">Fetching...</div>
+                    </div>
+                </div>
+
+                <!-- AI Driving Tip -->
+                <div id="ai-tip-container" class="mt-3 hidden">
+                    <div class="rounded-xl p-3" style="background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(16,185,129,0.08));border:1px solid rgba(59,130,246,0.15)">
+                        <div class="text-[9px] text-brand-blue uppercase font-bold tracking-widest mb-1">🤖 AI Insight</div>
+                        <div class="text-[10px] text-gray-700 dark:text-gray-300 font-medium leading-relaxed" id="ai-tip-text"></div>
+                    </div>
+                </div>
+
+                <div class="text-[8px] text-gray-400 text-center mt-3 font-medium" id="live-last-updated">Not yet fetched</div>
+            </div>
+
+            <div id="platform-perf-card" class="glass-card rounded-3xl p-5 hidden">
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide mb-4">📊 <span data-i18n="platformPerf">Platform Performance</span></h3>
+                <div id="platform-perf-list" class="space-y-2"></div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-5">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide" data-i18n="weekOverview">7-Day Overview</h3>
+                    <span class="text-[10px] font-bold tracking-widest px-2 py-1 stat-box rounded-lg text-brand-blue uppercase" data-i18n="netEarnings">Net</span>
+                </div>
+                <div class="relative h-44 w-full" dir="ltr">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </div>
+
         </section>
 
         <section id="view-stats" class="space-y-5 hidden">
             
             <h2 class="text-2xl font-bold px-2 pt-2 text-gray-900 dark:text-white" data-i18n="performanceStats">Performance Stats</h2>
 
+            <div class="glass-card rounded-3xl p-5">
+                <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4" data-i18n="allTimeSummary">All-Time Summary</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="stat-box rounded-2xl p-4 text-center">
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="totalRides">Total Rides</div>
+                        <div class="text-2xl font-black text-gray-900 dark:text-white" id="stat-total-rides">0</div>
+                    </div>
+                    <div class="stat-box rounded-2xl p-4 text-center">
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="totalEarned">Total Earned</div>
+                        <div class="text-lg font-black text-brand-green" id="stat-total-earned" dir="ltr">0 MAD</div>
+                    </div>
+                    <div class="stat-box rounded-2xl p-4 text-center">
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="totalKm">Total KM</div>
+                        <div class="text-2xl font-black text-brand-blue" id="stat-total-km">0</div>
+                    </div>
+                    <div class="stat-box rounded-2xl p-4 text-center">
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="bestDay">Best Day</div>
+                        <div class="text-lg font-black text-brand-gold" id="stat-best-day" dir="ltr">0 MAD</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-3 gap-3">
                 <div class="glass-card rounded-2xl p-4 text-center">
                     <i class="fa-solid fa-stopwatch text-brand-blue mb-3 text-xl opacity-80"></i>
                     <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="perHour">Per Hour</div>
-                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-per-hour" dir="ltr">0.00 MAD</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="stat-per-hour" dir="ltr">0 MAD</div>
                 </div>
                 <div class="glass-card rounded-2xl p-4 text-center">
                     <i class="fa-solid fa-road text-brand-gold mb-3 text-xl opacity-80"></i>
                     <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="perKm">Per KM</div>
-                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-per-km" dir="ltr">0.00 MAD</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="stat-per-km" dir="ltr">0 MAD</div>
                 </div>
                 <div class="glass-card rounded-2xl p-4 text-center">
                     <i class="fa-solid fa-gas-pump text-brand-red mb-3 text-xl opacity-80"></i>
                     <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="fuelEst">Fuel Est.</div>
-                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-fuel-est" dir="ltr">0.00 MAD</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="stat-fuel-est" dir="ltr">0 MAD</div>
                 </div>
             </div>
 
             <div class="glass-card rounded-3xl p-5">
-                <div class="flex justify-between items-center mb-5">
-                    <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide" data-i18n="weekOverview">7-Day Overview</h3>
-                    <span class="text-[10px] font-bold tracking-widest px-2 py-1 stat-box rounded-lg text-brand-blue uppercase" data-i18n="netEarnings">Net Earnings</span>
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide mb-4" data-i18n="expenseBreakdown">Expense Breakdown</h3>
+                <div id="expense-breakdown-list" class="space-y-3"></div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-5">
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide mb-4">🏆 <span data-i18n="peakHours">Best Hours to Drive</span></h3>
+                <div id="peak-hours-chart" class="grid grid-cols-12 gap-0.5 items-end h-20"></div>
+                <div class="flex justify-between mt-2 text-[9px] text-gray-400 font-medium">
+                    <span>6h</span><span>9h</span><span>12h</span><span>15h</span><span>18h</span><span>21h</span><span>0h</span>
                 </div>
-                <div class="relative h-56 w-full" dir="ltr">
-                    <canvas id="mainChart"></canvas>
+                <div id="peak-hour-tip" class="mt-3 text-[10px] text-gray-500 text-center font-medium bg-brand-gold/5 border border-brand-gold/20 rounded-xl p-2"></div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-5">
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide mb-4">🚗 <span data-i18n="platformBreakdown">Platform Breakdown</span></h3>
+                <div id="platform-breakdown-list" class="space-y-3"></div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-5 border border-brand-gold/20">
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide mb-1">💡 <span data-i18n="tipCalc">Driver Tip Calculator</span></h3>
+                <p class="text-[10px] text-gray-500 mb-4" data-i18n="tipCalcDesc">How much more do you need to reach your daily goal?</p>
+                <div class="stat-box rounded-2xl p-4 text-center tip-highlight">
+                    <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="ridesNeeded">Rides Needed</div>
+                    <div class="text-3xl font-black text-brand-gold" id="tip-rides-needed">—</div>
+                    <div class="text-xs text-gray-500 mt-1" id="tip-rides-desc"></div>
                 </div>
             </div>
         </section>
@@ -300,78 +474,102 @@
                 <button onclick="filterLedger('ride')" id="btn-filter-ride" class="px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-brand-blue transition-all whitespace-nowrap border border-gray-200 dark:border-white/5 shadow-sm" data-i18n="ridesOnly">Rides Only</button>
                 <button onclick="filterLedger('expense')" id="btn-filter-expense" class="px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-brand-red transition-all whitespace-nowrap border border-gray-200 dark:border-white/5 shadow-sm" data-i18n="expensesOnly">Expenses Only</button>
             </div>
-
-            <div id="ledger-list" class="space-y-3 pb-8 pt-2">
-                </div>
+            <div id="ledger-list" class="space-y-3 pb-8 pt-2"></div>
         </section>
 
         <section id="view-settings" class="space-y-6 hidden pb-8">
             <h2 class="text-2xl font-bold px-2 pt-2 text-gray-900 dark:text-white" data-i18n="appConfig">App Configuration</h2>
-            
+
+            <div class="glass-card rounded-[2rem] p-6 space-y-5 border border-brand-purple/20">
+                <h3 class="text-[11px] text-brand-purple font-bold uppercase tracking-widest mb-2 border-b border-gray-200 dark:border-white/5 pb-3" data-i18n="driverProfile">Driver Profile</h3>
+                <div>
+                    <label class="app-label" data-i18n="driverName">Driver Name</label>
+                    <input type="text" id="set-driver-name" class="app-input" placeholder="..." onchange="saveSettings()">
+                </div>
+                <div>
+                    <label class="app-label" data-i18n="cityLabel">City</label>
+                    <div class="flex flex-wrap gap-2 mt-1" id="city-chips"></div>
+                </div>
+                <div>
+                    <label class="app-label" data-i18n="vehicleType">Vehicle Type</label>
+                    <select id="set-vehicle" class="app-input font-medium" onchange="saveSettings()">
+                        <option value="car_small">🚗 Small Car (Clio, Sandero...)</option>
+                        <option value="car_mid">🚙 Mid Car (Logan, Tipo...)</option>
+                        <option value="car_suv">🚐 SUV / Minivan (Jogger, Express...)</option>
+                        <option value="moto">🏍️ Motorcycle / Scooter</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="app-label" data-i18n="activePlatform">Active Platform</label>
+                    <select id="set-platform" class="app-input font-medium" onchange="saveSettings()">
+                        <option value="InDrive">InDrive</option>
+                        <option value="Bolt">Bolt</option>
+                        <option value="Careem">Careem</option>
+                        <option value="Heetch">Heetch</option>
+                        <option value="Yango">Yango</option>
+                        <option value="Other">Other / Independent</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="glass-card relative z-50 rounded-[2rem] p-6 space-y-5 border border-brand-blue/20">
                 <h3 class="text-[11px] text-brand-blue font-bold uppercase tracking-widest mb-2 border-b border-gray-200 dark:border-white/5 pb-3" data-i18n="preferences">Preferences</h3>
-                
                 <div class="grid grid-cols-2 gap-4">
-                    
                     <div class="relative w-full z-50">
                         <button type="button" id="custom-lang-btn" class="app-input flex items-center justify-between font-bold w-full transition-colors hover:bg-gray-50 dark:hover:bg-white/5" onclick="toggleLangMenu()">
                             <span id="custom-lang-text" class="truncate">English</span>
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-globe text-brand-blue"></i>
-                            </div>
+                            <i class="fa-solid fa-globe text-brand-blue"></i>
                         </button>
-                        
                         <ul id="custom-lang-menu" class="absolute z-[100] w-full min-w-[180px] mt-2 bg-white dark:bg-[#141B2D] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl hidden overflow-hidden">
-                            <li onclick="selectLang('en')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">
-                                English <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i>
-                            </li>
-                            <li onclick="selectLang('fr')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">
-                                Français <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i>
-                            </li>
-                            <li onclick="selectLang('ar')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">
-                                العربية الفصحى <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i>
-                            </li>
-                            <li onclick="selectLang('ma')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center justify-between group">
-                                الدارجة المغربية <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i>
-                            </li>
+                            <li onclick="selectLang('en')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">English <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i></li>
+                            <li onclick="selectLang('fr')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">Français <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i></li>
+                            <li onclick="selectLang('ar')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">العربية الفصحى <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i></li>
+                            <li onclick="selectLang('ma')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center justify-between group">الدارجة المغربية <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i></li>
                         </ul>
                     </div>
-                    
                     <button type="button" onclick="toggleTheme()" class="app-input flex items-center justify-between font-bold w-full transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
                         <span id="theme-text" data-i18n="darkMode" class="truncate">Dark Mode</span>
                         <i class="fa-solid fa-moon text-lg text-brand-blue transition-transform" id="theme-icon-btn"></i>
                     </button>
-
+                </div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-sm font-bold text-gray-900 dark:text-white" data-i18n="ramadanMode">Ramadan Mode</div>
+                        <div class="text-[10px] text-gray-500" data-i18n="ramadanModeDesc">Show Iftar/Suhoor peak hour reminders</div>
+                    </div>
+                    <button id="ramadan-toggle-btn" onclick="toggleRamadanMode()" class="relative inline-flex h-7 w-12 items-center rounded-full bg-gray-300 dark:bg-dark-700 transition-colors duration-300 border border-gray-200 dark:border-white/10">
+                        <span id="ramadan-knob" class="inline-block h-5 w-5 transform rounded-full bg-white dark:bg-gray-400 transition-transform duration-300 translate-x-1"></span>
+                    </button>
                 </div>
             </div>
 
             <div class="glass-card rounded-[2rem] p-6 space-y-6 relative z-10">
                 <h3 class="text-[11px] text-brand-blue font-bold uppercase tracking-widest mb-4 border-b border-gray-200 dark:border-white/5 pb-3" data-i18n="defaultsGoals">Defaults & Goals</h3>
-                
                 <div>
                     <label class="app-label" data-i18n="setTarget">Daily Income Target (MAD)</label>
                     <input type="number" id="set-target" class="app-input" value="300" onchange="saveSettings()" dir="ltr">
                 </div>
-                
                 <div>
                     <label class="app-label" data-i18n="setComm">Default Commission (%)</label>
-                    <input type="number" id="set-comm" class="app-input" value="10" step="0.1" onchange="saveSettings()" dir="ltr">
+                    <input type="number" id="set-comm" class="app-input" value="20" step="0.1" onchange="saveSettings()" dir="ltr">
                 </div>
-
                 <div>
                     <label class="app-label" data-i18n="setFuelRate">Avg Fuel Consumption (L/100km)</label>
                     <input type="number" id="set-fuel-rate" class="app-input" value="6.0" step="0.1" onchange="saveSettings()" dir="ltr">
                 </div>
-
                 <div>
                     <label class="app-label" data-i18n="setFuelPrice">Avg Fuel Price (MAD per L)</label>
-                    <input type="number" id="set-fuel-price" class="app-input" value="13.50" step="0.01" onchange="saveSettings()" dir="ltr">
+                    <input type="number" id="set-fuel-price" class="app-input" value="11.93" step="0.01" onchange="saveSettings()" dir="ltr">
+                </div>
+                <div>
+                    <label class="app-label" data-i18n="setWeeklyTarget">Weekly Income Target (MAD)</label>
+                    <input type="number" id="set-weekly-target" class="app-input" value="2000" onchange="saveSettings()" dir="ltr">
                 </div>
             </div>
 
             <div class="glass-card rounded-[2rem] p-6 space-y-4 relative z-10">
                 <h3 class="text-[11px] text-brand-green font-bold uppercase tracking-widest mb-2 border-b border-gray-200 dark:border-white/5 pb-3" data-i18n="exportTitle">Data Management</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium" data-i18n="exportDesc">Download a copy of your entire ledger (rides and expenses) as a CSV file for your records.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium" data-i18n="exportDesc">Download your full ledger as CSV — rides and expenses.</p>
                 <button onclick="exportToCSV()" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-[#1E293B] dark:hover:bg-[#334155] text-gray-900 dark:text-white border border-gray-300 dark:border-white/10 rounded-2xl py-4 font-bold tracking-wide transition-all flex items-center justify-center gap-2 shadow-sm">
                     <i class="fa-solid fa-file-csv text-brand-green"></i> <span data-i18n="exportBtn">Export Data (CSV)</span>
                 </button>
@@ -396,8 +594,8 @@
                 <i class="fa-solid fa-list-ul text-[20px] mb-1.5"></i>
                 <span class="text-[10px] font-bold tracking-wide" data-i18n="navHistory">History</span>
             </button>
-
-            <div class="w-[75px]"></div> <button onclick="navigate('stats')" id="nav-stats" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all">
+            <div class="w-[75px]"></div>
+            <button onclick="navigate('stats')" id="nav-stats" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all">
                 <i class="fa-solid fa-chart-line text-[20px] mb-1.5"></i>
                 <span class="text-[10px] font-bold tracking-wide" data-i18n="navStats">Stats</span>
             </button>
@@ -429,6 +627,15 @@
                 <span class="font-bold text-gray-700 dark:text-gray-200 tracking-wide" data-i18n="addExpenseBtn">Add Expense</span>
             </button>
         </div>
+        <button onclick="openSheet('sheet-fuel')" class="w-full action-btn border border-brand-gold/20 hover:border-brand-gold/50 rounded-2xl p-4 flex items-center gap-4 transition-colors shadow-inner">
+            <div class="w-10 h-10 rounded-full bg-brand-gold/10 text-brand-gold flex items-center justify-center text-lg">
+                <i class="fa-solid fa-gas-pump"></i>
+            </div>
+            <div class="text-start">
+                <div class="font-bold text-gray-700 dark:text-gray-200 text-sm" data-i18n="quickFuel">Quick Fuel Log</div>
+                <div class="text-[10px] text-gray-500 font-medium" data-i18n="quickFuelDesc">Log a fillup fast</div>
+            </div>
+        </button>
     </div>
 
     <div id="sheet-ride" class="bottom-sheet pb-10 rounded-t-[36px] p-6">
@@ -444,6 +651,19 @@
                     <label class="app-label" data-i18n="dateTime">Date & Time</label>
                     <input type="datetime-local" id="ride-date" class="app-input" required dir="ltr">
                 </div>
+
+                <div class="col-span-2">
+                    <label class="app-label" data-i18n="platformLabel">Platform</label>
+                    <div class="flex flex-wrap gap-2" id="ride-platform-chips">
+                        <button type="button" data-platform="InDrive" onclick="selectRidePlatform('InDrive')" class="ride-plat-chip platform-pill platform-indrive selected-plat border-2 border-brand-green px-3 py-1.5 text-[11px] font-black">🟢 InDrive</button>
+                        <button type="button" data-platform="Bolt" onclick="selectRidePlatform('Bolt')" class="ride-plat-chip platform-pill platform-bolt px-3 py-1.5 text-[11px] font-black">⚡ Bolt</button>
+                        <button type="button" data-platform="Careem" onclick="selectRidePlatform('Careem')" class="ride-plat-chip platform-pill platform-careem px-3 py-1.5 text-[11px] font-black">🟩 Careem</button>
+                        <button type="button" data-platform="Heetch" onclick="selectRidePlatform('Heetch')" class="ride-plat-chip platform-pill platform-heetch px-3 py-1.5 text-[11px] font-black">🟣 Heetch</button>
+                        <button type="button" data-platform="Yango" onclick="selectRidePlatform('Yango')" class="ride-plat-chip platform-pill platform-yango px-3 py-1.5 text-[11px] font-black">🔴 Yango</button>
+                        <button type="button" data-platform="Other" onclick="selectRidePlatform('Other')" class="ride-plat-chip platform-pill platform-other px-3 py-1.5 text-[11px] font-black">Other</button>
+                    </div>
+                    <input type="hidden" id="ride-platform" value="InDrive">
+                </div>
                 
                 <div class="col-span-2 relative">
                     <label class="app-label" data-i18n="grossFare">Gross Fare (MAD)</label>
@@ -457,7 +677,7 @@
                     <label class="app-label" data-i18n="commissionLabel">Commission (MAD)</label>
                     <div class="relative">
                         <input type="number" id="ride-comm" step="0.01" min="0" class="app-input border-brand-red/30 focus:border-brand-red" placeholder="0.00" required dir="ltr">
-                        <div class="absolute end-3 top-3.5 text-[10px] text-gray-500 font-bold bg-gray-100 dark:bg-[#141B2D] px-2 py-1 rounded border border-gray-200 dark:border-transparent" id="comm-hint" dir="ltr">10%</div>
+                        <div class="absolute end-3 top-3.5 text-[10px] text-gray-500 font-bold bg-gray-100 dark:bg-[#141B2D] px-2 py-1 rounded border border-gray-200 dark:border-transparent" id="comm-hint" dir="ltr">20%</div>
                     </div>
                 </div>
                 
@@ -475,8 +695,26 @@
                     <label class="app-label" data-i18n="duration">Duration (mins)</label>
                     <input type="number" id="ride-duration" step="1" min="1" class="app-input" placeholder="15" required dir="ltr">
                 </div>
+
+                <div class="col-span-2">
+                    <label class="app-label" data-i18n="paymentMethod">Payment</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="pay-cash-btn" onclick="selectPayment('cash')" class="app-input flex items-center justify-center gap-2 font-bold text-sm border-brand-green/50 bg-brand-green/5 text-brand-green">
+                            💵 <span data-i18n="payCash">Cash</span>
+                        </button>
+                        <button type="button" id="pay-digital-btn" onclick="selectPayment('digital')" class="app-input flex items-center justify-center gap-2 font-bold text-sm text-gray-500">
+                            📱 <span data-i18n="payDigital">Digital</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="ride-payment" value="cash">
+                </div>
+
+                <div class="col-span-2 stat-box rounded-2xl p-4 flex justify-between items-center">
+                    <div class="text-xs font-bold text-gray-500 uppercase tracking-widest" data-i18n="netPreview">Net Preview</div>
+                    <div class="text-xl font-black text-brand-green" id="net-preview" dir="ltr">0.00 MAD</div>
+                </div>
             </div>
-            <div class="pt-6">
+            <div class="pt-2">
                 <button type="submit" class="w-full bg-brand-green hover:bg-brand-green/90 text-white dark:text-[#0B101E] rounded-2xl py-4 font-black text-lg shadow-[0_8px_20px_rgba(16,185,129,0.3)] transition-all active:scale-95 tracking-wide" data-i18n="saveRideData">Save Ride Data</button>
             </div>
         </form>
@@ -507,14 +745,16 @@
                 <label class="app-label" data-i18n="category">Category</label>
                 <div class="relative">
                     <select id="exp-category" class="app-input font-medium pe-10" required>
-                        <option value="Fuel">⛽ Fuel / Diesel</option>
-                        <option value="Wash">🧽 Car Wash</option>
-                        <option value="Maintenance">🔧 Maintenance</option>
-                        <option value="Tolls">🛣️ Tolls / Parking</option>
-                        <option value="Food">🍔 Food / Drinks</option>
-                        <option value="Mobile">📱 Phone / Internet</option>
-                        <option value="Insurance">🛡️ Insurance</option>
-                        <option value="Other">📦 Other</option>
+                        <option value="Fuel">⛽ Fuel / Gasoil / Essence</option>
+                        <option value="Wash">🧽 Car Wash / Lavage</option>
+                        <option value="Maintenance">🔧 Maintenance / Méca</option>
+                        <option value="Tolls">🛣️ Tolls / Autoroute / Parking</option>
+                        <option value="Food">🍔 Food / Café / Repas</option>
+                        <option value="Mobile">📱 Phone / Internet / Maroc Telecom</option>
+                        <option value="Insurance">🛡️ Insurance / Assurance</option>
+                        <option value="Vignette">📋 Vignette / Taxe</option>
+                        <option value="Visite">🔍 Visite Technique</option>
+                        <option value="Other">📦 Other / Autre</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-4 text-gray-400">
                         <i class="fa-solid fa-chevron-down text-sm"></i>
@@ -526,143 +766,415 @@
                 <label class="app-label" data-i18n="notes">Notes (Optional)</label>
                 <textarea id="exp-notes" rows="2" class="app-input resize-none" placeholder="..." dir="auto"></textarea>
             </div>
-            <div class="pt-6">
+            <div class="pt-4">
                 <button type="submit" class="w-full bg-brand-red hover:bg-brand-red/90 text-white rounded-2xl py-4 font-black text-lg shadow-[0_8px_20px_rgba(244,63,94,0.3)] transition-all active:scale-95 tracking-wide" data-i18n="saveExpense">Save Expense</button>
             </div>
         </form>
     </div>
 
+    <div id="sheet-fuel" class="bottom-sheet pb-10 rounded-t-[36px] p-6">
+        <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto mb-6"></div>
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-black text-brand-gold tracking-tight">⛽ <span data-i18n="quickFuel">Quick Fuel Log</span></h3>
+            <button onclick="closeAllSheets()" class="w-10 h-10 rounded-full action-btn border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+        <form id="form-fuel" class="space-y-5">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="app-label" data-i18n="fuelType">Fuel Type</label>
+                    <select id="fuel-type" class="app-input font-medium" onchange="updateFuelPrice()">
+                        <option value="gasoil">Gasoil S50 (~11.93/L)</option>
+                        <option value="sp95">Essence SP95 (~13.57/L)</option>
+                        <option value="sp98">Essence SP98</option>
+                        <option value="gpl">GPL</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="app-label" data-i18n="liters">Liters (L)</label>
+                    <input type="number" id="fuel-liters" step="0.5" min="1" class="app-input" placeholder="20" oninput="calcFuelTotal()" dir="ltr">
+                </div>
+                <div>
+                    <label class="app-label" data-i18n="pricePerLiter">Price/Liter (MAD)</label>
+                    <input type="number" id="fuel-price-per-l" step="0.01" class="app-input" value="11.93" oninput="calcFuelTotal()" dir="ltr">
+                </div>
+                <div>
+                    <label class="app-label" data-i18n="totalCost">Total Cost</label>
+                    <div class="app-input font-black text-brand-gold text-xl" id="fuel-total-display" dir="ltr">0.00 MAD</div>
+                </div>
+                <div class="col-span-2 stat-box rounded-2xl p-3">
+                    <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1" data-i18n="fuelStation">Station</div>
+                    <input type="text" id="fuel-station" class="app-input" placeholder="Ziz, Shell, Afriquia, Total..." dir="auto">
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-brand-gold hover:bg-brand-gold/90 text-white rounded-2xl py-4 font-black text-lg shadow-[0_8px_20px_rgba(245,158,11,0.3)] transition-all active:scale-95 tracking-wide" data-i18n="saveFuel">Log Fillup</button>
+        </form>
+    </div>
+
     <script>
-        // --- Translations Dictionary ---
+        // =============================================
+        // TRANSLATIONS
+        // =============================================
         const i18n = {
             en: {
-                onlineStatus: "ONLINE", netProfit: "Today's Net Profit", rides: "Rides",
-                grossIncome: "Gross Income", totalExpenses: "Total Expenses", dailyTarget: "Daily Target",
-                performanceStats: "Performance Stats", perHour: "Per Hour", perKm: "Per KM", fuelEst: "Fuel Est.",
-                weekOverview: "7-Day Overview", netEarnings: "Net Earnings", allActivity: "All Activity",
-                ridesOnly: "Rides Only", expensesOnly: "Expenses Only", appConfig: "App Configuration",
-                preferences: "Preferences", languageTitle: "App Language", darkMode: "Dark Mode", lightMode: "Light Mode",
-                defaultsGoals: "Defaults & Goals", setTarget: "Daily Income Target (MAD)",
-                setComm: "Default Commission (%)", setFuelRate: "Avg Fuel Consumption (L/100km)", setFuelPrice: "Avg Fuel Price (MAD per L)",
-                exportTitle: "Data Management", exportDesc: "Download a copy of your entire ledger (rides and expenses) as a CSV file for your records.",
-                exportBtn: "Export Data (CSV)", dangerZone: "Danger Zone", dangerDesc: "Permanently delete all locally stored data. This action cannot be undone.",
-                factoryReset: "Factory Reset Data", navHome: "Home", navHistory: "History", navStats: "Stats", navConfig: "Config",
-                logActivity: "Log Activity", addRideBtn: "Add Ride", addExpenseBtn: "Add Expense", logNewRide: "Log New Ride",
-                dateTime: "Date & Time", grossFare: "Gross Fare (MAD)", commissionLabel: "Commission (MAD)", tipTolls: "Tip / Tolls (MAD)",
-                distance: "Distance (km)", duration: "Duration (mins)", saveRideData: "Save Ride Data", logExpense: "Log Expense",
-                amount: "Amount (MAD)", category: "Category", notes: "Notes (Optional)", saveExpense: "Save Expense",
-                noData: "No activity found.", rideTitle: "Ride Data", gross: "Gross"
+                onlineStatus:"ONLINE", netProfit:"Today's Net Profit", rides:"Rides", grossIncome:"Gross", totalExpenses:"Expenses",
+                dailyTarget:"Daily Target", performanceStats:"Performance Stats", perHour:"Per Hour", perKm:"Per KM", fuelEst:"Fuel Est.",
+                weekOverview:"7-Day Overview", netEarnings:"Net Earnings", allActivity:"All Activity", ridesOnly:"Rides Only",
+                expensesOnly:"Expenses Only", appConfig:"App Configuration", preferences:"Preferences", languageTitle:"App Language",
+                darkMode:"Dark Mode", lightMode:"Light Mode", defaultsGoals:"Defaults & Goals", setTarget:"Daily Target (MAD)",
+                setComm:"Default Commission (%)", setFuelRate:"Fuel Consumption (L/100km)", setFuelPrice:"Fuel Price (MAD/L)",
+                exportTitle:"Data Management", exportDesc:"Download your full ledger as CSV.",
+                exportBtn:"Export Data (CSV)", dangerZone:"Danger Zone", dangerDesc:"Permanently delete all data. Cannot be undone.",
+                factoryReset:"Factory Reset", navHome:"Home", navHistory:"History", navStats:"Stats", navConfig:"Config",
+                logActivity:"Log Activity", addRideBtn:"Add Ride", addExpenseBtn:"Add Expense", logNewRide:"Log New Ride",
+                dateTime:"Date & Time", grossFare:"Gross Fare (MAD)", commissionLabel:"Commission (MAD)", tipTolls:"Tip / Tolls (MAD)",
+                distance:"Distance (km)", duration:"Duration (mins)", saveRideData:"Save Ride", logExpense:"Log Expense",
+                amount:"Amount (MAD)", category:"Category", notes:"Notes (Optional)", saveExpense:"Save Expense",
+                noData:"No activity found.", rideTitle:"Ride", gross:"Gross", commLabel:"Comm.",
+                driverProfile:"Driver Profile", driverName:"Driver Name", cityLabel:"City", vehicleType:"Vehicle",
+                activePlatform:"Active Platform", platformLabel:"Platform", paymentMethod:"Payment Method",
+                payCash:"Cash", payDigital:"Digital / App", netPreview:"Net Preview",
+                fuelTracker:"Fuel Prices (Morocco)", fuelNote:"Update fuel price in Settings for accurate estimates",
+                platformPerf:"Platform Performance", platformBreakdown:"Platform Breakdown",
+                allTimeSummary:"All-Time Summary", totalRides:"Total Rides", totalEarned:"Total Earned",
+                totalKm:"Total KM", bestDay:"Best Day", peakHours:"Best Hours to Drive",
+                expenseBreakdown:"Expense Breakdown", tipCalc:"Goal Calculator",
+                tipCalcDesc:"Rides needed to hit your daily target:", ridesNeeded:"Rides Needed",
+                quickFuel:"Quick Fuel Log", quickFuelDesc:"Log a fillup fast",
+                fuelType:"Fuel Type", liters:"Liters (L)", pricePerLiter:"Price/Liter",
+                totalCost:"Total Cost", fuelStation:"Station Name", saveFuel:"Log Fillup",
+                ramadanTitle:"Ramadan Mode", ramadanTip:"Peak hours: after Iftar (20h-24h) & Suhoor (3h-5h)",
+                ramadanMode:"Ramadan Mode", ramadanModeDesc:"Show Iftar/Suhoor peak hour reminders",
+                setWeeklyTarget:"Weekly Target (MAD)"
             },
             fr: {
-                onlineStatus: "EN LIGNE", netProfit: "Bénéfice Net du Jour", rides: "Trajets",
-                grossIncome: "Revenu Brut", totalExpenses: "Dépenses Totales", dailyTarget: "Objectif Quotidien",
-                performanceStats: "Statistiques", perHour: "Par Heure", perKm: "Par KM", fuelEst: "Est. Carburant",
-                weekOverview: "Aperçu 7 Jours", netEarnings: "Gains Nets", allActivity: "Toute l'Activité",
-                ridesOnly: "Trajets Uniquement", expensesOnly: "Dépenses Uniquement", appConfig: "Configuration",
-                preferences: "Préférences", languageTitle: "Langue", darkMode: "Mode Sombre", lightMode: "Mode Clair",
-                defaultsGoals: "Paramètres par Défaut", setTarget: "Objectif Quotidien (MAD)",
-                setComm: "Commission par Défaut (%)", setFuelRate: "Consommation Moy. (L/100km)", setFuelPrice: "Prix Carburant (MAD/L)",
-                exportTitle: "Gestion des Données", exportDesc: "Téléchargez une copie de votre historique (trajets et dépenses) au format CSV.",
-                exportBtn: "Exporter les Données (CSV)", dangerZone: "Zone de Danger", dangerDesc: "Supprimer définitivement toutes les données locales. Cette action est irréversible.",
-                factoryReset: "Réinitialiser les Données", navHome: "Accueil", navHistory: "Historique", navStats: "Stats", navConfig: "Config",
-                logActivity: "Ajouter une Activité", addRideBtn: "Ajouter Trajet", addExpenseBtn: "Ajouter Dépense", logNewRide: "Nouveau Trajet",
-                dateTime: "Date & Heure", grossFare: "Tarif Brut (MAD)", commissionLabel: "Commission (MAD)", tipTolls: "Pourboire / Péage (MAD)",
-                distance: "Distance (km)", duration: "Durée (mins)", saveRideData: "Enregistrer Trajet", logExpense: "Nouvelle Dépense",
-                amount: "Montant (MAD)", category: "Catégorie", notes: "Notes (Optionnel)", saveExpense: "Enregistrer Dépense",
-                noData: "Aucune activité trouvée.", rideTitle: "Données du Trajet", gross: "Brut"
+                onlineStatus:"EN LIGNE", netProfit:"Bénéfice Net du Jour", rides:"Trajets", grossIncome:"Brut",
+                totalExpenses:"Dépenses", dailyTarget:"Objectif Quotidien", performanceStats:"Statistiques",
+                perHour:"Par Heure", perKm:"Par KM", fuelEst:"Carburant Est.", weekOverview:"Aperçu 7 Jours",
+                netEarnings:"Gains Nets", allActivity:"Toute l'Activité", ridesOnly:"Trajets", expensesOnly:"Dépenses",
+                appConfig:"Configuration", preferences:"Préférences", languageTitle:"Langue",
+                darkMode:"Mode Sombre", lightMode:"Mode Clair", defaultsGoals:"Paramètres", setTarget:"Objectif Journalier (MAD)",
+                setComm:"Commission (%)", setFuelRate:"Consommation (L/100km)", setFuelPrice:"Prix Carburant (MAD/L)",
+                exportTitle:"Gestion des Données", exportDesc:"Téléchargez votre historique en CSV.",
+                exportBtn:"Exporter (CSV)", dangerZone:"Zone de Danger", dangerDesc:"Supprimer toutes les données définitivement.",
+                factoryReset:"Réinitialiser", navHome:"Accueil", navHistory:"Historique", navStats:"Stats", navConfig:"Config",
+                logActivity:"Ajouter", addRideBtn:"Trajet", addExpenseBtn:"Dépense", logNewRide:"Nouveau Trajet",
+                dateTime:"Date & Heure", grossFare:"Tarif Brut (MAD)", commissionLabel:"Commission (MAD)", tipTolls:"Pourboire/Péage (MAD)",
+                distance:"Distance (km)", duration:"Durée (min)", saveRideData:"Enregistrer", logExpense:"Nouvelle Dépense",
+                amount:"Montant (MAD)", category:"Catégorie", notes:"Notes (Optionnel)", saveExpense:"Enregistrer",
+                noData:"Aucune activité.", rideTitle:"Trajet", gross:"Brut", commLabel:"Comm.",
+                driverProfile:"Profil Chauffeur", driverName:"Votre Nom", cityLabel:"Ville", vehicleType:"Véhicule",
+                activePlatform:"Plateforme Active", platformLabel:"Plateforme", paymentMethod:"Paiement",
+                payCash:"Espèces", payDigital:"Numérique", netPreview:"Aperçu Net",
+                fuelTracker:"Prix Carburant (Maroc)", fuelNote:"Mettez à jour le prix du carburant dans les paramètres",
+                platformPerf:"Performance Plateforme", platformBreakdown:"Répartition Plateforme",
+                allTimeSummary:"Résumé Total", totalRides:"Total Trajets", totalEarned:"Total Gagné",
+                totalKm:"Total KM", bestDay:"Meilleur Jour", peakHours:"Meilleures Heures",
+                expenseBreakdown:"Répartition Dépenses", tipCalc:"Calculateur d'Objectif",
+                tipCalcDesc:"Trajets nécessaires pour atteindre l'objectif:", ridesNeeded:"Trajets Nécessaires",
+                quickFuel:"Plein Rapide", quickFuelDesc:"Enregistrer un plein vite",
+                fuelType:"Type Carburant", liters:"Litres (L)", pricePerLiter:"Prix/Litre",
+                totalCost:"Coût Total", fuelStation:"Nom Station", saveFuel:"Enregistrer Plein",
+                ramadanTitle:"Mode Ramadan", ramadanTip:"Heures de pointe: après Iftar (20h-24h) & Suhoor (3h-5h)",
+                ramadanMode:"Mode Ramadan", ramadanModeDesc:"Afficher les rappels Iftar/Suhoor",
+                setWeeklyTarget:"Objectif Hebdomadaire (MAD)"
             },
             ar: {
-                onlineStatus: "متصل", netProfit: "صافي أرباح اليوم", rides: "الرحلات",
-                grossIncome: "إجمالي الدخل", totalExpenses: "إجمالي النفقات", dailyTarget: "الهدف اليومي",
-                performanceStats: "إحصائيات الأداء", perHour: "في الساعة", perKm: "في الكيلومتر", fuelEst: "تكلفة الوقود",
-                weekOverview: "نظرة عامة لـ 7 أيام", netEarnings: "صافي الأرباح", allActivity: "كل الأنشطة",
-                ridesOnly: "الرحلات فقط", expensesOnly: "النفقات فقط", appConfig: "إعدادات التطبيق",
-                preferences: "التفضيلات", languageTitle: "لغة التطبيق", darkMode: "الوضع الداكن", lightMode: "الوضع الفاتح",
-                defaultsGoals: "الافتراضيات والأهداف", setTarget: "الهدف اليومي للدخل (درهم)",
-                setComm: "العمولة الافتراضية (%)", setFuelRate: "متوسط استهلاك الوقود (لتر/100كم)", setFuelPrice: "متوسط سعر الوقود (درهم/لتر)",
-                exportTitle: "إدارة البيانات", exportDesc: "قم بتنزيل نسخة من السجل الخاص بك (الرحلات والنفقات) كملف CSV.",
-                exportBtn: "تصدير البيانات (CSV)", dangerZone: "منطقة الخطر", dangerDesc: "حذف جميع البيانات المخزنة محلياً بشكل دائم. لا يمكن التراجع عن هذا الإجراء.",
-                factoryReset: "إعادة ضبط المصنع", navHome: "الرئيسية", navHistory: "السجل", navStats: "إحصائيات", navConfig: "الإعدادات",
-                logActivity: "تسجيل نشاط", addRideBtn: "إضافة رحلة", addExpenseBtn: "إضافة نفقة", logNewRide: "تسجيل رحلة جديدة",
-                dateTime: "التاريخ والوقت", grossFare: "الأجرة الإجمالية (درهم)", commissionLabel: "العمولة (درهم)", tipTolls: "إكرامية / رسوم طريق (درهم)",
-                distance: "المسافة (كم)", duration: "المدة (دقائق)", saveRideData: "حفظ بيانات الرحلة", logExpense: "تسجيل نفقة",
-                amount: "المبلغ (درهم)", category: "الفئة", notes: "ملاحظات (اختياري)", saveExpense: "حفظ النفقة",
-                noData: "لا توجد أنشطة مسجلة.", rideTitle: "بيانات الرحلة", gross: "الإجمالي"
+                onlineStatus:"متصل", netProfit:"صافي أرباح اليوم", rides:"الرحلات", grossIncome:"الإجمالي",
+                totalExpenses:"النفقات", dailyTarget:"الهدف اليومي", performanceStats:"إحصائيات الأداء",
+                perHour:"في الساعة", perKm:"في الكم", fuelEst:"تكلفة الوقود", weekOverview:"نظرة 7 أيام",
+                netEarnings:"صافي الأرباح", allActivity:"كل الأنشطة", ridesOnly:"الرحلات فقط", expensesOnly:"النفقات فقط",
+                appConfig:"إعدادات التطبيق", preferences:"التفضيلات", languageTitle:"لغة التطبيق",
+                darkMode:"الوضع الداكن", lightMode:"الوضع الفاتح", defaultsGoals:"الأهداف والإعدادات",
+                setTarget:"الهدف اليومي (درهم)", setComm:"العمولة الافتراضية (%)", setFuelRate:"استهلاك الوقود (لتر/100كم)",
+                setFuelPrice:"سعر الوقود (درهم/لتر)", exportTitle:"إدارة البيانات", exportDesc:"تنزيل السجل كملف CSV.",
+                exportBtn:"تصدير البيانات (CSV)", dangerZone:"منطقة الخطر", dangerDesc:"حذف جميع البيانات نهائياً.",
+                factoryReset:"إعادة الضبط", navHome:"الرئيسية", navHistory:"السجل", navStats:"إحصائيات", navConfig:"الإعدادات",
+                logActivity:"تسجيل نشاط", addRideBtn:"إضافة رحلة", addExpenseBtn:"إضافة نفقة", logNewRide:"رحلة جديدة",
+                dateTime:"التاريخ والوقت", grossFare:"الأجرة الإجمالية (درهم)", commissionLabel:"العمولة (درهم)",
+                tipTolls:"إكرامية / رسوم (درهم)", distance:"المسافة (كم)", duration:"المدة (دقائق)",
+                saveRideData:"حفظ الرحلة", logExpense:"نفقة جديدة", amount:"المبلغ (درهم)", category:"الفئة",
+                notes:"ملاحظات", saveExpense:"حفظ النفقة", noData:"لا توجد أنشطة.", rideTitle:"رحلة", gross:"إجمالي",
+                commLabel:"عمولة", driverProfile:"ملف السائق", driverName:"اسمك", cityLabel:"المدينة",
+                vehicleType:"نوع السيارة", activePlatform:"المنصة النشطة", platformLabel:"المنصة",
+                paymentMethod:"طريقة الدفع", payCash:"نقدي", payDigital:"رقمي", netPreview:"الصافي المتوقع",
+                fuelTracker:"أسعار الوقود (المغرب)", fuelNote:"حدّث سعر الوقود في الإعدادات",
+                platformPerf:"أداء المنصة", platformBreakdown:"تفاصيل المنصة",
+                allTimeSummary:"الملخص الإجمالي", totalRides:"إجمالي الرحلات", totalEarned:"إجمالي الأرباح",
+                totalKm:"إجمالي الكيلومترات", bestDay:"أفضل يوم", peakHours:"أفضل ساعات العمل",
+                expenseBreakdown:"تفصيل النفقات", tipCalc:"حاسبة الهدف",
+                tipCalcDesc:"الرحلات اللازمة لتحقيق الهدف:", ridesNeeded:"الرحلات المطلوبة",
+                quickFuel:"تسجيل وقود سريع", quickFuelDesc:"سجّل تعبئة وقود",
+                fuelType:"نوع الوقود", liters:"اللترات", pricePerLiter:"السعر/لتر",
+                totalCost:"التكلفة الإجمالية", fuelStation:"اسم المحطة", saveFuel:"حفظ التعبئة",
+                ramadanTitle:"رمضان كريم - وضع رمضان", ramadanTip:"أوقات الذروة: بعد الإفطار (20h-24h) والسحور (3h-5h)",
+                ramadanMode:"وضع رمضان", ramadanModeDesc:"عرض تذكيرات وقت الذروة",
+                setWeeklyTarget:"الهدف الأسبوعي (درهم)"
             },
             ma: {
-                onlineStatus: "خدام دابا", netProfit: "الربح الصافي ديال اليوم", rides: "توصيلات",
-                grossIncome: "المدخول الإجمالي", totalExpenses: "مجموع المصاريف", dailyTarget: "الهدف اليومي",
-                performanceStats: "إحصائيات الخدمة", perHour: "فـ الساعة", perKm: "فـ الكيلومتر", fuelEst: "تقدير المازوط",
-                weekOverview: "نظرة على 7 أيام", netEarnings: "الأرباح الصافية", allActivity: "ڭاع الحركات",
-                ridesOnly: "التوصيلات بوحدهم", expensesOnly: "المصاريف بوحدهم", appConfig: "إعدادات التطبيق",
-                preferences: "التفضيلات", languageTitle: "لغة التطبيق", darkMode: "الوضع المظلم", lightMode: "الوضع الفاتح",
-                defaultsGoals: "الأهداف والقياسات", setTarget: "الهدف اليومي (درهم)",
-                setComm: "الكوميسيون العادية (%)", setFuelRate: "استهلاك المازوط (L/100km)", setFuelPrice: "ثمن المازوط للتر (درهم)",
-                exportTitle: "إدارة البيانات", exportDesc: "تيليشارجي ڭاع الخدمة والمصاريف ديالك فملف CSV باش تحتفظ بيهم.",
-                exportBtn: "تيليشارجي البيانات (CSV)", dangerZone: "منطقة الخطر", dangerDesc: "مسح ڭاع المعلومات المسجلة فالتليفون. هاد الخطوة ميمكنش ترجع فيها.",
-                factoryReset: "مسح جميع البيانات", navHome: "الرئيسية", navHistory: "السجل", navStats: "إحصائيات", navConfig: "إعدادات",
-                logActivity: "قيد خدمة جديدة", addRideBtn: "زيد توصيلة", addExpenseBtn: "زيد مصروف", logNewRide: "قيد توصيلة جديدة",
-                dateTime: "التاريخ والوقت", grossFare: "الثمن الكلي (درهم)", commissionLabel: "الكوميسيون (درهم)", tipTolls: "بقشيش / بياج (درهم)",
-                distance: "المسافة (km)", duration: "المدة (دقائق)", saveRideData: "حفظ التوصيلة", logExpense: "قيد مصروف جديد",
-                amount: "المبلغ (درهم)", category: "النوع", notes: "ملاحظات (اختياري)", saveExpense: "حفظ المصروف",
-                noData: "مكاين حتى نشاط مسجل.", rideTitle: "تفاصيل التوصيلة", gross: "الإجمالي"
+                onlineStatus:"خدام دابا", netProfit:"الربح الصافي ديال اليوم", rides:"توصيلات", grossIncome:"الإجمالي",
+                totalExpenses:"المصاريف", dailyTarget:"الهدف اليومي", performanceStats:"إحصائيات الخدمة",
+                perHour:"فـ الساعة", perKm:"فـ الكيلو", fuelEst:"تقدير المازوط", weekOverview:"نظرة على 7 أيام",
+                netEarnings:"الأرباح الصافية", allActivity:"ڭاع الحركات", ridesOnly:"التوصيلات", expensesOnly:"المصاريف",
+                appConfig:"إعدادات التطبيق", preferences:"التفضيلات", languageTitle:"لغة التطبيق",
+                darkMode:"الوضع المظلم", lightMode:"الوضع الفاتح", defaultsGoals:"الأهداف والقياسات",
+                setTarget:"الهدف اليومي (درهم)", setComm:"الكوميسيون (%)", setFuelRate:"استهلاك المازوط (L/100km)",
+                setFuelPrice:"ثمن المازوط للتر (درهم)", exportTitle:"إدارة البيانات", exportDesc:"تيليشارجي بياناتك فملف CSV.",
+                exportBtn:"تيليشارجي البيانات (CSV)", dangerZone:"منطقة الخطر", dangerDesc:"مسح ڭاع المعلومات نهائياً.",
+                factoryReset:"مسح جميع البيانات", navHome:"الرئيسية", navHistory:"السجل", navStats:"إحصائيات", navConfig:"إعدادات",
+                logActivity:"قيد خدمة جديدة", addRideBtn:"زيد توصيلة", addExpenseBtn:"زيد مصروف", logNewRide:"توصيلة جديدة",
+                dateTime:"التاريخ والوقت", grossFare:"الثمن الكلي (درهم)", commissionLabel:"الكوميسيون (درهم)",
+                tipTolls:"بقشيش / بياج (درهم)", distance:"المسافة (km)", duration:"المدة (دقائق)",
+                saveRideData:"حفظ التوصيلة", logExpense:"قيد مصروف جديد", amount:"المبلغ (درهم)", category:"النوع",
+                notes:"ملاحظات", saveExpense:"حفظ المصروف", noData:"مكاين حتى نشاط مسجل.", rideTitle:"توصيلة",
+                gross:"الإجمالي", commLabel:"كوميسيون", driverProfile:"معلومات السائق",
+                driverName:"اسمك", cityLabel:"المدينة", vehicleType:"نوع السيارة",
+                activePlatform:"التطبيق المستعمل", platformLabel:"التطبيق", paymentMethod:"طريقة الأداء",
+                payCash:"كاش / نقدي", payDigital:"رقمي", netPreview:"الصافي المتوقع",
+                fuelTracker:"أثمنة المازوط (المغرب)", fuelNote:"حدث ثمن المازوط فالإعدادات باش يكون الحساب صحيح",
+                platformPerf:"أداء التطبيق", platformBreakdown:"تفاصيل التطبيق",
+                allTimeSummary:"الملخص الكامل", totalRides:"مجموع التوصيلات", totalEarned:"مجموع الأرباح",
+                totalKm:"مجموع الكيلومترات", bestDay:"أحسن يوم", peakHours:"أحسن وقت للخدمة",
+                expenseBreakdown:"تفاصيل المصاريف", tipCalc:"حساب الهدف",
+                tipCalcDesc:"شحال من توصيلة باقية لتحقق الهدف:", ridesNeeded:"التوصيلات الباقية",
+                quickFuel:"تسجيل مازوط", quickFuelDesc:"سجل التعبية بسرعة",
+                fuelType:"نوع المازوط", liters:"اللتروات", pricePerLiter:"الثمن/لتر",
+                totalCost:"التكلفة الكلية", fuelStation:"اسم المحطة", saveFuel:"حفظ التعبية",
+                ramadanTitle:"رمضان مبارك", ramadanTip:"أوقات الذروة: بعد الفطور (20h-24h) والسحور (3h-5h)",
+                ramadanMode:"وضع رمضان", ramadanModeDesc:"عرض تذكيرات الفطور والسحور",
+                setWeeklyTarget:"الهدف الأسبوعي (درهم)"
             }
         };
 
-        const catIcons = { 'Fuel': 'fa-gas-pump', 'Wash':'fa-soap', 'Maintenance':'fa-wrench', 'Food':'fa-burger', 'Tolls':'fa-road', 'Mobile':'fa-mobile', 'Insurance':'fa-shield', 'Other':'fa-receipt' };
-        const langMap = { 'en': 'English', 'fr': 'Français', 'ar': 'العربية الفصحى', 'ma': 'الدارجة المغربية' };
-
-        // --- Data & State Management ---
-        const defaultSettings = { target: 300, commRate: 10, fuelRate: 6.0, fuelPrice: 13.50, lang: 'en', theme: 'dark' };
-        let appState = JSON.parse(localStorage.getItem('indriveProDataMorocco')) || { 
-            rides: [], expenses: [], settings: defaultSettings, shift: { isActive: false, startTime: null, totalSecondsToday: 0 }
+        const catIcons = {
+            'Fuel':'fa-gas-pump', 'Wash':'fa-soap', 'Maintenance':'fa-wrench',
+            'Food':'fa-burger', 'Tolls':'fa-road', 'Mobile':'fa-mobile',
+            'Insurance':'fa-shield', 'Vignette':'fa-file-alt', 'Visite':'fa-search', 'Other':'fa-receipt'
         };
+        const langMap = { 'en':'English', 'fr':'Français', 'ar':'العربية الفصحى', 'ma':'الدارجة المغربية' };
+        const moroccanCities = ['Casa', 'Rabat', 'Marrakech', 'Fès', 'Tanger', 'Agadir', 'Meknès', 'Oujda', 'Tétouan', 'Kenitra', 'Safi', 'El Jadida', 'Béni Mellal', 'Nador'];
+
+        // =============================================
+        // STATE
+        // =============================================
+        const defaultSettings = {
+            target: 300, commRate: 20, fuelRate: 6.0, fuelPrice: 11.93,
+            lang: 'en', theme: 'dark', city: 'Casa', driverName: '',
+            vehicle: 'car_mid', platform: 'InDrive', weeklyTarget: 2000, ramadanMode: false
+        };
+        let appState = JSON.parse(localStorage.getItem('indriveProDataMorocco')) || {
+            rides: [], expenses: [], settings: {...defaultSettings},
+            shift: { isActive: false, startTime: null, totalSecondsToday: 0 }
+        };
+        // Migrate old data & Ensure defaults
+        if (!appState.settings.weeklyTarget) appState.settings.weeklyTarget = 2000;
+        if (!appState.settings.platform) appState.settings.platform = 'InDrive';
+        if (!appState.settings.city) appState.settings.city = 'Casa';
+
         let myChart = null;
         let shiftInterval = null;
         let currentFilter = 'all';
+        let selectedRidePlatform = 'InDrive';
+        let selectedPayment = 'cash';
 
-        // --- Initialization ---
+        // =============================================
+        // INIT
+        // =============================================
         document.addEventListener('DOMContentLoaded', () => {
-            if(!appState.settings.lang) appState.settings.lang = 'en';
-            if(!appState.settings.theme) appState.settings.theme = 'dark';
-            
-            // Set initial Custom Dropdown text
             document.getElementById('custom-lang-text').textContent = langMap[appState.settings.lang];
             updateLangMenuChecks(appState.settings.lang);
-            
             applyTranslations(appState.settings.lang);
             applyTheme(appState.settings.theme);
             updateHeaderDate();
             applySettingsToUI();
             checkShiftStatus();
             setFormDates();
+            renderCityChips();
+            renderDashboard();
+            updateHeaderCity();
+            updateActivePlatformBadge();
+            if (appState.settings.ramadanMode) {
+                document.getElementById('ramadan-banner').classList.remove('hidden');
+                const knob = document.getElementById('ramadan-knob');
+                knob.classList.replace('translate-x-1','translate-x-5');
+                document.getElementById('ramadan-toggle-btn').classList.add('bg-brand-gold');
+                document.getElementById('ramadan-toggle-btn').classList.remove('bg-gray-300','dark:bg-dark-700');
+            }
+            selectRidePlatform(appState.settings.platform || 'InDrive');
         });
 
-        // --- Custom Language Dropdown Logic ---
-        function toggleLangMenu() {
-            const menu = document.getElementById('custom-lang-menu');
-            const btn = document.getElementById('custom-lang-btn');
-            menu.classList.toggle('hidden');
-            btn.classList.toggle('active-focus');
+        // =============================================
+        // CITY CHIPS
+        // =============================================
+        function renderCityChips() {
+            const container = document.getElementById('city-chips');
+            container.innerHTML = '';
+            moroccanCities.forEach(city => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'city-chip' + (city === appState.settings.city ? ' selected' : '');
+                btn.textContent = city;
+                btn.onclick = () => { appState.settings.city = city; saveState(); renderCityChips(); updateHeaderCity(); };
+                container.appendChild(btn);
+            });
+        }
+        function updateHeaderCity() {
+            document.getElementById('header-city').textContent = '📍 ' + (appState.settings.city || 'Casa');
         }
 
+        // =============================================
+        // PLATFORM MANAGEMENT
+        // =============================================
+        function selectRidePlatform(platform) {
+            selectedRidePlatform = platform;
+            document.getElementById('ride-platform').value = platform;
+            document.querySelectorAll('.ride-plat-chip').forEach(btn => {
+                btn.classList.remove('border-2','border-brand-green','border-yellow-500','border-purple-500','border-red-500');
+                btn.style.opacity = '0.6';
+            });
+            const active = document.querySelector(`.ride-plat-chip[data-platform="${platform}"]`);
+            if (active) { 
+                active.style.opacity = '1'; 
+                active.classList.add('border-2'); 
+                if (platform==='InDrive') active.classList.add('border-brand-green');
+                else if (platform==='Bolt') active.classList.add('border-yellow-500');
+                else if (platform==='Careem') active.classList.add('border-green-600');
+                else if (platform==='Heetch') active.classList.add('border-purple-500');
+                else if (platform==='Yango') active.classList.add('border-red-500');
+                else active.classList.add('border-gray-400');
+            }
+            
+            // Use the global commission set in settings universally
+            const rate = appState.settings.commRate;
+            document.getElementById('comm-hint').textContent = rate + '%';
+            autoCalcCommission(rate);
+        }
+
+        function updateActivePlatformBadge() {
+            const badge = document.getElementById('active-platform-badge');
+            const platform = appState.settings.platform || 'InDrive';
+            badge.textContent = platform;
+            badge.className = 'platform-pill ms-1 ' + getPlatformClass(platform);
+        }
+
+        function getPlatformClass(p) {
+            const map = { 'InDrive':'platform-indrive', 'Bolt':'platform-bolt', 'Careem':'platform-careem', 'Heetch':'platform-heetch', 'Yango':'platform-yango', 'Other':'platform-other' };
+            return map[p] || 'platform-other';
+        }
+
+        // =============================================
+        // PAYMENT
+        // =============================================
+        function selectPayment(type) {
+            selectedPayment = type;
+            document.getElementById('ride-payment').value = type;
+            const cashBtn = document.getElementById('pay-cash-btn');
+            const digBtn = document.getElementById('pay-digital-btn');
+            if (type === 'cash') {
+                cashBtn.className = 'app-input flex items-center justify-center gap-2 font-bold text-sm border-brand-green/50 bg-brand-green/5 text-brand-green';
+                digBtn.className = 'app-input flex items-center justify-center gap-2 font-bold text-sm text-gray-500';
+            } else {
+                digBtn.className = 'app-input flex items-center justify-center gap-2 font-bold text-sm border-brand-blue/50 bg-brand-blue/5 text-brand-blue';
+                cashBtn.className = 'app-input flex items-center justify-center gap-2 font-bold text-sm text-gray-500';
+            }
+        }
+
+        // =============================================
+        // FUEL SHEET
+        // =============================================
+        function updateFuelPrice() {
+            const fuelPrices = {
+                'gasoil': 11.93,
+                'sp95': 13.57,
+                'sp98': 14.50,
+                'gpl': 5.50
+            };
+            const type = document.getElementById('fuel-type').value;
+            if(fuelPrices[type]) {
+                document.getElementById('fuel-price-per-l').value = fuelPrices[type];
+            }
+            calcFuelTotal();
+        }
+
+        function calcFuelTotal() {
+            const liters = parseFloat(document.getElementById('fuel-liters').value) || 0;
+            const price = parseFloat(document.getElementById('fuel-price-per-l').value) || 0;
+            const total = liters * price;
+            document.getElementById('fuel-total-display').textContent = total.toFixed(2) + ' MAD';
+        }
+
+        document.getElementById('form-fuel').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const liters = parseFloat(document.getElementById('fuel-liters').value) || 0;
+            const pricePerL = parseFloat(document.getElementById('fuel-price-per-l').value) || 0;
+            const total = liters * pricePerL;
+            const station = document.getElementById('fuel-station').value;
+            const fuelType = document.getElementById('fuel-type').value;
+            appState.expenses.push({
+                id: genId(), type: 'expense', date: new Date().toISOString().slice(0,16),
+                amount: total, category: 'Fuel',
+                notes: `${liters}L ${fuelType} @ ${pricePerL} MAD/L${station ? ' — ' + station : ''}`
+            });
+            saveState(); e.target.reset(); document.getElementById('fuel-total-display').textContent = '0.00 MAD';
+            closeAllSheets(); renderDashboard();
+        });
+
+        // =============================================
+        // NET PREVIEW (real-time)
+        // =============================================
+        ['ride-gross','ride-comm','ride-tip'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateNetPreview);
+        });
+        function updateNetPreview() {
+            const gross = parseFloat(document.getElementById('ride-gross').value) || 0;
+            const comm = parseFloat(document.getElementById('ride-comm').value) || 0;
+            const tip = parseFloat(document.getElementById('ride-tip').value) || 0;
+            const net = gross + tip - comm;
+            document.getElementById('net-preview').textContent = net.toFixed(2) + ' MAD';
+            document.getElementById('net-preview').className = 'text-xl font-black ' + (net >= 0 ? 'text-brand-green' : 'text-brand-red');
+        }
+
+        // =============================================
+        // RAMADAN MODE
+        // =============================================
+        function toggleRamadanMode() {
+            appState.settings.ramadanMode = !appState.settings.ramadanMode;
+            const btn = document.getElementById('ramadan-toggle-btn');
+            const knob = document.getElementById('ramadan-knob');
+            if (appState.settings.ramadanMode) {
+                btn.classList.add('bg-brand-gold');
+                btn.classList.remove('bg-gray-300','dark:bg-dark-700');
+                knob.classList.replace('translate-x-1','translate-x-5');
+                document.getElementById('ramadan-banner').classList.remove('hidden');
+            } else {
+                btn.classList.remove('bg-brand-gold');
+                btn.classList.add('bg-gray-300');
+                knob.classList.replace('translate-x-5','translate-x-1');
+                document.getElementById('ramadan-banner').classList.add('hidden');
+            }
+            saveState();
+        }
+        function dismissRamadan() { document.getElementById('ramadan-banner').classList.add('hidden'); }
+
+        // =============================================
+        // LANGUAGE DROPDOWN
+        // =============================================
+        function toggleLangMenu() {
+            document.getElementById('custom-lang-menu').classList.toggle('hidden');
+            document.getElementById('custom-lang-btn').classList.toggle('active-focus');
+        }
         function selectLang(lang) {
             document.getElementById('custom-lang-text').textContent = langMap[lang];
             toggleLangMenu();
             updateLangMenuChecks(lang);
             changeLanguage(lang);
         }
-        
         function updateLangMenuChecks(activeLang) {
-            const menuItems = document.querySelectorAll('#custom-lang-menu li');
-            const langCodes = ['en', 'fr', 'ar', 'ma'];
-            menuItems.forEach((li, index) => {
-                if(langCodes[index] === activeLang) li.classList.add('selected');
+            document.querySelectorAll('#custom-lang-menu li').forEach((li, i) => {
+                const codes = ['en','fr','ar','ma'];
+                if (codes[i] === activeLang) li.classList.add('selected');
                 else li.classList.remove('selected');
             });
         }
-
-        // Close dropdown if clicked outside
         document.addEventListener('click', (e) => {
             const btn = document.getElementById('custom-lang-btn');
             const menu = document.getElementById('custom-lang-menu');
@@ -672,19 +1184,18 @@
             }
         });
 
-        // --- Theme & Language Logic ---
+        // =============================================
+        // THEME & LANGUAGE
+        // =============================================
         function toggleTheme() {
             const newTheme = appState.settings.theme === 'dark' ? 'light' : 'dark';
             appState.settings.theme = newTheme;
-            saveState();
-            applyTheme(newTheme);
+            saveState(); applyTheme(newTheme);
         }
-
         function applyTheme(theme) {
             const icon = document.getElementById('theme-icon-btn');
             const textEl = document.getElementById('theme-text');
             const langData = i18n[appState.settings.lang];
-            
             if (theme === 'light') {
                 document.documentElement.classList.remove('dark');
                 icon.className = 'fa-solid fa-sun text-lg text-brand-gold transition-transform rotate-180';
@@ -694,133 +1205,610 @@
                 icon.className = 'fa-solid fa-moon text-lg text-brand-blue transition-transform rotate-0';
                 if(textEl && langData) textEl.textContent = langData.darkMode;
             }
-            if(myChart) renderChart(); // Update chart colors
+            if(myChart) renderChart();
         }
-
         function changeLanguage(lang) {
             appState.settings.lang = lang;
-            saveState();
-            applyTranslations(lang);
+            saveState(); applyTranslations(lang);
         }
-
         function applyTranslations(lang) {
-            document.documentElement.lang = lang === 'ma' ? 'ar' : lang; // standard attr
+            document.documentElement.lang = lang === 'ma' ? 'ar' : lang;
             document.documentElement.dir = (lang === 'ar' || lang === 'ma') ? 'rtl' : 'ltr';
-            
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (i18n[lang] && i18n[lang][key]) el.innerHTML = i18n[lang][key];
             });
-            
-            // Sync theme button text explicitly during lang change
             const textEl = document.getElementById('theme-text');
             if(textEl) textEl.textContent = appState.settings.theme === 'light' ? i18n[lang].lightMode : i18n[lang].darkMode;
-
             if(!document.getElementById('view-dashboard').classList.contains('hidden') || !document.getElementById('view-stats').classList.contains('hidden')) renderDashboard();
             renderLedger();
             if(myChart) myChart.update();
         }
 
-        // --- Core Helpers ---
+        // =============================================
+        // CORE HELPERS
+        // =============================================
         function saveState() { localStorage.setItem('indriveProDataMorocco', JSON.stringify(appState)); }
         function genId() { return 'id_' + Math.random().toString(36).substr(2, 9); }
-        function formatMoney(num) { return parseFloat(num).toFixed(2) + ' MAD'; }
-        function isSameDay(d1, d2) { return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate(); }
-
-        // --- Export to CSV ---
-        function exportToCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,Type,Date,Amount,Commission,Distance,Duration,Category,Notes\n";
-            const combined = [...appState.rides, ...appState.expenses].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            combined.forEach(item => {
-                const isRide = item.type === 'ride';
-                const row = [
-                    item.type,
-                    new Date(item.date).toLocaleString(),
-                    isRide ? item.gross : item.amount,
-                    isRide ? item.comm : 0,
-                    isRide ? item.distance : 0,
-                    isRide ? item.duration : 0,
-                    isRide ? 'Ride' : item.category,
-                    `"${item.notes || ''}"`
-                ];
-                csvContent += row.join(",") + "\n";
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `FlousiDrive_Export_${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        function formatMoney(num) { return parseFloat(num || 0).toFixed(2) + ' MAD'; }
+        function formatMoneyShort(num) {
+            const n = parseFloat(num || 0);
+            if (n >= 1000) return (n/1000).toFixed(1) + 'k MAD';
+            return n.toFixed(0) + ' MAD';
+        }
+        function isSameDay(d1, d2) {
+            return d1.getFullYear()===d2.getFullYear() && d1.getMonth()===d2.getMonth() && d1.getDate()===d2.getDate();
         }
 
-        // --- Navigation ---
-        const views = ['dashboard', 'ledger', 'stats', 'settings'];
+        // =============================================
+        // SETTINGS (with `isNaN` fix for accepting '0')
+        // =============================================
+        function applySettingsToUI() {
+            document.getElementById('set-target').value = appState.settings.target;
+            document.getElementById('set-comm').value = appState.settings.commRate;
+            document.getElementById('set-fuel-rate').value = appState.settings.fuelRate;
+            document.getElementById('set-fuel-price').value = appState.settings.fuelPrice;
+            document.getElementById('set-driver-name').value = appState.settings.driverName || '';
+            document.getElementById('set-vehicle').value = appState.settings.vehicle || 'car_mid';
+            document.getElementById('set-platform').value = appState.settings.platform || 'InDrive';
+            document.getElementById('set-weekly-target').value = appState.settings.weeklyTarget || 2000;
+        }
+        
+        function saveSettings() {
+            const t = parseFloat(document.getElementById('set-target').value);
+            appState.settings.target = isNaN(t) ? 300 : t;
+            
+            const c = parseFloat(document.getElementById('set-comm').value);
+            appState.settings.commRate = isNaN(c) ? 20 : c;
+            
+            const fr = parseFloat(document.getElementById('set-fuel-rate').value);
+            appState.settings.fuelRate = isNaN(fr) ? 6.0 : fr;
+            
+            const fp = parseFloat(document.getElementById('set-fuel-price').value);
+            appState.settings.fuelPrice = isNaN(fp) ? 11.93 : fp;
+            
+            const wt = parseFloat(document.getElementById('set-weekly-target').value);
+            appState.settings.weeklyTarget = isNaN(wt) ? 2000 : wt;
+            
+            appState.settings.driverName = document.getElementById('set-driver-name').value;
+            appState.settings.vehicle = document.getElementById('set-vehicle').value;
+            appState.settings.platform = document.getElementById('set-platform').value;
+            
+            saveState(); renderDashboard(); updateActivePlatformBadge();
+            
+            if (appState.settings.driverName) {
+                document.getElementById('header-avatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(appState.settings.driverName)}&background=141B2D&color=fff`;
+            }
+        }
+        
+        function factoryReset() {
+            if(confirm('Are you sure? / Vraiment? / هل أنت متأكد؟')) {
+                localStorage.removeItem('indriveProDataMorocco'); location.reload();
+            }
+        }
+        
+        function autoCalcCommission(rate) {
+            const gross = parseFloat(document.getElementById('ride-gross').value) || 0;
+            // Check if rate is passed strictly as a number, otherwise use global setting
+            const r = (typeof rate === 'number') ? rate : appState.settings.commRate;
+            document.getElementById('ride-comm').value = (gross * (r / 100)).toFixed(2);
+            document.getElementById('comm-hint').textContent = r + '%';
+            updateNetPreview();
+        }
+
+        // =============================================
+        // FORM SUBMISSIONS
+        // =============================================
+        document.getElementById('form-ride').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const ride = {
+                id: genId(), type: 'ride', date: document.getElementById('ride-date').value,
+                gross: parseFloat(document.getElementById('ride-gross').value),
+                comm: parseFloat(document.getElementById('ride-comm').value),
+                tip: parseFloat(document.getElementById('ride-tip').value) || 0,
+                distance: parseFloat(document.getElementById('ride-distance').value),
+                duration: parseFloat(document.getElementById('ride-duration').value),
+                platform: document.getElementById('ride-platform').value || appState.settings.platform,
+                payment: document.getElementById('ride-payment').value
+            };
+            ride.net = ride.gross + ride.tip - ride.comm;
+            appState.rides.push(ride); saveState(); e.target.reset(); closeAllSheets();
+            selectPayment('cash'); // reset payment UI
+            renderDashboard(); if(currentFilter !== 'expense') renderLedger();
+        });
+
+        document.getElementById('form-expense').addEventListener('submit', (e) => {
+            e.preventDefault();
+            appState.expenses.push({
+                id: genId(), type: 'expense', date: document.getElementById('exp-date').value,
+                amount: parseFloat(document.getElementById('exp-amount').value),
+                category: document.getElementById('exp-category').value,
+                notes: document.getElementById('exp-notes').value
+            });
+            saveState(); e.target.reset(); closeAllSheets();
+            renderDashboard(); if(currentFilter !== 'ride') renderLedger();
+        });
+
+        // =============================================
+        // DASHBOARD
+        // =============================================
+        function renderDashboard() {
+            const today = new Date();
+            let dGross=0, dComm=0, dTip=0, dExp=0, dDist=0, dDur=0, dCount=0;
+            appState.rides.forEach(r => {
+                if(isSameDay(new Date(r.date), today)) {
+                    dGross+=r.gross; dComm+=r.comm; dTip+=r.tip;
+                    dDist+=(r.distance || 0); dDur+=(r.duration || 0); dCount++;
+                }
+            });
+            appState.expenses.forEach(e => { if(isSameDay(new Date(e.date), today)) dExp+=e.amount; });
+
+            const totalIncome = dGross + dTip;
+            const netProfit = totalIncome - dComm - dExp;
+            
+            document.getElementById('dash-net').textContent = formatMoney(netProfit);
+            document.getElementById('dash-net').className = `text-4xl font-black bg-clip-text text-transparent tracking-tight ${netProfit >= 0 ? 'bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-300' : 'bg-gradient-to-r from-brand-red to-rose-400'}`;
+            document.getElementById('dash-gross').textContent = formatMoney(totalIncome);
+            document.getElementById('dash-expenses').textContent = formatMoney(dExp);
+            document.getElementById('dash-comm').textContent = formatMoney(dComm);
+            document.getElementById('dash-ride-count').textContent = dCount;
+            document.getElementById('dash-avg-fare').textContent = dCount > 0 ? formatMoney(totalIncome/dCount).replace(' MAD','') + ' avg' : '0 avg';
+
+            // Motivator message
+            const target = appState.settings.target || 1;
+            const pct = (netProfit/target)*100;
+            const lang = appState.settings.lang;
+            let mot = '';
+            if (dCount === 0) mot = lang==='ma'?'صباح الخير سائق 🚗':lang==='ar'?'صباح الخير سائق 🚗':lang==='fr'?"Bonne journée conducteur 🚗":'Good morning driver 🚗';
+            else if (pct >= 100) mot = lang==='ma'?'وصلتي الهدف 🎉':lang==='ar'?'وصلت الهدف 🎉':lang==='fr'?"Objectif atteint 🎉":'Target reached 🎉';
+            else if (pct >= 75) mot = lang==='ma'?'قريب من الهدف 💪':lang==='ar'?'قريب من الهدف 💪':lang==='fr'?"Presque là 💪":'Almost there 💪';
+            else if (pct >= 50) mot = lang==='ma'?'فـ النص، زيد 🔥':lang==='ar'?'في المنتصف، استمر 🔥':lang==='fr'?"À mi-chemin 🔥":'Halfway there 🔥';
+            else mot = lang==='ma'?'زيد التوصيلات 💨':lang==='ar'?'استمر في العمل 💨':lang==='fr'?"Continuez 💨":'Keep going 💨';
+            document.getElementById('dash-motivator').textContent = mot;
+
+            const hrs = dDur / 60;
+            document.getElementById('dash-per-hour').textContent = formatMoney(hrs > 0 ? (netProfit/hrs) : 0);
+            document.getElementById('dash-per-km').textContent = formatMoney(dDist > 0 ? (netProfit/dDist) : 0);
+            document.getElementById('dash-fuel-est').textContent = formatMoney((dDist/100)*appState.settings.fuelRate*appState.settings.fuelPrice);
+
+            // Goal bar
+            const percent = Math.min((netProfit/target)*100, 100);
+            document.getElementById('goal-current').textContent = formatMoney(netProfit);
+            document.getElementById('goal-target').textContent = formatMoney(target);
+            document.getElementById('goal-percent').textContent = `${Math.floor(Math.max(percent,0))}%`;
+            document.getElementById('goal-bar').style.width = `${Math.max(percent,0)}%`;
+            const remaining = target - netProfit;
+            const remEl = document.getElementById('target-remaining');
+            if (remaining > 0 && dCount > 0) {
+                const avgNet = netProfit / dCount;
+                const ridesLeft = avgNet > 0 ? Math.ceil(remaining / avgNet) : '?';
+                const l = appState.settings.lang;
+                remEl.textContent = l==='ma'?`باقي ${ridesLeft} توصيلة`:l==='ar'?`متبقي ${ridesLeft} رحلة`:l==='fr'?`Encore ${ridesLeft} trajet(s)`:`~${ridesLeft} more ride(s) needed`;
+            } else remEl.textContent = '';
+
+            renderChart();
+            renderPlatformPerformance(dCount);
+            renderAllTimeStats();
+            renderExpenseBreakdown();
+            renderPeakHours();
+            renderPlatformBreakdown();
+            renderTipCalc(netProfit, dCount);
+        }
+
+        // =============================================
+        // PLATFORM PERFORMANCE (Today)
+        // =============================================
+        function renderPlatformPerformance(dCount) {
+            if (dCount === 0) { document.getElementById('platform-perf-card').classList.add('hidden'); return; }
+            const today = new Date();
+            const byPlatform = {};
+            appState.rides.filter(r => isSameDay(new Date(r.date), today)).forEach(r => {
+                const p = r.platform || 'InDrive';
+                if (!byPlatform[p]) byPlatform[p] = {count:0, net:0};
+                byPlatform[p].count++;
+                const rNet = r.net !== undefined ? r.net : (r.gross + (r.tip||0) - r.comm);
+                byPlatform[p].net += rNet;
+            });
+            const platforms = Object.keys(byPlatform);
+            if (platforms.length <= 1) { document.getElementById('platform-perf-card').classList.add('hidden'); return; }
+            document.getElementById('platform-perf-card').classList.remove('hidden');
+            document.getElementById('platform-perf-list').innerHTML = platforms.map(p => `
+                <div class="flex justify-between items-center stat-box rounded-xl p-3">
+                    <div class="flex items-center gap-2">
+                        <span class="platform-pill ${getPlatformClass(p)}">${p}</span>
+                        <span class="text-xs text-gray-500">${byPlatform[p].count} rides</span>
+                    </div>
+                    <div class="font-black text-sm ${byPlatform[p].net >= 0 ? 'text-brand-green' : 'text-brand-red'}" dir="ltr">${formatMoney(byPlatform[p].net)}</div>
+                </div>`).join('');
+        }
+
+        // =============================================
+        // ALL-TIME STATS
+        // =============================================
+        function renderAllTimeStats() {
+            const totalRides = appState.rides.length;
+            let totalEarned = 0, totalKm = 0, totalDur = 0;
+            
+            appState.rides.forEach(r => {
+                totalEarned += r.net !== undefined ? r.net : (r.gross + (r.tip||0) - r.comm);
+                totalKm += r.distance || 0;
+                totalDur += r.duration || 0;
+            });
+            
+            const totalExp = appState.expenses.reduce((s,e) => s + e.amount, 0);
+            const netAll = totalEarned - totalExp;
+
+            // Best day
+            const byDay = {};
+            appState.rides.forEach(r => {
+                const d = new Date(r.date).toDateString();
+                if(!byDay[d]) byDay[d] = 0;
+                byDay[d] += r.net !== undefined ? r.net : (r.gross + (r.tip||0) - r.comm);
+            });
+            appState.expenses.forEach(e => {
+                const d = new Date(e.date).toDateString();
+                if(!byDay[d]) byDay[d] = 0;
+                byDay[d] -= e.amount;
+            });
+            const bestDay = Object.values(byDay).length ? Math.max(...Object.values(byDay)) : 0;
+
+            document.getElementById('stat-total-rides').textContent = totalRides;
+            document.getElementById('stat-total-earned').textContent = formatMoneyShort(netAll);
+            document.getElementById('stat-total-km').textContent = Math.round(totalKm) + ' km';
+            document.getElementById('stat-best-day').textContent = formatMoneyShort(bestDay);
+
+            const hrs = totalDur / 60;
+            document.getElementById('stat-per-hour').textContent = formatMoney(hrs > 0 ? (netAll/hrs) : 0);
+            document.getElementById('stat-per-km').textContent = formatMoney(totalKm > 0 ? (netAll/totalKm) : 0);
+            document.getElementById('stat-fuel-est').textContent = formatMoney((totalKm/100)*appState.settings.fuelRate*appState.settings.fuelPrice);
+        }
+
+        // =============================================
+        // EXPENSE BREAKDOWN
+        // =============================================
+        function renderExpenseBreakdown() {
+            const byCat = {};
+            appState.expenses.forEach(e => {
+                byCat[e.category] = (byCat[e.category] || 0) + e.amount;
+            });
+            const total = Object.values(byCat).reduce((a,b) => a+b, 0);
+            const el = document.getElementById('expense-breakdown-list');
+            if (Object.keys(byCat).length === 0) {
+                el.innerHTML = `<div class="text-center text-gray-400 text-sm py-4">No expenses yet</div>`;
+                return;
+            }
+            el.innerHTML = Object.entries(byCat).sort((a,b) => b[1]-a[1]).map(([cat, amt]) => {
+                const pct = total > 0 ? (amt/total*100).toFixed(0) : 0;
+                
+                // Translate category names if needed based on language
+                let displayCat = cat;
+                if(appState.settings.lang==='ma') {
+                    const maCats = {'Fuel':'مازوط','Wash':'غسيل','Maintenance':'ميكانيك','Tolls':'بياج','Food':'ماكلة','Mobile':'تعبئة','Insurance':'تأمين','Vignette':'ڤينيت','Visite':'فيزيت','Other':'أخرى'};
+                    displayCat = maCats[cat]||cat;
+                } else if (appState.settings.lang==='ar') {
+                    const arCats = {'Fuel':'وقود','Wash':'غسيل','Maintenance':'صيانة','Tolls':'رسوم طرق','Food':'طعام','Mobile':'اتصالات','Insurance':'تأمين','Vignette':'وثيقة','Visite':'فحص','Other':'أخرى'};
+                    displayCat = arCats[cat]||cat;
+                } else if (appState.settings.lang==='fr') {
+                    const frCats = {'Fuel':'Carburant','Wash':'Lavage','Maintenance':'Entretien','Tolls':'Péage','Food':'Repas','Mobile':'Forfait','Insurance':'Assurance','Vignette':'Vignette','Visite':'Visite Tech.','Other':'Autre'};
+                    displayCat = frCats[cat]||cat;
+                }
+                
+                return `<div>
+                    <div class="flex justify-between items-center mb-1">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid ${catIcons[cat]||'fa-receipt'} text-brand-red text-xs w-4"></i>
+                            <span class="text-xs font-bold text-gray-700 dark:text-gray-300">${displayCat}</span>
+                        </div>
+                        <div class="text-xs font-black text-gray-900 dark:text-white" dir="ltr">${formatMoney(amt)} <span class="text-gray-400 font-medium">(${pct}%)</span></div>
+                    </div>
+                    <div class="w-full stat-box rounded-full h-1.5"><div class="bg-brand-red h-1.5 rounded-full" style="width:${pct}%"></div></div>
+                </div>`;
+            }).join('');
+        }
+
+        // =============================================
+        // PEAK HOURS
+        // =============================================
+        function renderPeakHours() {
+            const hourCounts = new Array(24).fill(0);
+            const hourNets = new Array(24).fill(0);
+            appState.rides.forEach(r => {
+                const h = new Date(r.date).getHours();
+                hourCounts[h]++;
+                hourNets[h] += r.net !== undefined ? r.net : (r.gross + (r.tip||0) - r.comm);
+            });
+            // Show 6h to 5h (24 segments) — but only 12 buckets of 2h each
+            const buckets = [];
+            for (let i = 0; i < 12; i++) {
+                const h1 = (6 + i*2) % 24, h2 = (7 + i*2) % 24;
+                buckets.push({ hour: (6+i*2)%24, net: (hourNets[h1]||0)+(hourNets[h2]||0), count: (hourCounts[h1]||0)+(hourCounts[h2]||0) });
+            }
+            const maxNet = Math.max(...buckets.map(b => b.net), 1);
+            const container = document.getElementById('peak-hours-chart');
+            container.innerHTML = buckets.map(b => {
+                const h = b.hour;
+                const pct = Math.max((b.net/maxNet)*100, 4);
+                const color = b.net > maxNet*0.7 ? 'bg-brand-green' : b.net > maxNet*0.3 ? 'bg-brand-gold' : 'bg-gray-300 dark:bg-dark-800';
+                return `<div class="flex flex-col items-center gap-0.5 flex-1" title="${h}h: ${b.count} rides, ${b.net.toFixed(0)} MAD">
+                    <div class="w-full ${color} rounded-t" style="height:${pct}%"></div>
+                </div>`;
+            }).join('');
+
+            // Best hour tip
+            const best = buckets.reduce((a,b) => b.net > a.net ? b : a, {net:0, hour:0});
+            const tipEl = document.getElementById('peak-hour-tip');
+            if (best.count > 0) {
+                const lang = appState.settings.lang;
+                const h = best.hour;
+                tipEl.textContent = lang==='ma'?`أحسن وقت ديالك: ${h}h-${h+2}h 🏆`:lang==='ar'?`أفضل وقتك: ${h}h-${h+2}h 🏆`:lang==='fr'?`Votre meilleure heure: ${h}h-${h+2}h 🏆`:`Your best hours: ${h}h-${h+2}h 🏆`;
+            } else {
+                tipEl.textContent = 'Log more rides to see your peak hours!';
+            }
+        }
+
+        // =============================================
+        // PLATFORM BREAKDOWN (All-time)
+        // =============================================
+        function renderPlatformBreakdown() {
+            const byPlatform = {};
+            appState.rides.forEach(r => {
+                const p = r.platform || 'InDrive';
+                if (!byPlatform[p]) byPlatform[p] = {count:0, net:0, dist:0};
+                byPlatform[p].count++;
+                byPlatform[p].net += r.net !== undefined ? r.net : (r.gross + (r.tip||0) - r.comm);
+                byPlatform[p].dist += r.distance || 0;
+            });
+            const el = document.getElementById('platform-breakdown-list');
+            if (!Object.keys(byPlatform).length) {
+                el.innerHTML = `<div class="text-center text-gray-400 text-sm py-4">No rides yet</div>`;
+                return;
+            }
+            const totalNet = Math.max(Object.values(byPlatform).reduce((s,p) => s+p.net, 0), 1);
+            el.innerHTML = Object.entries(byPlatform).sort((a,b) => b[1].net-a[1].net).map(([name, data]) => {
+                const pct = (data.net/totalNet*100).toFixed(0);
+                const avgPerRide = data.count > 0 ? (data.net/data.count).toFixed(0) : 0;
+                return `<div>
+                    <div class="flex justify-between items-center mb-1">
+                        <div class="flex items-center gap-2">
+                            <span class="platform-pill ${getPlatformClass(name)}">${name}</span>
+                            <span class="text-[10px] text-gray-500">${data.count} rides • ${avgPerRide} MAD/ride</span>
+                        </div>
+                        <div class="text-sm font-black text-gray-900 dark:text-white" dir="ltr">${formatMoneyShort(data.net)}</div>
+                    </div>
+                    <div class="w-full stat-box rounded-full h-1.5"><div class="bg-brand-blue h-1.5 rounded-full" style="width:${pct}%"></div></div>
+                </div>`;
+            }).join('');
+        }
+
+        // =============================================
+        // TIP CALCULATOR
+        // =============================================
+        function renderTipCalc(netToday, ridesCount) {
+            const target = appState.settings.target || 1;
+            const remaining = target - netToday;
+            const avgNet = ridesCount > 0 ? (netToday / ridesCount) : 0;
+            const el = document.getElementById('tip-rides-needed');
+            const desc = document.getElementById('tip-rides-desc');
+            if (remaining <= 0) {
+                el.textContent = '✅';
+                const l = appState.settings.lang;
+                desc.textContent = l==='ma'?`وصلتي الهدف! 🎉`:l==='ar'?`وصلت الهدف! 🎉`:l==='fr'?'Objectif atteint! 🎉':'Target reached! 🎉';
+            } else if (avgNet <= 0) {
+                el.textContent = '—';
+                desc.textContent = 'Log rides to calculate';
+            } else {
+                const rides = Math.ceil(remaining / avgNet);
+                el.textContent = rides;
+                const l = appState.settings.lang;
+                desc.textContent = l==='ma'?`بمعدل ${avgNet.toFixed(0)} MAD للتوصيلة`:l==='ar'?`بمعدل ${avgNet.toFixed(0)} MAD للرحلة`:l==='fr'?`Moy. ${avgNet.toFixed(0)} MAD/trajet`:`Avg ${avgNet.toFixed(0)} MAD/ride`;
+            }
+        }
+
+        // =============================================
+        // CHART
+        // =============================================
+        function renderChart() {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            const labels=[], incomeData=[], expenseData=[];
+            for (let i=6; i>=0; i--) {
+                const d = new Date(); d.setDate(d.getDate()-i);
+                const locale = (appState.settings.lang==='ar'||appState.settings.lang==='ma') ? 'ar-MA' : 'en-US';
+                labels.push(d.toLocaleDateString(locale,{weekday:'short'}));
+                let dayInc=0, dayExp=0;
+                appState.rides.forEach(r => { if(isSameDay(new Date(r.date),d)) dayInc+=(r.net !== undefined ? r.net : (r.gross+r.tip-r.comm)); });
+                appState.expenses.forEach(e => { if(isSameDay(new Date(e.date),d)) dayExp+=e.amount; });
+                incomeData.push(dayInc); expenseData.push(dayExp);
+            }
+            if (myChart) myChart.destroy();
+            let gradientInc = ctx.createLinearGradient(0,0,0,300);
+            gradientInc.addColorStop(0,'rgba(16,185,129,0.9)'); gradientInc.addColorStop(1,'rgba(16,185,129,0.2)');
+            const isDark = appState.settings.theme === 'dark';
+            const langData = i18n[appState.settings.lang];
+            myChart = new Chart(ctx, {
+                type:'bar',
+                data:{ labels, datasets:[
+                    {label:langData.netEarnings, data:incomeData, backgroundColor:gradientInc, borderRadius:6, barPercentage:0.6},
+                    {label:langData.totalExpenses, data:expenseData, backgroundColor:'rgba(244,63,94,0.9)', borderRadius:6, barPercentage:0.6}
+                ]},
+                options:{
+                    responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
+                    plugins:{
+                        legend:{display:false},
+                        tooltip:{
+                            backgroundColor: isDark?'rgba(11,16,30,0.95)':'rgba(255,255,255,0.95)',
+                            titleColor: isDark?'#9ca3af':'#6b7280',
+                            bodyColor: isDark?'#ffffff':'#111827',
+                            borderColor: isDark?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.1)',
+                            borderWidth:1, padding:12, cornerRadius:8
+                        }
+                    },
+                    scales:{
+                        y:{beginAtZero:true, grid:{color:isDark?'rgba(255,255,255,0.03)':'rgba(0,0,0,0.03)', drawBorder:false}, ticks:{color:isDark?'#64748b':'#9ca3af'}},
+                        x:{grid:{display:false, drawBorder:false}, ticks:{color:isDark?'#94a3b8':'#6b7280'}}
+                    }
+                }
+            });
+        }
+
+        // =============================================
+        // LEDGER
+        // =============================================
+        function filterLedger(type) {
+            currentFilter = type;
+            ['all','ride','expense'].forEach(t => {
+                const btn = document.getElementById(`btn-filter-${t}`);
+                if(t===type) btn.className = "px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-brand-blue text-white transition-all whitespace-nowrap shadow-lg shadow-brand-blue/20";
+                else btn.className = "px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-brand-blue transition-all whitespace-nowrap border border-gray-200 dark:border-white/5 shadow-sm";
+            });
+            renderLedger();
+        }
+
+        function deleteEntry(id, type) {
+            if(confirm('Delete? / Supprimer? / تمسح؟')) {
+                if(type==='ride') appState.rides = appState.rides.filter(r => r.id !== id);
+                else appState.expenses = appState.expenses.filter(e => e.id !== id);
+                saveState(); renderLedger(); renderDashboard();
+            }
+        }
+
+        function renderLedger() {
+            const listEl = document.getElementById('ledger-list');
+            listEl.innerHTML = '';
+            const langData = i18n[appState.settings.lang];
+            let combined = [];
+            if(currentFilter==='all'||currentFilter==='ride') combined.push(...appState.rides);
+            if(currentFilter==='all'||currentFilter==='expense') combined.push(...appState.expenses);
+            combined.sort((a,b) => new Date(b.date)-new Date(a.date));
+
+            if (combined.length === 0) {
+                listEl.innerHTML = `<div class="flex flex-col items-center justify-center py-24 text-gray-400"><i class="fa-solid fa-folder-open text-5xl mb-4 opacity-40"></i><p class="font-medium tracking-wide">${langData.noData}</p></div>`;
+                return;
+            }
+
+            combined.forEach((item, index) => {
+                const d = new Date(item.date);
+                const locale = (appState.settings.lang==='ar'||appState.settings.lang==='ma') ? 'ar-MA' : 'en-US';
+                const timeStr = d.toLocaleTimeString(locale,{hour:'2-digit',minute:'2-digit'});
+                const dateStr = d.toLocaleDateString(locale,{month:'short',day:'numeric'});
+                const isRide = item.type === 'ride';
+                const iconColor = isRide ? 'text-brand-green' : 'text-brand-red';
+                const iconBg = isRide ? 'bg-brand-green/10' : 'bg-brand-red/10';
+                const iconClass = !isRide ? (catIcons[item.category]||'fa-receipt') : 'fa-car';
+                let displayTitle = isRide ? langData.rideTitle : item.category;
+                if(!isRide && appState.settings.lang==='ma') {
+                    const maCats = {'Fuel':'مازوط','Wash':'غسيل','Maintenance':'ميكانيك','Tolls':'بياج','Food':'ماكلة','Mobile':'تعبئة','Insurance':'تأمين','Vignette':'ڤينيت','Visite':'فيزيت','Other':'أخرى'};
+                    displayTitle = maCats[item.category]||item.category;
+                } else if (!isRide && appState.settings.lang==='ar') {
+                    const arCats = {'Fuel':'وقود','Wash':'غسيل','Maintenance':'صيانة','Tolls':'رسوم طرق','Food':'طعام','Mobile':'اتصالات','Insurance':'تأمين','Vignette':'وثيقة','Visite':'فحص','Other':'أخرى'};
+                    displayTitle = arCats[item.category]||item.category;
+                } else if (!isRide && appState.settings.lang==='fr') {
+                    const frCats = {'Fuel':'Carburant','Wash':'Lavage','Maintenance':'Entretien','Tolls':'Péage','Food':'Repas','Mobile':'Forfait','Insurance':'Assurance','Vignette':'Vignette','Visite':'Visite Tech.','Other':'Autre'};
+                    displayTitle = frCats[item.category]||item.category;
+                }
+                const mainAmt = isRide ? (item.net !== undefined ? item.net : item.gross + (item.tip||0) - item.comm) : item.amount;
+                const platformBadge = isRide && item.platform ? `<span class="platform-pill ${getPlatformClass(item.platform)}">${item.platform}</span>` : '';
+                const payBadge = isRide && item.payment ? `<span class="text-[9px] text-gray-400 font-bold">${item.payment==='cash'?'💵':'📱'}</span>` : '';
+                const subText = isRide ? `${item.distance}km • ${item.duration}min` : (item.notes || (appState.settings.lang==='ma'||appState.settings.lang==='ar'?'مصروف':'Expense'));
+                const delay = Math.min(index*0.05,0.5);
+
+                listEl.insertAdjacentHTML('beforeend', `
+                    <div class="glass-card rounded-[1.5rem] p-4 flex justify-between items-center group relative overflow-hidden opacity-0 animate-slide-up" style="animation-delay:${delay}s" dir="${(appState.settings.lang==='ar'||appState.settings.lang==='ma')?'rtl':'ltr'}">
+                        ${isRide?`<div class="absolute top-0 start-0 w-1.5 h-full bg-brand-green"></div>`:`<div class="absolute top-0 start-0 w-1.5 h-full bg-brand-red"></div>`}
+                        <div class="flex items-center gap-4 ps-2">
+                            <div class="w-11 h-11 rounded-2xl ${iconBg} flex items-center justify-center ${iconColor} text-base shadow-inner">
+                                <i class="fa-solid ${iconClass}"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2 mb-0.5">
+                                    <h4 class="font-bold text-gray-900 dark:text-gray-100 text-sm tracking-wide">${displayTitle}</h4>
+                                    ${platformBadge} ${payBadge}
+                                </div>
+                                <div class="text-[10px] text-gray-500 font-medium mb-1" dir="ltr">${dateStr} • ${timeStr}</div>
+                                <div class="text-[10px] text-gray-600 dark:text-gray-400 stat-box px-2 py-0.5 rounded-md inline-block" dir="auto">${subText}</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end justify-center pe-1">
+                            <div class="font-black text-base tracking-tight ${iconColor}" dir="ltr">${isRide?'+':'-'}${formatMoney(mainAmt)}</div>
+                            ${isRide?`<div class="text-[10px] text-gray-500 mt-0.5 font-medium" dir="ltr">${langData.gross}: ${formatMoney(item.gross)}</div>`:''}
+                            <button onclick="deleteEntry('${item.id}','${item.type}')" class="mt-2 stat-box w-7 h-7 rounded-full flex items-center justify-center text-gray-500 hover:text-brand-red hover:bg-brand-red/10 transition-colors shadow-inner">
+                                <i class="fa-solid fa-trash text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>`);
+            });
+        }
+
+        // =============================================
+        // NAVIGATION
+        // =============================================
+        const views = ['dashboard','ledger','stats','settings'];
         function navigate(targetId) {
             views.forEach(v => {
                 document.getElementById(`view-${v}`).classList.add('hidden');
                 document.getElementById(`view-${v}`).classList.remove('animate-fade-in');
-                const navBtn = document.getElementById(`nav-${v}`);
-                navBtn.classList.remove('text-brand-blue', 'bg-brand-blue/15');
-                navBtn.classList.add('text-gray-500');
+                const nav = document.getElementById(`nav-${v}`);
+                nav.classList.remove('text-brand-blue','bg-brand-blue/15');
+                nav.classList.add('text-gray-500');
             });
-            
             const targetView = document.getElementById(`view-${targetId}`);
             targetView.classList.remove('hidden');
             targetView.classList.add('animate-fade-in');
-            
             const activeNav = document.getElementById(`nav-${targetId}`);
             activeNav.classList.remove('text-gray-500');
-            activeNav.classList.add('text-brand-blue', 'bg-brand-blue/15');
-            
-            if (targetId === 'dashboard' || targetId === 'stats') renderDashboard();
-            if (targetId === 'ledger') renderLedger();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            activeNav.classList.add('text-brand-blue','bg-brand-blue/15');
+            if (targetId==='dashboard'||targetId==='stats') renderDashboard();
+            if (targetId==='ledger') renderLedger();
+            window.scrollTo({top:0, behavior:'smooth'});
         }
 
-        // --- Modals ---
+        // =============================================
+        // SHEETS & MODALS
+        // =============================================
         function openActionMenu() { openSheet('sheet-action'); }
         function openSheet(sheetId) {
             closeAllSheets();
             setFormDates();
             document.getElementById('modal-overlay').classList.add('active');
             setTimeout(() => document.getElementById(sheetId).classList.add('active'), 10);
-            if(sheetId === 'sheet-ride') document.getElementById('comm-hint').textContent = `${appState.settings.commRate}%`;
+            if(sheetId==='sheet-ride') {
+                document.getElementById('comm-hint').textContent = `${appState.settings.commRate}%`;
+                selectRidePlatform(appState.settings.platform || 'InDrive');
+            }
         }
         function closeAllSheets() {
-            document.querySelectorAll('.bottom-sheet').forEach(sheet => sheet.classList.remove('active'));
+            document.querySelectorAll('.bottom-sheet').forEach(s => s.classList.remove('active'));
             document.getElementById('modal-overlay').classList.remove('active');
         }
         function setFormDates() {
             const now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            now.setMinutes(now.getMinutes()-now.getTimezoneOffset());
             const iso = now.toISOString().slice(0,16);
             document.getElementById('ride-date').value = iso;
             document.getElementById('exp-date').value = iso;
         }
         function updateHeaderDate() {
-            const options = { weekday: 'long', month: 'short', day: 'numeric' };
-            const locale = (appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'ar-MA' : (appState.settings.lang === 'fr' ? 'fr-FR' : 'en-US');
-            document.getElementById('header-date').textContent = new Date().toLocaleDateString(locale, options);
+            const options = {weekday:'long', month:'short', day:'numeric'};
+            const locale = (appState.settings.lang==='ar'||appState.settings.lang==='ma') ? 'ar-MA' : (appState.settings.lang==='fr'?'fr-FR':'en-US');
+            document.getElementById('header-date').textContent = new Date().toLocaleDateString(locale,options);
         }
 
-        // --- Shift Management ---
+        // =============================================
+        // SHIFT
+        // =============================================
         function toggleShift() {
             const knob = document.getElementById('shift-knob');
             const toggle = document.getElementById('shift-toggle');
             if(appState.shift.isActive) {
                 appState.shift.isActive = false; appState.shift.startTime = null;
                 clearInterval(shiftInterval);
-                knob.classList.replace('translate-x-6', 'translate-x-1');
-                toggle.classList.replace('bg-brand-blue', 'bg-gray-300');
-                if(document.documentElement.classList.contains('dark')) toggle.classList.replace('bg-brand-blue', 'bg-dark-700');
+                knob.classList.replace('translate-x-6','translate-x-1');
+                toggle.classList.replace('bg-brand-blue','bg-gray-300');
+                if(document.documentElement.classList.contains('dark')) toggle.classList.replace('bg-brand-blue','bg-dark-700');
                 document.getElementById('shift-banner').classList.add('hidden');
             } else {
                 appState.shift.isActive = true; appState.shift.startTime = Date.now();
-                knob.classList.replace('translate-x-1', 'translate-x-6');
-                toggle.classList.remove('bg-gray-300', 'bg-dark-700');
+                knob.classList.replace('translate-x-1','translate-x-6');
+                toggle.classList.remove('bg-gray-300','bg-dark-700');
                 toggle.classList.add('bg-brand-blue');
                 document.getElementById('shift-banner').classList.remove('hidden');
                 startShiftTimer();
@@ -831,8 +1819,8 @@
             const knob = document.getElementById('shift-knob');
             const toggle = document.getElementById('shift-toggle');
             if(appState.shift.isActive) {
-                knob.classList.replace('translate-x-1', 'translate-x-6');
-                toggle.classList.remove('bg-gray-300', 'bg-dark-700');
+                knob.classList.replace('translate-x-1','translate-x-6');
+                toggle.classList.remove('bg-gray-300','bg-dark-700');
                 toggle.classList.add('bg-brand-blue');
                 document.getElementById('shift-banner').classList.remove('hidden');
                 startShiftTimer();
@@ -841,237 +1829,294 @@
         function startShiftTimer() {
             clearInterval(shiftInterval);
             shiftInterval = setInterval(() => {
-                const totalSecs = appState.shift.totalSecondsToday + Math.floor((Date.now() - appState.shift.startTime) / 1000);
-                const h = String(Math.floor(totalSecs / 3600)).padStart(2, '0');
-                const m = String(Math.floor((totalSecs % 3600) / 60)).padStart(2, '0');
-                const s = String(totalSecs % 60).padStart(2, '0');
+                const totalSecs = appState.shift.totalSecondsToday + Math.floor((Date.now()-appState.shift.startTime)/1000);
+                const h = String(Math.floor(totalSecs/3600)).padStart(2,'0');
+                const m = String(Math.floor((totalSecs%3600)/60)).padStart(2,'0');
+                const s = String(totalSecs%60).padStart(2,'0');
                 document.getElementById('shift-timer').textContent = `${h}:${m}:${s}`;
             }, 1000);
         }
 
-        // --- Settings ---
-        function applySettingsToUI() {
-            document.getElementById('set-target').value = appState.settings.target;
-            document.getElementById('set-comm').value = appState.settings.commRate;
-            document.getElementById('set-fuel-rate').value = appState.settings.fuelRate;
-            document.getElementById('set-fuel-price').value = appState.settings.fuelPrice;
-        }
-        function saveSettings() {
-            appState.settings.target = parseFloat(document.getElementById('set-target').value) || 300;
-            appState.settings.commRate = parseFloat(document.getElementById('set-comm').value) || 10;
-            appState.settings.fuelRate = parseFloat(document.getElementById('set-fuel-rate').value) || 6.0;
-            appState.settings.fuelPrice = parseFloat(document.getElementById('set-fuel-price').value) || 13.50;
-            saveState(); renderDashboard();
-        }
-        function factoryReset() {
-            if(confirm('Are you sure? / Vraiment? / هل أنت متأكد؟')) {
-                localStorage.removeItem('indriveProDataMorocco'); location.reload();
+        // =============================================
+        // LIVE DATA APIs
+        // =============================================
+
+        // City coordinates map for Morocco cities
+        const cityCoords = {
+            'Casa': { lat: 33.5731, lon: -7.5898, name: 'Casablanca' },
+            'Rabat': { lat: 33.9716, lon: -6.8498, name: 'Rabat' },
+            'Marrakech': { lat: 31.6295, lon: -7.9811, name: 'Marrakech' },
+            'Fès': { lat: 34.0181, lon: -5.0078, name: 'Fès' },
+            'Tanger': { lat: 35.7672, lon: -5.7997, name: 'Tanger' },
+            'Agadir': { lat: 30.4278, lon: -9.5981, name: 'Agadir' },
+            'Meknès': { lat: 33.8935, lon: -5.5547, name: 'Meknès' },
+            'Oujda': { lat: 34.6815, lon: -1.9086, name: 'Oujda' },
+            'Tétouan': { lat: 35.5785, lon: -5.3684, name: 'Tétouan' },
+            'Kenitra': { lat: 34.2610, lon: -6.5802, name: 'Kénitra' },
+            'Safi': { lat: 32.2994, lon: -9.2372, name: 'Safi' },
+            'El Jadida': { lat: 33.2316, lon: -8.5007, name: 'El Jadida' },
+            'Béni Mellal': { lat: 32.3373, lon: -6.3498, name: 'Béni Mellal' },
+            'Nador': { lat: 35.1681, lon: -2.9287, name: 'Nador' }
+        };
+
+        const weatherCodes = {
+            0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',
+            51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',
+            71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',
+            95:'⛈️',96:'⛈️',99:'⛈️'
+        };
+        const weatherDescs = {
+            0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',48:'Icy fog',
+            51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',
+            71:'Light snow',73:'Snow',75:'Heavy snow',80:'Showers',81:'Rain showers',82:'Violent showers',
+            95:'Thunderstorm',96:'Thunderstorm+hail',99:'Severe thunderstorm'
+        };
+
+        let liveDataFetched = false;
+
+        async function fetchWeather(city) {
+            const coords = cityCoords[city] || cityCoords['Casa'];
+            try {
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=Africa%2FCasablanca`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('Weather fetch failed');
+                const data = await res.json();
+                const c = data.current;
+                const icon = weatherCodes[c.weather_code] || '🌡️';
+                const desc = weatherDescs[c.weather_code] || 'Unknown';
+                document.getElementById('weather-icon').textContent = icon;
+                document.getElementById('weather-temp').textContent = `${Math.round(c.temperature_2m)}°C`;
+                document.getElementById('weather-desc').textContent = desc;
+                document.getElementById('weather-humidity').textContent = `${c.relative_humidity_2m}%`;
+                document.getElementById('weather-wind').textContent = `Wind: ${Math.round(c.wind_speed_10m)} km/h`;
+                document.getElementById('weather-city-label').textContent = `Weather — ${coords.name}`;
+            } catch(e) {
+                document.getElementById('weather-desc').textContent = 'Unavailable';
             }
         }
-        function autoCalcCommission() {
-            const gross = parseFloat(document.getElementById('ride-gross').value) || 0;
-            document.getElementById('ride-comm').value = (gross * (appState.settings.commRate / 100)).toFixed(2);
+
+        async function fetchExchangeRate() {
+            try {
+                // Using open exchange rates (no key needed for USD base basic)
+                const res = await fetch('https://open.er-api.com/v6/latest/USD');
+                if (!res.ok) throw new Error('FX fetch failed');
+                const data = await res.json();
+                const mad = data.rates && data.rates.MAD;
+                if (mad) {
+                    document.getElementById('live-usd-mad').textContent = `1 USD = ${mad.toFixed(2)} MAD`;
+                    document.getElementById('live-fx-updated').textContent = `Updated: ${new Date(data.time_last_update_unix*1000).toLocaleDateString()}`;
+                } else {
+                    throw new Error('No MAD rate');
+                }
+            } catch(e) {
+                document.getElementById('live-usd-mad').textContent = '≈ 9.98 MAD';
+                document.getElementById('live-fx-updated').textContent = 'Rate unavailable';
+            }
         }
 
-        // --- Form Submissions ---
-        document.getElementById('form-ride').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const ride = {
-                id: genId(), type: 'ride', date: document.getElementById('ride-date').value,
-                gross: parseFloat(document.getElementById('ride-gross').value), comm: parseFloat(document.getElementById('ride-comm').value),
-                tip: parseFloat(document.getElementById('ride-tip').value) || 0, distance: parseFloat(document.getElementById('ride-distance').value),
-                duration: parseFloat(document.getElementById('ride-duration').value)
-            };
-            ride.net = ride.gross + ride.tip - ride.comm;
-            appState.rides.push(ride); saveState(); e.target.reset(); closeAllSheets();
-            if(!document.getElementById('view-dashboard').classList.contains('hidden') || !document.getElementById('view-stats').classList.contains('hidden')) renderDashboard();
-            else renderLedger();
-        });
-
-        document.getElementById('form-expense').addEventListener('submit', (e) => {
-            e.preventDefault();
-            appState.expenses.push({
-                id: genId(), type: 'expense', date: document.getElementById('exp-date').value,
-                amount: parseFloat(document.getElementById('exp-amount').value), category: document.getElementById('exp-category').value,
-                notes: document.getElementById('exp-notes').value
-            });
-            saveState(); e.target.reset(); closeAllSheets();
-            if(!document.getElementById('view-dashboard').classList.contains('hidden') || !document.getElementById('view-stats').classList.contains('hidden')) renderDashboard();
-            else renderLedger();
-        });
-
-        // --- Dashboard & Analytics ---
-        function renderDashboard() {
-            const today = new Date();
-            let dGross = 0, dComm = 0, dTip = 0, dExp = 0, dDist = 0, dDur = 0, dCount = 0;
-
-            appState.rides.forEach(r => {
-                if (isSameDay(new Date(r.date), today)) { dGross+=r.gross; dComm+=r.comm; dTip+=r.tip; dDist+=r.distance; dDur+=r.duration; dCount++; }
-            });
-            appState.expenses.forEach(e => { if (isSameDay(new Date(e.date), today)) dExp+=e.amount; });
-
-            const totalIncome = dGross + dTip; const netProfit = totalIncome - dComm - dExp;
-            
-            document.getElementById('dash-net').textContent = formatMoney(netProfit);
-            document.getElementById('dash-net').className = `text-4xl font-black bg-clip-text text-transparent tracking-tight ${netProfit >= 0 ? 'bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-300' : 'bg-gradient-to-r from-brand-red to-rose-400'}`;
-            document.getElementById('dash-gross').textContent = formatMoney(totalIncome);
-            document.getElementById('dash-expenses').textContent = formatMoney(dExp + dComm);
-            document.getElementById('dash-ride-count').textContent = dCount;
-
-            const hrs = dDur / 60;
-            document.getElementById('dash-per-hour').textContent = formatMoney(hrs > 0 ? (netProfit / hrs) : 0);
-            document.getElementById('dash-per-km').textContent = formatMoney(dDist > 0 ? (netProfit / dDist) : 0);
-            document.getElementById('dash-fuel-est').textContent = formatMoney((dDist / 100) * appState.settings.fuelRate * appState.settings.fuelPrice);
-
-            const target = appState.settings.target;
-            const percent = Math.min((netProfit / target) * 100, 100);
-            document.getElementById('goal-current').textContent = formatMoney(netProfit);
-            document.getElementById('goal-target').textContent = formatMoney(target);
-            document.getElementById('goal-percent').textContent = `${Math.floor(Math.max(percent, 0))}%`;
-            document.getElementById('goal-bar').style.width = `${Math.max(percent, 0)}%`;
-
-            renderChart();
+        function setFuelCardLoading(isLoading) {
+            const icon = document.getElementById('fuel-loading-icon');
+            const badge = document.getElementById('fuel-updated');
+            if (isLoading) {
+                icon.className = 'fa-solid fa-spinner fa-spin me-1';
+                badge.style.background = 'rgba(100,116,139,0.15)';
+                badge.style.color = '#94a3b8';
+                badge.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i>Fetching...';
+            }
         }
 
-        // --- Chart Logic ---
-        function renderChart() {
-            const ctx = document.getElementById('mainChart').getContext('2d');
-            const labels = [], incomeData = [], expenseData = [];
-            
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date(); d.setDate(d.getDate() - i);
-                const locale = (appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'ar-MA' : 'en-US';
-                labels.push(d.toLocaleDateString(locale, { weekday: 'short' }));
-                
-                let dayInc = 0, dayExp = 0;
-                appState.rides.forEach(r => { if (isSameDay(new Date(r.date), d)) dayInc += (r.gross + r.tip - r.comm); });
-                appState.expenses.forEach(e => { if (isSameDay(new Date(e.date), d)) dayExp += e.amount; });
-                incomeData.push(dayInc); expenseData.push(dayExp);
+        function setFuelCardValues(gasoilVal, sp95Val, tipText) {
+            // Update the main fuel price card
+            const gasoilEl = document.getElementById('fuel-gasoil');
+            const essenceEl = document.getElementById('fuel-essence');
+            const badgeEl = document.getElementById('fuel-updated');
+            const noteEl = document.getElementById('fuel-source-note');
+
+            gasoilEl.textContent = gasoilVal + ' MAD/L';
+            essenceEl.textContent = sp95Val + ' MAD/L';
+
+            // Green live badge
+            badgeEl.innerHTML = '🟢 AI Live';
+            badgeEl.style.background = 'rgba(16,185,129,0.15)';
+            badgeEl.style.color = '#10B981';
+
+            // Note below
+            const now = new Date();
+            noteEl.textContent = `AI-fetched · ${now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+
+            // Update the Live Data card mini display too
+            const liveEl = document.getElementById('live-fuel-ai');
+            if (liveEl) liveEl.innerHTML = `🟡 <strong>${gasoilVal}</strong> MAD/L<br>🔴 <strong>${sp95Val}</strong> MAD/L`;
+
+            // Update fuel log sheet dropdown labels
+            const fuelSelect = document.getElementById('fuel-type');
+            if (fuelSelect) {
+                fuelSelect.options[0].text = `Gasoil S50 (${gasoilVal}/L)`;
+                fuelSelect.options[1].text = `Essence SP95 (${sp95Val}/L)`;
             }
 
-            if (myChart) myChart.destroy();
-            let gradientInc = ctx.createLinearGradient(0, 0, 0, 400);
-            gradientInc.addColorStop(0, 'rgba(16, 185, 129, 0.9)'); gradientInc.addColorStop(1, 'rgba(16, 185, 129, 0.2)');
+            // Update fuel log price input
+            const parsedGasoil = parseFloat(gasoilVal.replace(',', '.'));
+            const priceInput = document.getElementById('fuel-price-per-l');
+            if (!isNaN(parsedGasoil) && priceInput) priceInput.value = parsedGasoil;
 
-            const langData = i18n[appState.settings.lang];
-            const isDark = appState.settings.theme === 'dark';
+            // Update settings fuel price field too so estimates are accurate
+            const settingsFuelPrice = document.getElementById('set-fuel-price');
+            if (!isNaN(parsedGasoil) && settingsFuelPrice) {
+                settingsFuelPrice.value = parsedGasoil;
+                appState.settings.fuelPrice = parsedGasoil;
+                saveState();
+                renderDashboard();
+            }
 
-            myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        { label: langData.netEarnings, data: incomeData, backgroundColor: gradientInc, borderRadius: 6, barPercentage: 0.6 },
-                        { label: langData.totalExpenses, data: expenseData, backgroundColor: 'rgba(244, 63, 94, 0.9)', borderRadius: 6, barPercentage: 0.6 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { 
-                            backgroundColor: isDark ? 'rgba(11, 16, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)', 
-                            titleColor: isDark ? '#9ca3af' : '#6b7280', 
-                            bodyColor: isDark ? '#ffffff' : '#111827', 
-                            borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)', 
-                            borderWidth: 1, padding: 12, cornerRadius: 8, rtl: (appState.settings.lang === 'ar' || appState.settings.lang === 'ma') 
-                        }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0,0,0,0.03)', drawBorder: false }, ticks: { color: isDark ? '#64748b' : '#9ca3af' } },
-                        x: { grid: { display: false, drawBorder: false }, ticks: { color: isDark ? '#94a3b8' : '#6b7280' } }
+            // Show AI tip if available
+            if (tipText) {
+                const tipEl = document.getElementById('ai-tip-text');
+                const tipContainer = document.getElementById('ai-tip-container');
+                if (tipEl && tipContainer) {
+                    tipEl.textContent = tipText;
+                    tipContainer.classList.remove('hidden');
+                }
+            }
+        }
+
+        function setFuelCardError() {
+            const badgeEl = document.getElementById('fuel-updated');
+            const noteEl = document.getElementById('fuel-source-note');
+            badgeEl.innerHTML = '⚠️ Offline';
+            badgeEl.style.background = 'rgba(244,63,94,0.1)';
+            badgeEl.style.color = '#F43F5E';
+            // Fall back to last known prices
+            document.getElementById('fuel-gasoil').textContent = '11.93 MAD/L';
+            document.getElementById('fuel-essence').textContent = '13.57 MAD/L';
+            if (noteEl) noteEl.textContent = 'Could not fetch live prices — showing last known rates';
+            const liveEl = document.getElementById('live-fuel-ai');
+            if (liveEl) liveEl.textContent = 'Unavailable — showing defaults';
+        }
+
+        async function fetchFuelPricesViaAI() {
+            setFuelCardLoading(true);
+            try {
+                const city = appState.settings.city || 'Casa';
+                const cityName = (cityCoords[city] || {name: city}).name;
+                const lang = appState.settings.lang;
+                const langPrompt = lang === 'ma' || lang === 'ar' ? 'Arabic' : lang === 'fr' ? 'French' : 'English';
+
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 500,
+                        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+                        system: 'You are a data extraction assistant. After web searching, you MUST output ONLY the 3 lines below — no markdown, no extra words, no preamble:\nGASOIL: [number only, e.g. 11.93]\nSP95: [number only, e.g. 13.57]\nTIP: [one sentence in ' + langPrompt + ']',
+                        messages: [{
+                            role: 'user',
+                            content: `Search the web for "prix carburant maroc gasoil sp95 aujourd'hui ${new Date().getFullYear()}" and return the current retail pump prices in Morocco for Gasoil S50 and Essence SP95 in MAD per liter. Then output exactly:\nGASOIL: [price]\nSP95: [price]\nTIP: [a short driving tip for a ride-hailing driver in ${cityName} in ${langPrompt}]`
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    const errText = await response.text();
+                    console.error('API error:', errText);
+                    throw new Error('API ' + response.status);
+                }
+
+                const data = await response.json();
+
+                // Extract all text blocks (tool_use blocks are ignored, we only want text)
+                const fullText = (data.content || [])
+                    .filter(b => b.type === 'text')
+                    .map(b => b.text)
+                    .join('\n');
+
+                console.log('AI fuel response:', fullText);
+
+                // Parse with flexible regex — handle formats like "11.93", "11,93", "11.93 MAD/L"
+                const gasoilMatch = fullText.match(/GASOIL\s*:\s*([\d]+[.,][\d]+)/i);
+                const sp95Match   = fullText.match(/SP95\s*:\s*([\d]+[.,][\d]+)/i);
+                const tipMatch    = fullText.match(/TIP\s*:\s*(.+)/i);
+
+                if (gasoilMatch && sp95Match) {
+                    const gasoilVal = gasoilMatch[1].replace(',', '.');
+                    const sp95Val   = sp95Match[1].replace(',', '.');
+                    const tipText   = tipMatch ? tipMatch[1].trim() : null;
+                    setFuelCardValues(gasoilVal, sp95Val, tipText);
+                } else {
+                    // Try a broader fallback — look for any two prices in the text
+                    const allPrices = fullText.match(/\b(1[0-9]\.[0-9]{1,2})\b/g);
+                    if (allPrices && allPrices.length >= 2) {
+                        // Sort ascending so gasoil (cheaper) is first
+                        const sorted = allPrices.map(Number).sort((a,b) => a-b);
+                        const tipText = tipMatch ? tipMatch[1].trim() : null;
+                        setFuelCardValues(sorted[0].toFixed(2), sorted[sorted.length-1].toFixed(2), tipText);
+                    } else {
+                        console.warn('Could not parse prices from:', fullText);
+                        setFuelCardError();
                     }
                 }
-            });
-        }
-
-        // --- Ledger History ---
-        function filterLedger(type) {
-            currentFilter = type;
-            ['all', 'ride', 'expense'].forEach(t => {
-                const btn = document.getElementById(`btn-filter-${t}`);
-                if(t === type) btn.className = "px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-brand-blue text-white transition-all whitespace-nowrap shadow-lg shadow-brand-blue/20";
-                else btn.className = "px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-brand-blue transition-all whitespace-nowrap border border-gray-200 dark:border-white/5 shadow-sm";
-            });
-            renderLedger();
-        }
-
-        function deleteEntry(id, type) {
-            if(confirm('Delete? / Supprimer? / تمسح؟ / هل تريد الحذف؟')) {
-                if(type === 'ride') appState.rides = appState.rides.filter(r => r.id !== id);
-                else appState.expenses = appState.expenses.filter(e => e.id !== id);
-                saveState(); renderLedger();
+            } catch(e) {
+                console.error('AI fuel fetch error:', e);
+                setFuelCardError();
             }
         }
 
-        function renderLedger() {
-            const listEl = document.getElementById('ledger-list');
-            listEl.innerHTML = '';
-            const langData = i18n[appState.settings.lang];
-
-            let combined = [];
-            if(currentFilter === 'all' || currentFilter === 'ride') combined.push(...appState.rides);
-            if(currentFilter === 'all' || currentFilter === 'expense') combined.push(...appState.expenses);
-            combined.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            if (combined.length === 0) {
-                listEl.innerHTML = `<div class="flex flex-col items-center justify-center py-24 text-gray-400"><i class="fa-solid fa-folder-open text-5xl mb-4 opacity-40"></i><p class="font-medium tracking-wide">${langData.noData}</p></div>`;
-                return;
+        async function fetchAllLiveData() {
+            const btn = document.getElementById('live-refresh-btn');
+            if (btn) {
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i><span>Loading...</span>';
+                btn.disabled = true;
             }
+            const city = appState.settings.city || 'Casa';
+            await Promise.allSettled([
+                fetchWeather(city),
+                fetchExchangeRate(),
+                fetchFuelPricesViaAI()
+            ]);
+            const now = new Date();
+            document.getElementById('live-last-updated').textContent =
+                `Last updated: ${now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+            liveDataFetched = true;
+            if (btn) {
+                btn.innerHTML = '<i class="fa-solid fa-check me-1"></i><span>Updated</span>';
+                btn.disabled = false;
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fa-solid fa-rotate-right me-1"></i><span id="live-refresh-text">Refresh</span>';
+                }, 2500);
+            }
+        }
 
-            combined.forEach((item, index) => {
-                const d = new Date(item.date);
-                const locale = (appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'ar-MA' : 'en-US';
-                const timeStr = d.toLocaleTimeString(locale, {hour: '2-digit', minute:'2-digit'});
-                const dateStr = d.toLocaleDateString(locale, {month: 'short', day: 'numeric'});
-                
-                const isRide = item.type === 'ride';
-                const iconColor = isRide ? 'text-brand-green' : 'text-brand-red';
-                const iconBg = isRide ? 'bg-brand-green/10' : 'bg-brand-red/10';
-                const iconClass = !isRide ? (catIcons[item.category] || 'fa-receipt') : 'fa-car';
-                
-                let displayTitle = isRide ? langData.rideTitle : item.category;
-                if(!isRide && appState.settings.lang === 'ma') {
-                    const maCats = {'Fuel':'مازوط', 'Wash':'غسيل', 'Maintenance':'ميكانيك', 'Tolls':'بياج', 'Food':'ماكلة', 'Mobile':'تعبئة', 'Insurance':'تأمين', 'Other':'أخرى'};
-                    displayTitle = maCats[item.category] || item.category;
-                } else if (!isRide && appState.settings.lang === 'ar') {
-                    const arCats = {'Fuel':'وقود', 'Wash':'غسيل', 'Maintenance':'صيانة', 'Tolls':'رسوم طرق', 'Food':'طعام', 'Mobile':'اتصالات', 'Insurance':'تأمين', 'Other':'أخرى'};
-                    displayTitle = arCats[item.category] || item.category;
-                } else if (!isRide && appState.settings.lang === 'fr') {
-                    const frCats = {'Fuel':'Carburant', 'Wash':'Lavage', 'Maintenance':'Entretien', 'Tolls':'Péage', 'Food':'Repas', 'Mobile':'Forfait', 'Insurance':'Assurance', 'Other':'Autre'};
-                    displayTitle = frCats[item.category] || item.category;
-                }
+        // Auto-fetch on load after a short delay
+        window.addEventListener('load', () => {
+            setTimeout(fetchAllLiveData, 1200);
+        });
 
-                const subText = isRide ? `${item.distance}km • ${item.duration}m` : (item.notes || ((appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'مصروف' : 'Expense'));
-                const mainAmt = isRide ? item.net : item.amount;
-                const delay = Math.min(index * 0.05, 0.5);
-
-                const html = `
-                    <div class="glass-card rounded-[1.5rem] p-4 flex justify-between items-center group relative overflow-hidden opacity-0 animate-slide-up" style="animation-delay: ${delay}s" dir="${(appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'rtl' : 'ltr'}">
-                        ${isRide ? `<div class="absolute top-0 start-0 w-1.5 h-full bg-brand-green"></div>` : `<div class="absolute top-0 start-0 w-1.5 h-full bg-brand-red"></div>`}
-                        <div class="flex items-center gap-4 ps-2">
-                            <div class="w-12 h-12 rounded-2xl ${iconBg} flex items-center justify-center ${iconColor} text-lg shadow-inner">
-                                <i class="fa-solid ${iconClass}"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 dark:text-gray-100 text-sm tracking-wide mb-0.5">${displayTitle}</h4>
-                                <div class="text-[11px] text-gray-500 font-medium mb-1" dir="ltr">${dateStr} • ${timeStr}</div>
-                                <div class="text-[10px] text-gray-600 dark:text-gray-400 stat-box px-2 py-0.5 rounded-md inline-block" dir="auto">${subText}</div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex flex-col items-end justify-center pe-1">
-                            <div class="font-black text-base tracking-tight ${iconColor}" dir="ltr">${isRide ? '+' : '-'}${formatMoney(mainAmt)}</div>
-                            ${isRide ? `<div class="text-[10px] text-gray-500 mt-1 font-medium" dir="ltr">${langData.gross}: ${formatMoney(item.gross)}</div>` : ''}
-                            
-                            <button onclick="deleteEntry('${item.id}', '${item.type}')" class="mt-3 stat-box w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:text-brand-red hover:bg-brand-red/10 transition-colors shadow-inner">
-                                <i class="fa-solid fa-trash text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                listEl.insertAdjacentHTML('beforeend', html);
+        // =============================================
+        // EXPORT CSV
+        // =============================================
+        function exportToCSV() {
+            let csv = "data:text/csv;charset=utf-8,Type,Platform,Payment,Date,Amount,Commission,Net,Distance,Duration,Category,Notes\n";
+            const combined = [...appState.rides,...appState.expenses].sort((a,b) => new Date(b.date)-new Date(a.date));
+            combined.forEach(item => {
+                const isRide = item.type==='ride';
+                const net = isRide ? (item.net !== undefined ? item.net : (item.gross+(item.tip||0)-item.comm)) : (-item.amount);
+                csv += [
+                    item.type, isRide?(item.platform||''):'', isRide?(item.payment||''):'',
+                    new Date(item.date).toLocaleString(),
+                    isRide?item.gross:item.amount,
+                    isRide?item.comm:0,
+                    net,
+                    isRide?(item.distance||0):0,
+                    isRide?(item.duration||0):0,
+                    isRide?'Ride':item.category,
+                    `"${item.notes||''}"`
+                ].join(',') + '\n';
             });
+            const link = document.createElement('a');
+            link.href = encodeURI(csv);
+            link.download = `FlousiDrive_${appState.settings.city||'MA'}_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
     </script>
 </body>

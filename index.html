@@ -126,6 +126,7 @@
             border-radius: 1rem;
             padding: 1rem;
             color: var(--text-main);
+            -webkit-text-fill-color: var(--text-main); /* Safari iOS fix */
             font-size: 1rem; font-weight: 500;
             outline: none;
             transition: all 0.2s ease;
@@ -178,10 +179,42 @@
         @keyframes tipGlow { 0%,100%{box-shadow:0 0 10px rgba(245,158,11,0.2)} 50%{box-shadow:0 0 20px rgba(245,158,11,0.5)} }
 
         /* City selector */
-        .city-chip { border-radius: 999px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1.5px solid var(--border-input); background: var(--bg-input); color: var(--text-main); white-space: nowrap; flex-shrink: 0; min-height: 44px; display: inline-flex; align-items: center; }
-        .city-chip.selected { background: #3B82F6; color: white; border-color: #3B82F6; box-shadow: 0 4px 12px rgba(59,130,246,0.35); }
+        .city-chip {
+            border-radius: 999px; padding: 8px 16px; font-size: 12px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+            min-height: 44px; display: inline-flex; align-items: center;
+            /* Explicit light-mode defaults — no CSS vars on buttons (Safari iOS drops them) */
+            background: #e5e7eb;
+            color: #111827 !important;
+            -webkit-text-fill-color: #111827;
+            border: 1.5px solid #d1d5db;
+        }
+        html.dark .city-chip {
+            background: #0f172a;
+            color: #f1f5f9 !important;
+            -webkit-text-fill-color: #f1f5f9;
+            border-color: rgba(255,255,255,0.15);
+        }
+        .city-chip.selected {
+            background: #3B82F6 !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            border-color: #3B82F6 !important;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.4);
+        }
         .city-chips-scroll { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 2px 8px; }
-        
+
+        /* 
+         * SAFARI iOS BUG FIX: Safari ignores `color` on <button> elements.
+         * Must use -webkit-text-fill-color to force text color on buttons.
+         */
+        button.app-input, button.app-input * {
+            color: var(--text-main) !important;
+            -webkit-text-fill-color: var(--text-main) !important;
+        }
+        /* Force text color on all buttons globally */
+        button { color: inherit; -webkit-text-fill-color: inherit; }
+
         /* Mobile touch targets - minimum 44px */
         .app-input, select.app-input, button.app-input { min-height: 52px; }
         input.app-input { min-height: 52px; }
@@ -572,9 +605,9 @@
                 <h3 class="text-[11px] text-brand-blue font-bold uppercase tracking-widest mb-2 border-b border-gray-200 dark:border-white/5 pb-3" data-i18n="preferences">Preferences</h3>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="relative w-full z-50">
-                        <button type="button" id="custom-lang-btn" class="app-input flex items-center justify-between font-bold w-full transition-colors hover:bg-gray-50 dark:hover:bg-white/5" onclick="toggleLangMenu()">
-                            <span id="custom-lang-text" class="truncate">English</span>
-                            <i class="fa-solid fa-globe text-brand-blue"></i>
+                        <button type="button" id="custom-lang-btn" class="app-input flex items-center justify-between font-bold w-full transition-colors hover:bg-gray-50 dark:hover:bg-white/5" onclick="toggleLangMenu()" style="-webkit-text-fill-color:var(--text-main);color:var(--text-main);">
+                            <span id="custom-lang-text" class="truncate" style="-webkit-text-fill-color:inherit;">English</span>
+                            <i class="fa-solid fa-globe text-brand-blue" style="-webkit-text-fill-color:#3B82F6;"></i>
                         </button>
                         <ul id="custom-lang-menu" class="absolute z-[100] w-full min-w-[180px] mt-2 bg-white dark:bg-[#141B2D] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl hidden overflow-hidden">
                             <li onclick="selectLang('en')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">English <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i></li>
@@ -1056,6 +1089,8 @@
                 document.getElementById('ramadan-toggle-btn').classList.remove('bg-gray-300','dark:bg-dark-700');
             }
             selectRidePlatform(appState.settings.platform || 'InDrive');
+            // Safari iOS: force text color on lang button after full init
+            applyTheme(appState.settings.theme);
         });
 
         // =============================================
@@ -1064,11 +1099,22 @@
         function renderCityChips() {
             const container = document.getElementById('city-chips');
             container.innerHTML = '';
+            const isDark = document.documentElement.classList.contains('dark');
             moroccanCities.forEach(city => {
+                const isSelected = city === appState.settings.city;
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'city-chip' + (city === appState.settings.city ? ' selected' : '');
+                btn.className = 'city-chip' + (isSelected ? ' selected' : '');
                 btn.textContent = city;
+                // Force inline color for Safari iOS which ignores CSS vars on buttons
+                if (isSelected) {
+                    btn.style.cssText = 'background:#3B82F6;color:#ffffff;-webkit-text-fill-color:#ffffff;border-color:#3B82F6;';
+                } else {
+                    const bg = isDark ? '#0f172a' : '#e5e7eb';
+                    const col = isDark ? '#f1f5f9' : '#111827';
+                    const border = isDark ? 'rgba(255,255,255,0.15)' : '#d1d5db';
+                    btn.style.cssText = `background:${bg};color:${col};-webkit-text-fill-color:${col};border-color:${border};`;
+                }
                 btn.onclick = () => { appState.settings.city = city; saveState(); renderCityChips(); updateHeaderCity(); };
                 container.appendChild(btn);
             });
@@ -1260,6 +1306,15 @@
                 document.documentElement.classList.add('dark');
                 icon.className = 'fa-solid fa-moon text-lg text-brand-blue transition-transform rotate-0';
                 if(textEl && langData) textEl.textContent = langData.darkMode;
+            }
+            // Safari iOS: force refresh text color on lang button after theme change
+            const langBtn = document.getElementById('custom-lang-btn');
+            if (langBtn) {
+                const col = theme === 'dark' ? '#F8FAFC' : '#111827';
+                langBtn.style.color = col;
+                langBtn.style.webkitTextFillColor = col;
+                const span = document.getElementById('custom-lang-text');
+                if (span) { span.style.color = col; span.style.webkitTextFillColor = col; }
             }
             if(myChart) renderChart();
         }

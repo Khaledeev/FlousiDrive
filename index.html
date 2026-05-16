@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0B101E" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f3f4f6" media="(prefers-color-scheme: light)">
     <title>FlousiDrive - Morocco</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -173,11 +178,62 @@
         @keyframes tipGlow { 0%,100%{box-shadow:0 0 10px rgba(245,158,11,0.2)} 50%{box-shadow:0 0 20px rgba(245,158,11,0.5)} }
 
         /* City selector */
-        .city-chip { border-radius: 999px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border-input); background: var(--bg-input); }
-        .city-chip.selected { background: #3B82F6; color: white; border-color: #3B82F6; }
+        .city-chip { border-radius: 999px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1.5px solid var(--border-input); background: var(--bg-input); color: var(--text-main); white-space: nowrap; flex-shrink: 0; min-height: 44px; display: inline-flex; align-items: center; }
+        .city-chip.selected { background: #3B82F6; color: white; border-color: #3B82F6; box-shadow: 0 4px 12px rgba(59,130,246,0.35); }
+        .city-chips-scroll { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 2px 8px; }
+        
+        /* Mobile touch targets - minimum 44px */
+        .app-input, select.app-input, button.app-input { min-height: 52px; }
+        input.app-input { min-height: 52px; }
+        
+        /* Fix selects on iOS - prevent zoom */
+        select, input, textarea { font-size: 16px !important; }
+        .app-label { font-size: 0.7rem !important; }
+        
+        /* Bottom sheet mobile scroll fix */
+        .bottom-sheet { padding-bottom: calc(env(safe-area-inset-bottom) + 2rem) !important; }
+        
+        /* FAB center alignment fix */
+        .fab-center-fix { left: 50%; transform: translateX(-50%); }
+        
+        /* iOS safe area support */
+        body { padding-bottom: 0; }
+        .fixed.bottom-6 { bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+        
+        /* Platform chips wrapping fix */
+        #ride-platform-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .ride-plat-chip { min-height: 40px; display: inline-flex; align-items: center; padding: 8px 14px !important; }
+        
+        /* Improve tap response */
+        button, [onclick] { -webkit-tap-highlight-color: rgba(59,130,246,0.15); cursor: pointer; }
+        
+        /* Ledger filter bar */
+        .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* Input number arrows removal for cleaner mobile UI */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+        
+        /* Better select arrow on mobile */
+        select.app-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239ca3af' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; appearance: none; -webkit-appearance: none; }
+        
+        /* Smooth scroll on iOS */
+        .bottom-sheet { -webkit-overflow-scrolling: touch; overflow-y: auto; }
+        main { -webkit-overflow-scrolling: touch; }
+        
+        /* Fix datetime-local on iOS */
+        input[type="datetime-local"] { -webkit-appearance: none; }
+        
+        /* Better nav active state */
+        nav button:active { transform: scale(0.94); }
+        
+        /* Prevent body scroll when sheet open */
+        body.sheet-open { overflow: hidden; position: fixed; width: 100%; }
     </style>
 </head>
-<body class="antialiased pb-32 selection:bg-brand-blue selection:text-white flex flex-col min-h-screen">
+<body class="antialiased selection:bg-brand-blue selection:text-white flex flex-col min-h-screen">
 
     <header class="glass-nav sticky top-0 z-40 px-5 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
@@ -200,7 +256,7 @@
 
     <div id="modal-overlay" class="overlay" onclick="closeAllSheets()"></div>
 
-    <main class="flex-1 w-full max-w-lg mx-auto relative px-4 pt-4">
+    <main class="flex-1 w-full max-w-lg mx-auto relative px-4 pt-4 pb-36">
 
         <section id="view-dashboard" class="space-y-5 animate-fade-in block">
 
@@ -445,7 +501,7 @@
 
             <div class="glass-card rounded-3xl p-5">
                 <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide mb-4">🏆 <span data-i18n="peakHours">Best Hours to Drive</span></h3>
-                <div id="peak-hours-chart" class="grid grid-cols-12 gap-0.5 items-end h-20"></div>
+                <div id="peak-hours-chart" class="flex gap-0.5 items-end" style="height:80px;width:100%"></div>
                 <div class="flex justify-between mt-2 text-[9px] text-gray-400 font-medium">
                     <span>6h</span><span>9h</span><span>12h</span><span>15h</span><span>18h</span><span>21h</span><span>0h</span>
                 </div>
@@ -488,7 +544,7 @@
                 </div>
                 <div>
                     <label class="app-label" data-i18n="cityLabel">City</label>
-                    <div class="flex flex-wrap gap-2 mt-1" id="city-chips"></div>
+                    <div class="city-chips-scroll mt-1" id="city-chips"></div>
                 </div>
                 <div>
                     <label class="app-label" data-i18n="vehicleType">Vehicle Type</label>
@@ -585,21 +641,21 @@
     </main>
 
     <div class="fixed bottom-6 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none">
-        <nav class="fab-dock-bg pointer-events-auto w-full max-w-[420px] backdrop-blur-3xl rounded-[2rem] px-2 py-2 flex justify-between items-center shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.8)] relative">
-            <button onclick="navigate('dashboard')" id="nav-dashboard" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl bg-brand-blue/15 text-brand-blue transition-all">
+        <nav class="fab-dock-bg pointer-events-auto w-full max-w-[420px] backdrop-blur-3xl rounded-[2rem] px-2 py-2 flex justify-between items-center shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.8)] relative" style="padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));">
+            <button onclick="navigate('dashboard')" id="nav-dashboard" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl bg-brand-blue/15 text-brand-blue transition-all" style="min-height:56px;">
                 <i class="fa-solid fa-chart-pie text-[20px] mb-1.5"></i>
                 <span class="text-[10px] font-bold tracking-wide" data-i18n="navHome">Home</span>
             </button>
-            <button onclick="navigate('ledger')" id="nav-ledger" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all">
+            <button onclick="navigate('ledger')" id="nav-ledger" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all" style="min-height:56px;">
                 <i class="fa-solid fa-list-ul text-[20px] mb-1.5"></i>
                 <span class="text-[10px] font-bold tracking-wide" data-i18n="navHistory">History</span>
             </button>
-            <div class="w-[75px]"></div>
-            <button onclick="navigate('stats')" id="nav-stats" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all">
+            <div class="w-[75px] flex-shrink-0"></div>
+            <button onclick="navigate('stats')" id="nav-stats" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all" style="min-height:56px;">
                 <i class="fa-solid fa-chart-line text-[20px] mb-1.5"></i>
                 <span class="text-[10px] font-bold tracking-wide" data-i18n="navStats">Stats</span>
             </button>
-            <button onclick="navigate('settings')" id="nav-settings" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all">
+            <button onclick="navigate('settings')" id="nav-settings" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all" style="min-height:56px;">
                 <i class="fa-solid fa-gear text-[20px] mb-1.5"></i>
                 <span class="text-[10px] font-bold tracking-wide" data-i18n="navConfig">Config</span>
             </button>
@@ -1517,20 +1573,26 @@
                 hourCounts[h]++;
                 hourNets[h] += r.net !== undefined ? r.net : (r.gross + (r.tip||0) - r.comm);
             });
-            // Show 6h to 5h (24 segments) — but only 12 buckets of 2h each
+            // 12 buckets of 2h each, starting at 6h
             const buckets = [];
             for (let i = 0; i < 12; i++) {
                 const h1 = (6 + i*2) % 24, h2 = (7 + i*2) % 24;
                 buckets.push({ hour: (6+i*2)%24, net: (hourNets[h1]||0)+(hourNets[h2]||0), count: (hourCounts[h1]||0)+(hourCounts[h2]||0) });
             }
             const maxNet = Math.max(...buckets.map(b => b.net), 1);
+            const CHART_HEIGHT = 80; // px — matches h-20
             const container = document.getElementById('peak-hours-chart');
             container.innerHTML = buckets.map(b => {
-                const h = b.hour;
-                const pct = Math.max((b.net/maxNet)*100, 4);
-                const color = b.net > maxNet*0.7 ? 'bg-brand-green' : b.net > maxNet*0.3 ? 'bg-brand-gold' : 'bg-gray-300 dark:bg-dark-800';
-                return `<div class="flex flex-col items-center gap-0.5 flex-1" title="${h}h: ${b.count} rides, ${b.net.toFixed(0)} MAD">
-                    <div class="w-full ${color} rounded-t" style="height:${pct}%"></div>
+                const rawPct = maxNet > 0 ? (b.net / maxNet) : 0;
+                const barPx = Math.max(Math.round(rawPct * CHART_HEIGHT), b.count > 0 ? 4 : 2);
+                const color = b.net > maxNet*0.7
+                    ? 'background:#10B981'
+                    : b.net > maxNet*0.3
+                    ? 'background:#F59E0B'
+                    : 'background:rgba(100,116,139,0.25)';
+                const opacity = b.count > 0 ? '1' : '0.3';
+                return `<div class="flex flex-col items-center justify-end flex-1 h-full" title="${b.hour}h: ${b.count} rides, ${b.net.toFixed(0)} MAD" style="opacity:${opacity}">
+                    <div class="w-full rounded-t-sm transition-all duration-700" style="height:${barPx}px;${color};min-height:2px"></div>
                 </div>`;
             }).join('');
 
@@ -1770,6 +1832,7 @@
             setFormDates();
             document.getElementById('modal-overlay').classList.add('active');
             setTimeout(() => document.getElementById(sheetId).classList.add('active'), 10);
+            document.body.classList.add('sheet-open');
             if(sheetId==='sheet-ride') {
                 document.getElementById('comm-hint').textContent = `${appState.settings.commRate}%`;
                 selectRidePlatform(appState.settings.platform || 'InDrive');
@@ -1778,6 +1841,7 @@
         function closeAllSheets() {
             document.querySelectorAll('.bottom-sheet').forEach(s => s.classList.remove('active'));
             document.getElementById('modal-overlay').classList.remove('active');
+            document.body.classList.remove('sheet-open');
         }
         function setFormDates() {
             const now = new Date();
@@ -2093,8 +2157,38 @@
         });
 
         // =============================================
-        // EXPORT CSV
+        // SWIPE TO CLOSE BOTTOM SHEETS
         // =============================================
+        (function() {
+            let startY = 0, startX = 0, isDragging = false;
+            document.querySelectorAll('.bottom-sheet').forEach(sheet => {
+                sheet.addEventListener('touchstart', (e) => {
+                    // Only initiate if touching near the top drag handle area
+                    if (sheet.scrollTop <= 5) {
+                        startY = e.touches[0].clientY;
+                        startX = e.touches[0].clientX;
+                        isDragging = true;
+                    }
+                }, { passive: true });
+                sheet.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    const dy = e.touches[0].clientY - startY;
+                    const dx = e.touches[0].clientX - startX;
+                    if (dy > 0 && Math.abs(dy) > Math.abs(dx) && sheet.scrollTop <= 0) {
+                        sheet.style.transform = `translateY(${dy}px)`;
+                        sheet.style.transition = 'none';
+                    }
+                }, { passive: true });
+                sheet.addEventListener('touchend', (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    const dy = e.changedTouches[0].clientY - startY;
+                    sheet.style.transform = '';
+                    sheet.style.transition = '';
+                    if (dy > 80) { closeAllSheets(); }
+                });
+            });
+        })();
         function exportToCSV() {
             let csv = "data:text/csv;charset=utf-8,Type,Platform,Payment,Date,Amount,Commission,Net,Distance,Duration,Category,Notes\n";
             const combined = [...appState.rides,...appState.expenses].sort((a,b) => new Date(b.date)-new Date(a.date));

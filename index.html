@@ -582,9 +582,9 @@
                 <div>
                     <label class="app-label" data-i18n="vehicleType">Vehicle Type</label>
                     <select id="set-vehicle" class="app-input font-medium" onchange="saveSettings()">
-                        <option value="car_small">🚗 Small Car (Clio, Sandero...)</option>
-                        <option value="car_mid">🚙 Mid Car (Logan, Tipo...)</option>
-                        <option value="car_suv">🚐 SUV / Minivan (Jogger, Express...)</option>
+                        <option value="car_small">🚗 Small Car (Clio, Sandero, 208...)</option>
+                        <option value="car_mid">🚙 Mid Car (Logan, Tipo, Accent...)</option>
+                        <option value="car_suv">🚐 SUV / Minivan (Duster, Express, Jogger...)</option>
                         <option value="moto">🏍️ Motorcycle / Scooter</option>
                     </select>
                 </div>
@@ -592,10 +592,9 @@
                     <label class="app-label" data-i18n="activePlatform">Active Platform</label>
                     <select id="set-platform" class="app-input font-medium" onchange="saveSettings()">
                         <option value="InDrive">InDrive</option>
-                        <option value="Bolt">Bolt</option>
-                        <option value="Careem">Careem</option>
-                        <option value="Heetch">Heetch</option>
-                        <option value="Yango">Yango</option>
+						<option value="Careem">Careem</option>
+						<option value="Yango">Yango</option>
+                        <option value="Bolt">Uber</option>
                         <option value="Other">Other / Independent</option>
                     </select>
                 </div>
@@ -745,9 +744,8 @@
                     <label class="app-label" data-i18n="platformLabel">Platform</label>
                     <div class="flex flex-wrap gap-2" id="ride-platform-chips">
                         <button type="button" data-platform="InDrive" onclick="selectRidePlatform('InDrive')" class="ride-plat-chip platform-pill platform-indrive selected-plat border-2 border-brand-green px-3 py-1.5 text-[11px] font-black">🟢 InDrive</button>
-                        <button type="button" data-platform="Bolt" onclick="selectRidePlatform('Bolt')" class="ride-plat-chip platform-pill platform-bolt px-3 py-1.5 text-[11px] font-black">⚡ Bolt</button>
-                        <button type="button" data-platform="Careem" onclick="selectRidePlatform('Careem')" class="ride-plat-chip platform-pill platform-careem px-3 py-1.5 text-[11px] font-black">🟩 Careem</button>
-                        <button type="button" data-platform="Heetch" onclick="selectRidePlatform('Heetch')" class="ride-plat-chip platform-pill platform-heetch px-3 py-1.5 text-[11px] font-black">🟣 Heetch</button>
+                        <button type="button" data-platform="Bolt" onclick="selectRidePlatform('Bolt')" class="ride-plat-chip platform-pill platform-bolt px-3 py-1.5 text-[11px] font-black">⚡ Careem</button>
+                        <button type="button" data-platform="Careem" onclick="selectRidePlatform('Careem')" class="ride-plat-chip platform-pill platform-careem px-3 py-1.5 text-[11px] font-black">🟩 Uber</button>
                         <button type="button" data-platform="Yango" onclick="selectRidePlatform('Yango')" class="ride-plat-chip platform-pill platform-yango px-3 py-1.5 text-[11px] font-black">🔴 Yango</button>
                         <button type="button" data-platform="Other" onclick="selectRidePlatform('Other')" class="ride-plat-chip platform-pill platform-other px-3 py-1.5 text-[11px] font-black">Other</button>
                     </div>
@@ -2106,8 +2104,8 @@
             badgeEl.style.background = 'rgba(244,63,94,0.1)';
             badgeEl.style.color = '#F43F5E';
             // Fall back to last known prices
-            document.getElementById('fuel-gasoil').textContent = '11.93 MAD/L';
-            document.getElementById('fuel-essence').textContent = '13.57 MAD/L';
+            document.getElementById('fuel-gasoil').textContent = '14.50 MAD/L';
+            document.getElementById('fuel-essence').textContent = '15.00 MAD/L';
             if (noteEl) noteEl.textContent = 'Could not fetch live prices — showing last known rates';
             const liveEl = document.getElementById('live-fuel-ai');
             if (liveEl) liveEl.textContent = 'Unavailable — showing defaults';

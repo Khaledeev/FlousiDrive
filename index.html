@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>InDrive Pro Tracker - Morocco</title>
+    <title>FlousiDrive - Morocco</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -34,14 +34,8 @@
                         'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                     },
                     keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        slideUp: {
-                            '0%': { transform: 'translateY(100%)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
-                        }
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { transform: 'translateY(100%)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
                     }
                 }
             }
@@ -49,106 +43,139 @@
     </script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
         
         :root {
+            /* Light Theme Variables */
+            color-scheme: light;
+            --bg-body: #f3f4f6;
+            --text-main: #111827;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --border-card: rgba(0, 0, 0, 0.05);
+            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --bg-nav: rgba(255, 255, 255, 0.95);
+            --bg-input: #ffffff;
+            --bg-input-deep: #f9fafb;
+            --border-input: #d1d5db;
+            --bg-sheet: #ffffff;
+            --fab-border: #f3f4f6;
+            --fab-dock: rgba(255, 255, 255, 0.95);
+            --danger-bg: #fff1f2;
+        }
+
+        html.dark {
+            /* Dark Theme Variables */
             color-scheme: dark;
+            --bg-body: #0B101E;
+            --text-main: #F8FAFC;
+            --bg-card: rgba(20, 27, 45, 0.8);
+            --border-card: rgba(255, 255, 255, 0.05);
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --bg-nav: rgba(11, 16, 30, 0.85);
+            --bg-input: #070A14;
+            --bg-input-deep: #04060b;
+            --border-input: rgba(255, 255, 255, 0.1);
+            --bg-sheet: #141B2D;
+            --fab-border: #0B101E;
+            --fab-dock: rgba(20, 27, 45, 0.95);
+            --danger-bg: #1A1016;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0B101E;
-            color: #F8FAFC;
+            background-color: var(--bg-body);
+            color: var(--text-main);
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-
+        
+        html[dir="rtl"] body { font-family: 'Tajawal', sans-serif; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
 
-        /* Premium Input Styling (Raw CSS to guarantee it works) */
+        /* Pure CSS Components reacting to Theme Variables */
+        .glass-card {
+            background-color: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        
+        .glass-nav {
+            background-color: var(--bg-nav);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-card);
+            transition: background-color 0.3s;
+        }
+
+        .bottom-sheet {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--bg-sheet);
+            border-top-left-radius: 28px; border-top-right-radius: 28px;
+            z-index: 100;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+            border-top: 1px solid var(--border-card);
+            max-height: 90vh; overflow-y: auto;
+        }
+        html.dark .bottom-sheet { box-shadow: 0 -10px 40px rgba(0,0,0,0.6); }
+        .bottom-sheet.active { transform: translateY(0); }
+
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 90; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        html.dark .overlay { background: rgba(0, 0, 0, 0.7); }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+
+        /* Premium Input Styling */
         .app-input {
             width: 100%;
-            background-color: #070A14;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-input);
             border-radius: 1rem;
             padding: 1rem;
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: 500;
+            color: var(--text-main);
+            font-size: 1rem; font-weight: 500;
             outline: none;
             transition: all 0.2s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
             -webkit-appearance: none;
         }
-        .app-input::placeholder {
-            color: #4b5563;
-        }
-        .app-input:focus {
+        html.dark .app-input { box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+        .app-input-deep { background-color: var(--bg-input-deep) !important; }
+        .app-input::placeholder { color: #9ca3af; }
+        html.dark .app-input::placeholder { color: #4b5563; }
+        .app-input:focus, .app-input.active-focus {
             border-color: #3B82F6;
-            box-shadow: 0 0 0 2px rgba(59,130,246,0.2), inset 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.2), inset 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .app-label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #9ca3af;
-            margin-bottom: 0.5rem;
-            margin-left: 0.25rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            display: block; font-size: 0.75rem; font-weight: 700;
+            color: #6b7280;
+            margin-bottom: 0.5rem; margin-inline-start: 0.25rem;
+            text-transform: uppercase; letter-spacing: 0.05em;
         }
+        html.dark .app-label { color: #9ca3af; }
 
-        /* Glassmorphism */
-        .glass-card {
-            background-color: rgba(20, 27, 45, 0.8);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-        .glass-nav {
-            background-color: rgba(11, 16, 30, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Bottom Sheet Modal */
-        .bottom-sheet {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #141B2D;
-            border-top-left-radius: 28px;
-            border-top-right-radius: 28px;
-            z-index: 100;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
-            border-top: 1px solid rgba(255,255,255,0.08);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .bottom-sheet.active {
-            transform: translateY(0);
-        }
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 90;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .danger-zone { background-color: var(--danger-bg); transition: background-color 0.3s; }
+        .fab-dock-bg { background-color: var(--fab-dock); border: 1px solid var(--border-card); transition: background-color 0.3s; }
+        .fab-btn { border-color: var(--fab-border); transition: border-color 0.3s; }
+        
+        .stat-box { background-color: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
+        html.dark .stat-box { background-color: #0B101E; border: 1px solid rgba(255,255,255,0.05); }
+        
+        /* Modal Action Buttons */
+        .action-btn { background-color: #f9fafb; transition: background-color 0.3s; }
+        html.dark .action-btn { background-color: #0B101E; }
     </style>
 </head>
 <body class="antialiased pb-32 selection:bg-brand-blue selection:text-white flex flex-col min-h-screen">
@@ -156,17 +183,17 @@
     <header class="glass-nav sticky top-0 z-40 px-5 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-blue to-brand-green p-[2px]">
-                <img src="https://ui-avatars.com/api/?name=Driver&background=141B2D&color=fff" alt="Profile" class="rounded-full w-full h-full object-cover border-2 border-dark-900">
+                <img src="https://ui-avatars.com/api/?name=Driver&background=141B2D&color=fff" alt="Profile" class="rounded-full w-full h-full object-cover border-2 border-transparent">
             </div>
             <div>
-                <h1 class="text-sm font-bold tracking-wide">InDrive <span class="text-brand-green">Pro</span></h1>
-                <p id="header-date" class="text-xs text-gray-400 font-medium"></p>
+                <h1 class="text-sm font-bold tracking-wide text-gray-900 dark:text-white">Flousi<span class="text-brand-green">Drive</span></h1>
+                <p id="header-date" class="text-xs text-gray-500 dark:text-gray-400 font-medium"></p>
             </div>
         </div>
         
-        <button id="shift-toggle" onclick="toggleShift()" class="relative inline-flex h-8 w-14 items-center rounded-full bg-dark-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue border border-white/10">
+        <button id="shift-toggle" onclick="toggleShift()" class="relative inline-flex h-8 w-14 items-center rounded-full bg-gray-300 dark:bg-dark-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue border border-gray-200 dark:border-white/10">
             <span class="sr-only">Toggle shift</span>
-            <span id="shift-knob" class="inline-block h-6 w-6 transform rounded-full bg-gray-400 transition-transform duration-300 translate-x-1 shadow-md"></span>
+            <span id="shift-knob" class="inline-block h-6 w-6 transform rounded-full bg-white dark:bg-gray-400 transition-transform duration-300 translate-x-1 rtl:-translate-x-1 shadow-md"></span>
         </button>
     </header>
 
@@ -182,39 +209,39 @@
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
                       <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
                     </span>
-                    ONLINE
+                    <span data-i18n="onlineStatus">ONLINE</span>
                 </div>
-                <div id="shift-timer" class="text-sm font-mono tracking-widest text-gray-300">00:00:00</div>
+                <div id="shift-timer" class="text-sm font-mono tracking-widest text-gray-600 dark:text-gray-300">00:00:00</div>
             </div>
 
             <div class="glass-card rounded-[2rem] p-6 relative overflow-hidden">
-                <div class="absolute -top-20 -right-20 w-48 h-48 bg-brand-blue/20 rounded-full blur-3xl"></div>
-                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-brand-green/10 rounded-full blur-2xl"></div>
+                <div class="absolute -top-20 end-[-5rem] w-48 h-48 bg-brand-blue/20 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-10 start-[-2.5rem] w-32 h-32 bg-brand-green/10 rounded-full blur-2xl"></div>
                 
                 <div class="flex justify-between items-start relative z-10">
                     <div>
-                        <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Today's Net Profit</h2>
-                        <div class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 tracking-tight" id="dash-net">0.00 MAD</div>
+                        <h2 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-2" data-i18n="netProfit">Today's Net Profit</h2>
+                        <div class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-300 tracking-tight" id="dash-net" dir="ltr">0.00 MAD</div>
                     </div>
-                    <div class="bg-[#0B101E] rounded-2xl p-3 border border-white/5 text-center min-w-[75px] shadow-inner">
-                        <div class="text-[10px] text-gray-500 uppercase font-bold mb-1 tracking-wider">Rides</div>
-                        <div class="text-xl font-black text-white" id="dash-ride-count">0</div>
+                    <div class="stat-box rounded-2xl p-3 text-center min-w-[75px] shadow-inner">
+                        <div class="text-[10px] text-gray-500 uppercase font-bold mb-1 tracking-wider" data-i18n="rides">Rides</div>
+                        <div class="text-xl font-black text-gray-900 dark:text-white" id="dash-ride-count">0</div>
                     </div>
                 </div>
 
-                <div class="mt-8 grid grid-cols-2 gap-4 relative z-10 border-t border-white/5 pt-5">
+                <div class="mt-8 grid grid-cols-2 gap-4 relative z-10 border-t border-gray-200 dark:border-white/5 pt-5">
                     <div>
-                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest">Gross Income</div>
+                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest" data-i18n="grossIncome">Gross Income</div>
                         <div class="text-base font-bold text-brand-green flex items-center">
-                            <i class="fa-solid fa-arrow-up-right-dots text-xs mr-2 opacity-70"></i>
-                            <span id="dash-gross">0.00 MAD</span>
+                            <i class="fa-solid fa-arrow-up-right-dots text-xs me-2 opacity-70"></i>
+                            <span id="dash-gross" dir="ltr">0.00 MAD</span>
                         </div>
                     </div>
                     <div>
-                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest">Total Expenses</div>
+                        <div class="text-[10px] text-gray-500 mb-1 uppercase font-bold tracking-widest" data-i18n="totalExpenses">Total Expenses</div>
                         <div class="text-base font-bold text-brand-red flex items-center">
-                            <i class="fa-solid fa-arrow-down-right-dots text-xs mr-2 opacity-70"></i>
-                            <span id="dash-expenses">0.00 MAD</span>
+                            <i class="fa-solid fa-arrow-down-right-dots text-xs me-2 opacity-70"></i>
+                            <span id="dash-expenses" dir="ltr">0.00 MAD</span>
                         </div>
                     </div>
                 </div>
@@ -223,57 +250,55 @@
             <div class="glass-card rounded-3xl p-6">
                 <div class="flex justify-between items-end mb-3">
                     <div>
-                        <h3 class="text-sm font-bold text-white mb-1 tracking-wide">Daily Target</h3>
-                        <div class="text-xs text-gray-400 font-medium"><span id="goal-current" class="text-brand-green font-bold">0 MAD</span> / <span id="goal-target">300 MAD</span></div>
+                        <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1 tracking-wide" data-i18n="dailyTarget">Daily Target</h3>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 font-medium" dir="ltr"><span id="goal-current" class="text-brand-green font-bold">0 MAD</span> / <span id="goal-target">300 MAD</span></div>
                     </div>
                     <div class="text-2xl font-black text-brand-green" id="goal-percent">0%</div>
                 </div>
-                <div class="w-full bg-[#0B101E] rounded-full h-3 mt-2 shadow-inner overflow-hidden">
+                <div class="w-full stat-box rounded-full h-3 mt-2 shadow-inner overflow-hidden flex" dir="ltr">
                     <div id="goal-bar" class="bg-gradient-to-r from-brand-blue to-brand-green h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
                 </div>
             </div>
-            
         </section>
 
         <section id="view-stats" class="space-y-5 hidden">
             
-            <h2 class="text-2xl font-bold px-2 pt-2 text-white">Performance Stats</h2>
+            <h2 class="text-2xl font-bold px-2 pt-2 text-gray-900 dark:text-white" data-i18n="performanceStats">Performance Stats</h2>
 
             <div class="grid grid-cols-3 gap-3">
                 <div class="glass-card rounded-2xl p-4 text-center">
                     <i class="fa-solid fa-stopwatch text-brand-blue mb-3 text-xl opacity-80"></i>
-                    <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1">Per Hour</div>
-                    <div class="text-xs font-bold text-white" id="dash-per-hour">0.00 MAD</div>
+                    <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="perHour">Per Hour</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-per-hour" dir="ltr">0.00 MAD</div>
                 </div>
                 <div class="glass-card rounded-2xl p-4 text-center">
                     <i class="fa-solid fa-road text-brand-gold mb-3 text-xl opacity-80"></i>
-                    <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1">Per KM</div>
-                    <div class="text-xs font-bold text-white" id="dash-per-km">0.00 MAD</div>
+                    <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="perKm">Per KM</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-per-km" dir="ltr">0.00 MAD</div>
                 </div>
                 <div class="glass-card rounded-2xl p-4 text-center">
                     <i class="fa-solid fa-gas-pump text-brand-red mb-3 text-xl opacity-80"></i>
-                    <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1">Fuel Est.</div>
-                    <div class="text-xs font-bold text-white" id="dash-fuel-est">0.00 MAD</div>
+                    <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1" data-i18n="fuelEst">Fuel Est.</div>
+                    <div class="text-xs font-bold text-gray-900 dark:text-white" id="dash-fuel-est" dir="ltr">0.00 MAD</div>
                 </div>
             </div>
 
             <div class="glass-card rounded-3xl p-5">
                 <div class="flex justify-between items-center mb-5">
-                    <h3 class="text-sm font-bold text-white tracking-wide">7-Day Overview</h3>
-                    <span class="text-[10px] font-bold tracking-widest px-2 py-1 bg-[#0B101E] rounded-lg text-brand-blue border border-brand-blue/20 uppercase">Net Earnings</span>
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white tracking-wide" data-i18n="weekOverview">7-Day Overview</h3>
+                    <span class="text-[10px] font-bold tracking-widest px-2 py-1 stat-box rounded-lg text-brand-blue uppercase" data-i18n="netEarnings">Net Earnings</span>
                 </div>
-                <div class="relative h-56 w-full">
+                <div class="relative h-56 w-full" dir="ltr">
                     <canvas id="mainChart"></canvas>
                 </div>
             </div>
-            
         </section>
 
         <section id="view-ledger" class="space-y-4 hidden">
-            <div class="sticky top-[72px] z-30 bg-[#0B101E]/90 backdrop-blur-xl mx-[-16px] px-4 py-4 rounded-none border-b border-white/5 flex gap-2 overflow-x-auto hide-scrollbar">
-                <button onclick="filterLedger('all')" id="btn-filter-all" class="px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-brand-blue text-white transition-all whitespace-nowrap shadow-lg shadow-brand-blue/20">All Activity</button>
-                <button onclick="filterLedger('ride')" id="btn-filter-ride" class="px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-dark-800 text-gray-400 hover:text-white transition-all whitespace-nowrap border border-white/5">Rides Only</button>
-                <button onclick="filterLedger('expense')" id="btn-filter-expense" class="px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-dark-800 text-gray-400 hover:text-white transition-all whitespace-nowrap border border-white/5">Expenses Only</button>
+            <div class="sticky top-[72px] z-30 glass-nav mx-[-16px] px-4 py-4 rounded-none flex gap-2 overflow-x-auto hide-scrollbar">
+                <button onclick="filterLedger('all')" id="btn-filter-all" class="px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-brand-blue text-white transition-all whitespace-nowrap shadow-lg shadow-brand-blue/20" data-i18n="allActivity">All Activity</button>
+                <button onclick="filterLedger('ride')" id="btn-filter-ride" class="px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-brand-blue transition-all whitespace-nowrap border border-gray-200 dark:border-white/5 shadow-sm" data-i18n="ridesOnly">Rides Only</button>
+                <button onclick="filterLedger('expense')" id="btn-filter-expense" class="px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-brand-red transition-all whitespace-nowrap border border-gray-200 dark:border-white/5 shadow-sm" data-i18n="expensesOnly">Expenses Only</button>
             </div>
 
             <div id="ledger-list" class="space-y-3 pb-8 pt-2">
@@ -281,170 +306,207 @@
         </section>
 
         <section id="view-settings" class="space-y-6 hidden pb-8">
-            <h2 class="text-2xl font-bold px-2 pt-2 text-white">App Configuration</h2>
+            <h2 class="text-2xl font-bold px-2 pt-2 text-gray-900 dark:text-white" data-i18n="appConfig">App Configuration</h2>
             
-            <div class="glass-card rounded-[2rem] p-6 space-y-6">
-                <h3 class="text-[11px] text-brand-blue font-bold uppercase tracking-widest mb-4 border-b border-white/5 pb-3">Defaults & Goals</h3>
+            <div class="glass-card relative z-50 rounded-[2rem] p-6 space-y-5 border border-brand-blue/20">
+                <h3 class="text-[11px] text-brand-blue font-bold uppercase tracking-widest mb-2 border-b border-gray-200 dark:border-white/5 pb-3" data-i18n="preferences">Preferences</h3>
                 
-                <div>
-                    <label class="app-label">Daily Income Target (MAD)</label>
-                    <input type="number" id="set-target" class="app-input" value="300" onchange="saveSettings()">
-                </div>
-                
-                <div>
-                    <label class="app-label">Default InDrive Commission (%)</label>
-                    <input type="number" id="set-comm" class="app-input" value="10" step="0.1" onchange="saveSettings()">
-                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    
+                    <div class="relative w-full z-50">
+                        <button type="button" id="custom-lang-btn" class="app-input flex items-center justify-between font-bold w-full transition-colors hover:bg-gray-50 dark:hover:bg-white/5" onclick="toggleLangMenu()">
+                            <span id="custom-lang-text" class="truncate">English</span>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-globe text-brand-blue"></i>
+                            </div>
+                        </button>
+                        
+                        <ul id="custom-lang-menu" class="absolute z-[100] w-full min-w-[180px] mt-2 bg-white dark:bg-[#141B2D] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl hidden overflow-hidden">
+                            <li onclick="selectLang('en')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">
+                                English <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i>
+                            </li>
+                            <li onclick="selectLang('fr')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">
+                                Français <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i>
+                            </li>
+                            <li onclick="selectLang('ar')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-100 dark:border-white/5 flex items-center justify-between group">
+                                العربية الفصحى <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i>
+                            </li>
+                            <li onclick="selectLang('ma')" class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center justify-between group">
+                                الدارجة المغربية <i class="fa-solid fa-check text-brand-blue hidden group-[.selected]:block"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <button type="button" onclick="toggleTheme()" class="app-input flex items-center justify-between font-bold w-full transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                        <span id="theme-text" data-i18n="darkMode" class="truncate">Dark Mode</span>
+                        <i class="fa-solid fa-moon text-lg text-brand-blue transition-transform" id="theme-icon-btn"></i>
+                    </button>
 
-                <div>
-                    <label class="app-label">Avg Fuel Consumption (L/100km)</label>
-                    <input type="number" id="set-fuel-rate" class="app-input" value="6.0" step="0.1" onchange="saveSettings()">
-                </div>
-
-                <div>
-                    <label class="app-label">Avg Fuel Price (MAD per L)</label>
-                    <input type="number" id="set-fuel-price" class="app-input" value="13.50" step="0.01" onchange="saveSettings()">
                 </div>
             </div>
 
-            <div class="bg-[#1A1016] border border-brand-red/20 rounded-[2rem] p-6 space-y-5 shadow-lg">
-                <h3 class="text-[11px] text-brand-red font-bold uppercase tracking-widest mb-2 border-b border-brand-red/10 pb-3">Danger Zone</h3>
-                <p class="text-xs text-gray-400 leading-relaxed font-medium">Permanently delete all locally stored data. This action cannot be undone.</p>
-                <button onclick="factoryReset()" class="w-full bg-brand-red/10 hover:bg-brand-red text-brand-red hover:text-white border border-brand-red/50 rounded-2xl py-4 font-bold tracking-wide transition-all">Factory Reset Data</button>
+            <div class="glass-card rounded-[2rem] p-6 space-y-6 relative z-10">
+                <h3 class="text-[11px] text-brand-blue font-bold uppercase tracking-widest mb-4 border-b border-gray-200 dark:border-white/5 pb-3" data-i18n="defaultsGoals">Defaults & Goals</h3>
+                
+                <div>
+                    <label class="app-label" data-i18n="setTarget">Daily Income Target (MAD)</label>
+                    <input type="number" id="set-target" class="app-input" value="300" onchange="saveSettings()" dir="ltr">
+                </div>
+                
+                <div>
+                    <label class="app-label" data-i18n="setComm">Default Commission (%)</label>
+                    <input type="number" id="set-comm" class="app-input" value="10" step="0.1" onchange="saveSettings()" dir="ltr">
+                </div>
+
+                <div>
+                    <label class="app-label" data-i18n="setFuelRate">Avg Fuel Consumption (L/100km)</label>
+                    <input type="number" id="set-fuel-rate" class="app-input" value="6.0" step="0.1" onchange="saveSettings()" dir="ltr">
+                </div>
+
+                <div>
+                    <label class="app-label" data-i18n="setFuelPrice">Avg Fuel Price (MAD per L)</label>
+                    <input type="number" id="set-fuel-price" class="app-input" value="13.50" step="0.01" onchange="saveSettings()" dir="ltr">
+                </div>
+            </div>
+
+            <div class="glass-card rounded-[2rem] p-6 space-y-4 relative z-10">
+                <h3 class="text-[11px] text-brand-green font-bold uppercase tracking-widest mb-2 border-b border-gray-200 dark:border-white/5 pb-3" data-i18n="exportTitle">Data Management</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium" data-i18n="exportDesc">Download a copy of your entire ledger (rides and expenses) as a CSV file for your records.</p>
+                <button onclick="exportToCSV()" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-[#1E293B] dark:hover:bg-[#334155] text-gray-900 dark:text-white border border-gray-300 dark:border-white/10 rounded-2xl py-4 font-bold tracking-wide transition-all flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-file-csv text-brand-green"></i> <span data-i18n="exportBtn">Export Data (CSV)</span>
+                </button>
+            </div>
+
+            <div class="danger-zone rounded-[2rem] p-6 space-y-5 shadow-lg border border-brand-red/20 relative z-10">
+                <h3 class="text-[11px] text-brand-red font-bold uppercase tracking-widest mb-2 border-b border-brand-red/10 pb-3" data-i18n="dangerZone">Danger Zone</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium" data-i18n="dangerDesc">Permanently delete all locally stored data. This action cannot be undone.</p>
+                <button onclick="factoryReset()" class="w-full bg-brand-red/10 hover:bg-brand-red text-brand-red hover:text-white border border-brand-red/50 rounded-2xl py-4 font-bold tracking-wide transition-all" data-i18n="factoryReset">Factory Reset Data</button>
             </div>
         </section>
 
     </main>
 
     <div class="fixed bottom-6 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none">
-        
-        <nav class="pointer-events-auto w-full max-w-[420px] bg-[#141B2D]/95 backdrop-blur-3xl border border-white/10 rounded-[2rem] px-2 py-2 flex justify-between items-center shadow-[0_20px_40px_rgba(0,0,0,0.8)] relative">
-            
+        <nav class="fab-dock-bg pointer-events-auto w-full max-w-[420px] backdrop-blur-3xl rounded-[2rem] px-2 py-2 flex justify-between items-center shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.8)] relative">
             <button onclick="navigate('dashboard')" id="nav-dashboard" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl bg-brand-blue/15 text-brand-blue transition-all">
                 <i class="fa-solid fa-chart-pie text-[20px] mb-1.5"></i>
-                <span class="text-[10px] font-bold tracking-wide">Home</span>
+                <span class="text-[10px] font-bold tracking-wide" data-i18n="navHome">Home</span>
             </button>
-            
-            <button onclick="navigate('ledger')" id="nav-ledger" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-300 transition-all">
+            <button onclick="navigate('ledger')" id="nav-ledger" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all">
                 <i class="fa-solid fa-list-ul text-[20px] mb-1.5"></i>
-                <span class="text-[10px] font-bold tracking-wide">History</span>
+                <span class="text-[10px] font-bold tracking-wide" data-i18n="navHistory">History</span>
             </button>
 
-            <div class="w-[75px]"></div>
-
-            <button onclick="navigate('stats')" id="nav-stats" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-300 transition-all">
+            <div class="w-[75px]"></div> <button onclick="navigate('stats')" id="nav-stats" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all">
                 <i class="fa-solid fa-chart-line text-[20px] mb-1.5"></i>
-                <span class="text-[10px] font-bold tracking-wide">Stats</span>
+                <span class="text-[10px] font-bold tracking-wide" data-i18n="navStats">Stats</span>
             </button>
-            
-            <button onclick="navigate('settings')" id="nav-settings" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-300 transition-all">
+            <button onclick="navigate('settings')" id="nav-settings" class="flex-1 flex flex-col items-center py-2.5 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-all">
                 <i class="fa-solid fa-gear text-[20px] mb-1.5"></i>
-                <span class="text-[10px] font-bold tracking-wide">Config</span>
+                <span class="text-[10px] font-bold tracking-wide" data-i18n="navConfig">Config</span>
             </button>
-            
         </nav>
         
-        <button onclick="openActionMenu()" class="pointer-events-auto absolute bottom-[14px] w-[68px] h-[68px] bg-gradient-to-tr from-brand-blue to-brand-green rounded-full shadow-[0_8px_25px_rgba(16,185,129,0.5)] flex items-center justify-center text-white text-2xl transition-transform active:scale-90 hover:scale-105 border-[5px] border-[#0B101E] z-50">
+        <button onclick="openActionMenu()" class="fab-btn pointer-events-auto absolute bottom-[14px] w-[68px] h-[68px] bg-gradient-to-tr from-brand-blue to-brand-green rounded-full shadow-[0_8px_25px_rgba(16,185,129,0.5)] flex items-center justify-center text-white text-2xl transition-transform active:scale-90 hover:scale-105 border-[5px] z-50">
             <i class="fa-solid fa-plus"></i>
         </button>
     </div>
 
     <div id="sheet-action" class="bottom-sheet pb-10 rounded-t-[36px] p-6">
-        <div class="w-12 h-1.5 bg-gray-700 rounded-full mx-auto mb-8"></div>
-        <h3 class="text-xl font-black tracking-wide mb-6 text-center text-white">Log Activity</h3>
+        <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto mb-8"></div>
+        <h3 class="text-xl font-black tracking-wide mb-6 text-center text-gray-900 dark:text-white" data-i18n="logActivity">Log Activity</h3>
         <div class="grid grid-cols-2 gap-4 mb-4">
-            <button onclick="openSheet('sheet-ride')" class="bg-[#0B101E] border border-brand-green/20 hover:border-brand-green/50 rounded-3xl p-6 flex flex-col items-center gap-4 transition-colors shadow-inner">
+            <button onclick="openSheet('sheet-ride')" class="action-btn border border-brand-green/20 hover:border-brand-green/50 rounded-3xl p-6 flex flex-col items-center gap-4 transition-colors shadow-inner">
                 <div class="w-14 h-14 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(16,185,129,0.2)]">
                     <i class="fa-solid fa-car"></i>
                 </div>
-                <span class="font-bold text-gray-200 tracking-wide">Add Ride</span>
+                <span class="font-bold text-gray-700 dark:text-gray-200 tracking-wide" data-i18n="addRideBtn">Add Ride</span>
             </button>
-            <button onclick="openSheet('sheet-expense')" class="bg-[#0B101E] border border-brand-red/20 hover:border-brand-red/50 rounded-3xl p-6 flex flex-col items-center gap-4 transition-colors shadow-inner">
+            <button onclick="openSheet('sheet-expense')" class="action-btn border border-brand-red/20 hover:border-brand-red/50 rounded-3xl p-6 flex flex-col items-center gap-4 transition-colors shadow-inner">
                 <div class="w-14 h-14 rounded-full bg-brand-red/10 text-brand-red flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(244,63,94,0.2)]">
                     <i class="fa-solid fa-receipt"></i>
                 </div>
-                <span class="font-bold text-gray-200 tracking-wide">Add Expense</span>
+                <span class="font-bold text-gray-700 dark:text-gray-200 tracking-wide" data-i18n="addExpenseBtn">Add Expense</span>
             </button>
         </div>
     </div>
 
     <div id="sheet-ride" class="bottom-sheet pb-10 rounded-t-[36px] p-6">
-        <div class="w-12 h-1.5 bg-gray-700 rounded-full mx-auto mb-6"></div>
+        <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto mb-6"></div>
         <div class="flex justify-between items-center mb-8">
-            <h3 class="text-2xl font-black text-brand-green tracking-tight">Log New Ride</h3>
-            <button onclick="closeAllSheets()" class="w-10 h-10 rounded-full bg-[#0B101E] border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="text-2xl font-black text-brand-green tracking-tight" data-i18n="logNewRide">Log New Ride</h3>
+            <button onclick="closeAllSheets()" class="w-10 h-10 rounded-full action-btn border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
         
         <form id="form-ride" class="space-y-5">
             <div class="grid grid-cols-2 gap-5">
                 <div class="col-span-2">
-                    <label class="app-label">Date & Time</label>
-                    <input type="datetime-local" id="ride-date" class="app-input" required>
+                    <label class="app-label" data-i18n="dateTime">Date & Time</label>
+                    <input type="datetime-local" id="ride-date" class="app-input" required dir="ltr">
                 </div>
                 
                 <div class="col-span-2 relative">
-                    <label class="app-label">Gross Fare (MAD)</label>
+                    <label class="app-label" data-i18n="grossFare">Gross Fare (MAD)</label>
                     <div class="relative">
-                        <span class="absolute left-4 top-[18px] text-brand-green font-bold text-sm">DH</span>
-                        <input type="number" id="ride-gross" step="0.01" min="0" class="app-input pl-[2.8rem] text-2xl font-black text-brand-green" style="background-color: #04060b;" placeholder="0.00" required oninput="autoCalcCommission()">
+                        <span class="absolute start-4 top-[18px] text-brand-green font-bold text-sm">DH</span>
+                        <input type="number" id="ride-gross" step="0.01" min="0" class="app-input app-input-deep ps-[2.8rem] text-2xl font-black text-brand-green" placeholder="0.00" required oninput="autoCalcCommission()" dir="ltr">
                     </div>
                 </div>
 
                 <div>
-                    <label class="app-label">Commission (MAD)</label>
+                    <label class="app-label" data-i18n="commissionLabel">Commission (MAD)</label>
                     <div class="relative">
-                        <input type="number" id="ride-comm" step="0.01" min="0" class="app-input border-brand-red/30 focus:border-brand-red" placeholder="0.00" required>
-                        <div class="absolute right-3 top-3.5 text-[10px] text-gray-500 font-bold bg-[#141B2D] px-2 py-1 rounded" id="comm-hint">10%</div>
+                        <input type="number" id="ride-comm" step="0.01" min="0" class="app-input border-brand-red/30 focus:border-brand-red" placeholder="0.00" required dir="ltr">
+                        <div class="absolute end-3 top-3.5 text-[10px] text-gray-500 font-bold bg-gray-100 dark:bg-[#141B2D] px-2 py-1 rounded border border-gray-200 dark:border-transparent" id="comm-hint" dir="ltr">10%</div>
                     </div>
                 </div>
                 
                 <div>
-                    <label class="app-label">Tip / Tolls (MAD)</label>
-                    <input type="number" id="ride-tip" step="0.01" min="0" class="app-input" value="0.00">
+                    <label class="app-label" data-i18n="tipTolls">Tip / Tolls (MAD)</label>
+                    <input type="number" id="ride-tip" step="0.01" min="0" class="app-input" value="0.00" dir="ltr">
                 </div>
 
                 <div>
-                    <label class="app-label">Distance (km)</label>
-                    <input type="number" id="ride-distance" step="0.1" min="0" class="app-input" placeholder="0.0" required>
+                    <label class="app-label" data-i18n="distance">Distance (km)</label>
+                    <input type="number" id="ride-distance" step="0.1" min="0" class="app-input" placeholder="0.0" required dir="ltr">
                 </div>
 
                 <div>
-                    <label class="app-label">Duration (mins)</label>
-                    <input type="number" id="ride-duration" step="1" min="1" class="app-input" placeholder="15" required>
+                    <label class="app-label" data-i18n="duration">Duration (mins)</label>
+                    <input type="number" id="ride-duration" step="1" min="1" class="app-input" placeholder="15" required dir="ltr">
                 </div>
             </div>
-
             <div class="pt-6">
-                <button type="submit" class="w-full bg-brand-green hover:bg-brand-green/90 text-[#0B101E] rounded-2xl py-4 font-black text-lg shadow-[0_8px_20px_rgba(16,185,129,0.3)] transition-all active:scale-95 tracking-wide">Save Ride Data</button>
+                <button type="submit" class="w-full bg-brand-green hover:bg-brand-green/90 text-white dark:text-[#0B101E] rounded-2xl py-4 font-black text-lg shadow-[0_8px_20px_rgba(16,185,129,0.3)] transition-all active:scale-95 tracking-wide" data-i18n="saveRideData">Save Ride Data</button>
             </div>
         </form>
     </div>
 
     <div id="sheet-expense" class="bottom-sheet pb-10 rounded-t-[36px] p-6">
-        <div class="w-12 h-1.5 bg-gray-700 rounded-full mx-auto mb-6"></div>
+        <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto mb-6"></div>
         <div class="flex justify-between items-center mb-8">
-            <h3 class="text-2xl font-black text-brand-red tracking-tight">Log Expense</h3>
-            <button onclick="closeAllSheets()" class="w-10 h-10 rounded-full bg-[#0B101E] border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="text-2xl font-black text-brand-red tracking-tight" data-i18n="logExpense">Log Expense</h3>
+            <button onclick="closeAllSheets()" class="w-10 h-10 rounded-full action-btn border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
         
         <form id="form-expense" class="space-y-5">
             <div>
-                <label class="app-label">Date & Time</label>
-                <input type="datetime-local" id="exp-date" class="app-input" required>
+                <label class="app-label" data-i18n="dateTime">Date & Time</label>
+                <input type="datetime-local" id="exp-date" class="app-input" required dir="ltr">
             </div>
             
             <div class="relative">
-                <label class="app-label">Amount (MAD)</label>
+                <label class="app-label" data-i18n="amount">Amount (MAD)</label>
                 <div class="relative">
-                    <span class="absolute left-4 top-[18px] text-brand-red font-bold text-sm">DH</span>
-                    <input type="number" id="exp-amount" step="0.01" min="0" class="app-input pl-[2.8rem] text-2xl font-black text-brand-red" style="background-color: #04060b;" placeholder="0.00" required>
+                    <span class="absolute start-4 top-[18px] text-brand-red font-bold text-sm">DH</span>
+                    <input type="number" id="exp-amount" step="0.01" min="0" class="app-input app-input-deep ps-[2.8rem] text-2xl font-black text-brand-red" placeholder="0.00" required dir="ltr">
                 </div>
             </div>
 
             <div>
-                <label class="app-label">Category</label>
+                <label class="app-label" data-i18n="category">Category</label>
                 <div class="relative">
-                    <select id="exp-category" class="app-input text-white font-medium pr-10" required>
+                    <select id="exp-category" class="app-input font-medium pe-10" required>
                         <option value="Fuel">⛽ Fuel / Diesel</option>
                         <option value="Wash">🧽 Car Wash</option>
                         <option value="Maintenance">🔧 Maintenance</option>
@@ -454,52 +516,244 @@
                         <option value="Insurance">🛡️ Insurance</option>
                         <option value="Other">📦 Other</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                    <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-4 text-gray-400">
                         <i class="fa-solid fa-chevron-down text-sm"></i>
                     </div>
                 </div>
             </div>
 
             <div>
-                <label class="app-label">Notes (Optional)</label>
-                <textarea id="exp-notes" rows="2" class="app-input resize-none" placeholder="Add specific details..."></textarea>
+                <label class="app-label" data-i18n="notes">Notes (Optional)</label>
+                <textarea id="exp-notes" rows="2" class="app-input resize-none" placeholder="..." dir="auto"></textarea>
             </div>
-
             <div class="pt-6">
-                <button type="submit" class="w-full bg-brand-red hover:bg-brand-red/90 text-white rounded-2xl py-4 font-black text-lg shadow-[0_8px_20px_rgba(244,63,94,0.3)] transition-all active:scale-95 tracking-wide">Save Expense</button>
+                <button type="submit" class="w-full bg-brand-red hover:bg-brand-red/90 text-white rounded-2xl py-4 font-black text-lg shadow-[0_8px_20px_rgba(244,63,94,0.3)] transition-all active:scale-95 tracking-wide" data-i18n="saveExpense">Save Expense</button>
             </div>
         </form>
     </div>
 
     <script>
-        // --- Data & State Management ---
-        const defaultSettings = { target: 300, commRate: 10, fuelRate: 6.0, fuelPrice: 13.50 };
-        
-        let appState = JSON.parse(localStorage.getItem('indriveProDataMorocco')) || { 
-            rides: [], 
-            expenses: [], 
-            settings: defaultSettings,
-            shift: { isActive: false, startTime: null, totalSecondsToday: 0 }
+        // --- Translations Dictionary ---
+        const i18n = {
+            en: {
+                onlineStatus: "ONLINE", netProfit: "Today's Net Profit", rides: "Rides",
+                grossIncome: "Gross Income", totalExpenses: "Total Expenses", dailyTarget: "Daily Target",
+                performanceStats: "Performance Stats", perHour: "Per Hour", perKm: "Per KM", fuelEst: "Fuel Est.",
+                weekOverview: "7-Day Overview", netEarnings: "Net Earnings", allActivity: "All Activity",
+                ridesOnly: "Rides Only", expensesOnly: "Expenses Only", appConfig: "App Configuration",
+                preferences: "Preferences", languageTitle: "App Language", darkMode: "Dark Mode", lightMode: "Light Mode",
+                defaultsGoals: "Defaults & Goals", setTarget: "Daily Income Target (MAD)",
+                setComm: "Default Commission (%)", setFuelRate: "Avg Fuel Consumption (L/100km)", setFuelPrice: "Avg Fuel Price (MAD per L)",
+                exportTitle: "Data Management", exportDesc: "Download a copy of your entire ledger (rides and expenses) as a CSV file for your records.",
+                exportBtn: "Export Data (CSV)", dangerZone: "Danger Zone", dangerDesc: "Permanently delete all locally stored data. This action cannot be undone.",
+                factoryReset: "Factory Reset Data", navHome: "Home", navHistory: "History", navStats: "Stats", navConfig: "Config",
+                logActivity: "Log Activity", addRideBtn: "Add Ride", addExpenseBtn: "Add Expense", logNewRide: "Log New Ride",
+                dateTime: "Date & Time", grossFare: "Gross Fare (MAD)", commissionLabel: "Commission (MAD)", tipTolls: "Tip / Tolls (MAD)",
+                distance: "Distance (km)", duration: "Duration (mins)", saveRideData: "Save Ride Data", logExpense: "Log Expense",
+                amount: "Amount (MAD)", category: "Category", notes: "Notes (Optional)", saveExpense: "Save Expense",
+                noData: "No activity found.", rideTitle: "Ride Data", gross: "Gross"
+            },
+            fr: {
+                onlineStatus: "EN LIGNE", netProfit: "Bénéfice Net du Jour", rides: "Trajets",
+                grossIncome: "Revenu Brut", totalExpenses: "Dépenses Totales", dailyTarget: "Objectif Quotidien",
+                performanceStats: "Statistiques", perHour: "Par Heure", perKm: "Par KM", fuelEst: "Est. Carburant",
+                weekOverview: "Aperçu 7 Jours", netEarnings: "Gains Nets", allActivity: "Toute l'Activité",
+                ridesOnly: "Trajets Uniquement", expensesOnly: "Dépenses Uniquement", appConfig: "Configuration",
+                preferences: "Préférences", languageTitle: "Langue", darkMode: "Mode Sombre", lightMode: "Mode Clair",
+                defaultsGoals: "Paramètres par Défaut", setTarget: "Objectif Quotidien (MAD)",
+                setComm: "Commission par Défaut (%)", setFuelRate: "Consommation Moy. (L/100km)", setFuelPrice: "Prix Carburant (MAD/L)",
+                exportTitle: "Gestion des Données", exportDesc: "Téléchargez une copie de votre historique (trajets et dépenses) au format CSV.",
+                exportBtn: "Exporter les Données (CSV)", dangerZone: "Zone de Danger", dangerDesc: "Supprimer définitivement toutes les données locales. Cette action est irréversible.",
+                factoryReset: "Réinitialiser les Données", navHome: "Accueil", navHistory: "Historique", navStats: "Stats", navConfig: "Config",
+                logActivity: "Ajouter une Activité", addRideBtn: "Ajouter Trajet", addExpenseBtn: "Ajouter Dépense", logNewRide: "Nouveau Trajet",
+                dateTime: "Date & Heure", grossFare: "Tarif Brut (MAD)", commissionLabel: "Commission (MAD)", tipTolls: "Pourboire / Péage (MAD)",
+                distance: "Distance (km)", duration: "Durée (mins)", saveRideData: "Enregistrer Trajet", logExpense: "Nouvelle Dépense",
+                amount: "Montant (MAD)", category: "Catégorie", notes: "Notes (Optionnel)", saveExpense: "Enregistrer Dépense",
+                noData: "Aucune activité trouvée.", rideTitle: "Données du Trajet", gross: "Brut"
+            },
+            ar: {
+                onlineStatus: "متصل", netProfit: "صافي أرباح اليوم", rides: "الرحلات",
+                grossIncome: "إجمالي الدخل", totalExpenses: "إجمالي النفقات", dailyTarget: "الهدف اليومي",
+                performanceStats: "إحصائيات الأداء", perHour: "في الساعة", perKm: "في الكيلومتر", fuelEst: "تكلفة الوقود",
+                weekOverview: "نظرة عامة لـ 7 أيام", netEarnings: "صافي الأرباح", allActivity: "كل الأنشطة",
+                ridesOnly: "الرحلات فقط", expensesOnly: "النفقات فقط", appConfig: "إعدادات التطبيق",
+                preferences: "التفضيلات", languageTitle: "لغة التطبيق", darkMode: "الوضع الداكن", lightMode: "الوضع الفاتح",
+                defaultsGoals: "الافتراضيات والأهداف", setTarget: "الهدف اليومي للدخل (درهم)",
+                setComm: "العمولة الافتراضية (%)", setFuelRate: "متوسط استهلاك الوقود (لتر/100كم)", setFuelPrice: "متوسط سعر الوقود (درهم/لتر)",
+                exportTitle: "إدارة البيانات", exportDesc: "قم بتنزيل نسخة من السجل الخاص بك (الرحلات والنفقات) كملف CSV.",
+                exportBtn: "تصدير البيانات (CSV)", dangerZone: "منطقة الخطر", dangerDesc: "حذف جميع البيانات المخزنة محلياً بشكل دائم. لا يمكن التراجع عن هذا الإجراء.",
+                factoryReset: "إعادة ضبط المصنع", navHome: "الرئيسية", navHistory: "السجل", navStats: "إحصائيات", navConfig: "الإعدادات",
+                logActivity: "تسجيل نشاط", addRideBtn: "إضافة رحلة", addExpenseBtn: "إضافة نفقة", logNewRide: "تسجيل رحلة جديدة",
+                dateTime: "التاريخ والوقت", grossFare: "الأجرة الإجمالية (درهم)", commissionLabel: "العمولة (درهم)", tipTolls: "إكرامية / رسوم طريق (درهم)",
+                distance: "المسافة (كم)", duration: "المدة (دقائق)", saveRideData: "حفظ بيانات الرحلة", logExpense: "تسجيل نفقة",
+                amount: "المبلغ (درهم)", category: "الفئة", notes: "ملاحظات (اختياري)", saveExpense: "حفظ النفقة",
+                noData: "لا توجد أنشطة مسجلة.", rideTitle: "بيانات الرحلة", gross: "الإجمالي"
+            },
+            ma: {
+                onlineStatus: "خدام دابا", netProfit: "الربح الصافي ديال اليوم", rides: "توصيلات",
+                grossIncome: "المدخول الإجمالي", totalExpenses: "مجموع المصاريف", dailyTarget: "الهدف اليومي",
+                performanceStats: "إحصائيات الخدمة", perHour: "فـ الساعة", perKm: "فـ الكيلومتر", fuelEst: "تقدير المازوط",
+                weekOverview: "نظرة على 7 أيام", netEarnings: "الأرباح الصافية", allActivity: "ڭاع الحركات",
+                ridesOnly: "التوصيلات بوحدهم", expensesOnly: "المصاريف بوحدهم", appConfig: "إعدادات التطبيق",
+                preferences: "التفضيلات", languageTitle: "لغة التطبيق", darkMode: "الوضع المظلم", lightMode: "الوضع الفاتح",
+                defaultsGoals: "الأهداف والقياسات", setTarget: "الهدف اليومي (درهم)",
+                setComm: "الكوميسيون العادية (%)", setFuelRate: "استهلاك المازوط (L/100km)", setFuelPrice: "ثمن المازوط للتر (درهم)",
+                exportTitle: "إدارة البيانات", exportDesc: "تيليشارجي ڭاع الخدمة والمصاريف ديالك فملف CSV باش تحتفظ بيهم.",
+                exportBtn: "تيليشارجي البيانات (CSV)", dangerZone: "منطقة الخطر", dangerDesc: "مسح ڭاع المعلومات المسجلة فالتليفون. هاد الخطوة ميمكنش ترجع فيها.",
+                factoryReset: "مسح جميع البيانات", navHome: "الرئيسية", navHistory: "السجل", navStats: "إحصائيات", navConfig: "إعدادات",
+                logActivity: "قيد خدمة جديدة", addRideBtn: "زيد توصيلة", addExpenseBtn: "زيد مصروف", logNewRide: "قيد توصيلة جديدة",
+                dateTime: "التاريخ والوقت", grossFare: "الثمن الكلي (درهم)", commissionLabel: "الكوميسيون (درهم)", tipTolls: "بقشيش / بياج (درهم)",
+                distance: "المسافة (km)", duration: "المدة (دقائق)", saveRideData: "حفظ التوصيلة", logExpense: "قيد مصروف جديد",
+                amount: "المبلغ (درهم)", category: "النوع", notes: "ملاحظات (اختياري)", saveExpense: "حفظ المصروف",
+                noData: "مكاين حتى نشاط مسجل.", rideTitle: "تفاصيل التوصيلة", gross: "الإجمالي"
+            }
         };
 
+        const catIcons = { 'Fuel': 'fa-gas-pump', 'Wash':'fa-soap', 'Maintenance':'fa-wrench', 'Food':'fa-burger', 'Tolls':'fa-road', 'Mobile':'fa-mobile', 'Insurance':'fa-shield', 'Other':'fa-receipt' };
+        const langMap = { 'en': 'English', 'fr': 'Français', 'ar': 'العربية الفصحى', 'ma': 'الدارجة المغربية' };
+
+        // --- Data & State Management ---
+        const defaultSettings = { target: 300, commRate: 10, fuelRate: 6.0, fuelPrice: 13.50, lang: 'en', theme: 'dark' };
+        let appState = JSON.parse(localStorage.getItem('indriveProDataMorocco')) || { 
+            rides: [], expenses: [], settings: defaultSettings, shift: { isActive: false, startTime: null, totalSecondsToday: 0 }
+        };
         let myChart = null;
         let shiftInterval = null;
         let currentFilter = 'all';
 
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
+            if(!appState.settings.lang) appState.settings.lang = 'en';
+            if(!appState.settings.theme) appState.settings.theme = 'dark';
+            
+            // Set initial Custom Dropdown text
+            document.getElementById('custom-lang-text').textContent = langMap[appState.settings.lang];
+            updateLangMenuChecks(appState.settings.lang);
+            
+            applyTranslations(appState.settings.lang);
+            applyTheme(appState.settings.theme);
             updateHeaderDate();
             applySettingsToUI();
             checkShiftStatus();
-            renderDashboard();
             setFormDates();
         });
 
+        // --- Custom Language Dropdown Logic ---
+        function toggleLangMenu() {
+            const menu = document.getElementById('custom-lang-menu');
+            const btn = document.getElementById('custom-lang-btn');
+            menu.classList.toggle('hidden');
+            btn.classList.toggle('active-focus');
+        }
+
+        function selectLang(lang) {
+            document.getElementById('custom-lang-text').textContent = langMap[lang];
+            toggleLangMenu();
+            updateLangMenuChecks(lang);
+            changeLanguage(lang);
+        }
+        
+        function updateLangMenuChecks(activeLang) {
+            const menuItems = document.querySelectorAll('#custom-lang-menu li');
+            const langCodes = ['en', 'fr', 'ar', 'ma'];
+            menuItems.forEach((li, index) => {
+                if(langCodes[index] === activeLang) li.classList.add('selected');
+                else li.classList.remove('selected');
+            });
+        }
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (e) => {
+            const btn = document.getElementById('custom-lang-btn');
+            const menu = document.getElementById('custom-lang-menu');
+            if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+                btn.classList.remove('active-focus');
+            }
+        });
+
+        // --- Theme & Language Logic ---
+        function toggleTheme() {
+            const newTheme = appState.settings.theme === 'dark' ? 'light' : 'dark';
+            appState.settings.theme = newTheme;
+            saveState();
+            applyTheme(newTheme);
+        }
+
+        function applyTheme(theme) {
+            const icon = document.getElementById('theme-icon-btn');
+            const textEl = document.getElementById('theme-text');
+            const langData = i18n[appState.settings.lang];
+            
+            if (theme === 'light') {
+                document.documentElement.classList.remove('dark');
+                icon.className = 'fa-solid fa-sun text-lg text-brand-gold transition-transform rotate-180';
+                if(textEl && langData) textEl.textContent = langData.lightMode;
+            } else {
+                document.documentElement.classList.add('dark');
+                icon.className = 'fa-solid fa-moon text-lg text-brand-blue transition-transform rotate-0';
+                if(textEl && langData) textEl.textContent = langData.darkMode;
+            }
+            if(myChart) renderChart(); // Update chart colors
+        }
+
+        function changeLanguage(lang) {
+            appState.settings.lang = lang;
+            saveState();
+            applyTranslations(lang);
+        }
+
+        function applyTranslations(lang) {
+            document.documentElement.lang = lang === 'ma' ? 'ar' : lang; // standard attr
+            document.documentElement.dir = (lang === 'ar' || lang === 'ma') ? 'rtl' : 'ltr';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang] && i18n[lang][key]) el.innerHTML = i18n[lang][key];
+            });
+            
+            // Sync theme button text explicitly during lang change
+            const textEl = document.getElementById('theme-text');
+            if(textEl) textEl.textContent = appState.settings.theme === 'light' ? i18n[lang].lightMode : i18n[lang].darkMode;
+
+            if(!document.getElementById('view-dashboard').classList.contains('hidden') || !document.getElementById('view-stats').classList.contains('hidden')) renderDashboard();
+            renderLedger();
+            if(myChart) myChart.update();
+        }
+
+        // --- Core Helpers ---
         function saveState() { localStorage.setItem('indriveProDataMorocco', JSON.stringify(appState)); }
         function genId() { return 'id_' + Math.random().toString(36).substr(2, 9); }
         function formatMoney(num) { return parseFloat(num).toFixed(2) + ' MAD'; }
-        function isSameDay(d1, d2) {
-            return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+        function isSameDay(d1, d2) { return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate(); }
+
+        // --- Export to CSV ---
+        function exportToCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,Type,Date,Amount,Commission,Distance,Duration,Category,Notes\n";
+            const combined = [...appState.rides, ...appState.expenses].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            combined.forEach(item => {
+                const isRide = item.type === 'ride';
+                const row = [
+                    item.type,
+                    new Date(item.date).toLocaleString(),
+                    isRide ? item.gross : item.amount,
+                    isRide ? item.comm : 0,
+                    isRide ? item.distance : 0,
+                    isRide ? item.duration : 0,
+                    isRide ? 'Ride' : item.category,
+                    `"${item.notes || ''}"`
+                ];
+                csvContent += row.join(",") + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `FlousiDrive_Export_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         // --- Navigation ---
@@ -526,27 +780,19 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- Bottom Sheets (Modals) ---
+        // --- Modals ---
         function openActionMenu() { openSheet('sheet-action'); }
-        
         function openSheet(sheetId) {
             closeAllSheets();
             setFormDates();
             document.getElementById('modal-overlay').classList.add('active');
-            setTimeout(() => {
-                document.getElementById(sheetId).classList.add('active');
-            }, 10);
-            
-            if(sheetId === 'sheet-ride') {
-                document.getElementById('comm-hint').textContent = `${appState.settings.commRate}%`;
-            }
+            setTimeout(() => document.getElementById(sheetId).classList.add('active'), 10);
+            if(sheetId === 'sheet-ride') document.getElementById('comm-hint').textContent = `${appState.settings.commRate}%`;
         }
-        
         function closeAllSheets() {
             document.querySelectorAll('.bottom-sheet').forEach(sheet => sheet.classList.remove('active'));
             document.getElementById('modal-overlay').classList.remove('active');
         }
-
         function setFormDates() {
             const now = new Date();
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -554,135 +800,102 @@
             document.getElementById('ride-date').value = iso;
             document.getElementById('exp-date').value = iso;
         }
-
         function updateHeaderDate() {
             const options = { weekday: 'long', month: 'short', day: 'numeric' };
-            document.getElementById('header-date').textContent = new Date().toLocaleDateString('en-US', options);
+            const locale = (appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'ar-MA' : (appState.settings.lang === 'fr' ? 'fr-FR' : 'en-US');
+            document.getElementById('header-date').textContent = new Date().toLocaleDateString(locale, options);
         }
 
         // --- Shift Management ---
         function toggleShift() {
             const knob = document.getElementById('shift-knob');
             const toggle = document.getElementById('shift-toggle');
-            
             if(appState.shift.isActive) {
-                appState.shift.isActive = false;
-                appState.shift.startTime = null;
+                appState.shift.isActive = false; appState.shift.startTime = null;
                 clearInterval(shiftInterval);
                 knob.classList.replace('translate-x-6', 'translate-x-1');
-                toggle.classList.replace('bg-brand-blue', 'bg-dark-700');
+                toggle.classList.replace('bg-brand-blue', 'bg-gray-300');
+                if(document.documentElement.classList.contains('dark')) toggle.classList.replace('bg-brand-blue', 'bg-dark-700');
                 document.getElementById('shift-banner').classList.add('hidden');
             } else {
-                appState.shift.isActive = true;
-                appState.shift.startTime = Date.now();
+                appState.shift.isActive = true; appState.shift.startTime = Date.now();
                 knob.classList.replace('translate-x-1', 'translate-x-6');
-                toggle.classList.replace('bg-dark-700', 'bg-brand-blue');
+                toggle.classList.remove('bg-gray-300', 'bg-dark-700');
+                toggle.classList.add('bg-brand-blue');
                 document.getElementById('shift-banner').classList.remove('hidden');
                 startShiftTimer();
             }
             saveState();
         }
-
         function checkShiftStatus() {
             const knob = document.getElementById('shift-knob');
             const toggle = document.getElementById('shift-toggle');
             if(appState.shift.isActive) {
                 knob.classList.replace('translate-x-1', 'translate-x-6');
-                toggle.classList.replace('bg-dark-700', 'bg-brand-blue');
+                toggle.classList.remove('bg-gray-300', 'bg-dark-700');
+                toggle.classList.add('bg-brand-blue');
                 document.getElementById('shift-banner').classList.remove('hidden');
                 startShiftTimer();
-            } else {
-                appState.shift.totalSecondsToday = 0; 
-            }
+            } else { appState.shift.totalSecondsToday = 0; }
         }
-
         function startShiftTimer() {
             clearInterval(shiftInterval);
             shiftInterval = setInterval(() => {
-                const now = Date.now();
-                const diffSecs = Math.floor((now - appState.shift.startTime) / 1000);
-                const totalSecs = appState.shift.totalSecondsToday + diffSecs;
-                
+                const totalSecs = appState.shift.totalSecondsToday + Math.floor((Date.now() - appState.shift.startTime) / 1000);
                 const h = String(Math.floor(totalSecs / 3600)).padStart(2, '0');
                 const m = String(Math.floor((totalSecs % 3600) / 60)).padStart(2, '0');
                 const s = String(totalSecs % 60).padStart(2, '0');
-                
                 document.getElementById('shift-timer').textContent = `${h}:${m}:${s}`;
             }, 1000);
         }
 
         // --- Settings ---
         function applySettingsToUI() {
-            if(!appState.settings) appState.settings = defaultSettings;
             document.getElementById('set-target').value = appState.settings.target;
             document.getElementById('set-comm').value = appState.settings.commRate;
             document.getElementById('set-fuel-rate').value = appState.settings.fuelRate;
             document.getElementById('set-fuel-price').value = appState.settings.fuelPrice;
         }
-
         function saveSettings() {
-            appState.settings = {
-                target: parseFloat(document.getElementById('set-target').value) || 300,
-                commRate: parseFloat(document.getElementById('set-comm').value) || 10,
-                fuelRate: parseFloat(document.getElementById('set-fuel-rate').value) || 6.0,
-                fuelPrice: parseFloat(document.getElementById('set-fuel-price').value) || 13.50
-            };
-            saveState();
-            renderDashboard();
+            appState.settings.target = parseFloat(document.getElementById('set-target').value) || 300;
+            appState.settings.commRate = parseFloat(document.getElementById('set-comm').value) || 10;
+            appState.settings.fuelRate = parseFloat(document.getElementById('set-fuel-rate').value) || 6.0;
+            appState.settings.fuelPrice = parseFloat(document.getElementById('set-fuel-price').value) || 13.50;
+            saveState(); renderDashboard();
         }
-
         function factoryReset() {
-            if(confirm('Are you absolutely sure? All data will be wiped.')) {
-                localStorage.removeItem('indriveProDataMorocco');
-                location.reload();
+            if(confirm('Are you sure? / Vraiment? / هل أنت متأكد؟')) {
+                localStorage.removeItem('indriveProDataMorocco'); location.reload();
             }
         }
-
         function autoCalcCommission() {
             const gross = parseFloat(document.getElementById('ride-gross').value) || 0;
-            const rate = appState.settings.commRate / 100;
-            document.getElementById('ride-comm').value = (gross * rate).toFixed(2);
+            document.getElementById('ride-comm').value = (gross * (appState.settings.commRate / 100)).toFixed(2);
         }
 
         // --- Form Submissions ---
         document.getElementById('form-ride').addEventListener('submit', (e) => {
             e.preventDefault();
             const ride = {
-                id: genId(),
-                type: 'ride',
-                date: document.getElementById('ride-date').value,
-                gross: parseFloat(document.getElementById('ride-gross').value),
-                comm: parseFloat(document.getElementById('ride-comm').value),
-                tip: parseFloat(document.getElementById('ride-tip').value) || 0,
-                distance: parseFloat(document.getElementById('ride-distance').value),
-                duration: parseFloat(document.getElementById('ride-duration').value),
+                id: genId(), type: 'ride', date: document.getElementById('ride-date').value,
+                gross: parseFloat(document.getElementById('ride-gross').value), comm: parseFloat(document.getElementById('ride-comm').value),
+                tip: parseFloat(document.getElementById('ride-tip').value) || 0, distance: parseFloat(document.getElementById('ride-distance').value),
+                duration: parseFloat(document.getElementById('ride-duration').value)
             };
             ride.net = ride.gross + ride.tip - ride.comm;
-            
-            appState.rides.push(ride);
-            saveState();
-            e.target.reset();
-            closeAllSheets();
-            
+            appState.rides.push(ride); saveState(); e.target.reset(); closeAllSheets();
             if(!document.getElementById('view-dashboard').classList.contains('hidden') || !document.getElementById('view-stats').classList.contains('hidden')) renderDashboard();
             else renderLedger();
         });
 
         document.getElementById('form-expense').addEventListener('submit', (e) => {
             e.preventDefault();
-            const expense = {
-                id: genId(),
-                type: 'expense',
-                date: document.getElementById('exp-date').value,
-                amount: parseFloat(document.getElementById('exp-amount').value),
-                category: document.getElementById('exp-category').value,
+            appState.expenses.push({
+                id: genId(), type: 'expense', date: document.getElementById('exp-date').value,
+                amount: parseFloat(document.getElementById('exp-amount').value), category: document.getElementById('exp-category').value,
                 notes: document.getElementById('exp-notes').value
-            };
-            appState.expenses.push(expense);
-            saveState();
-            e.target.reset();
-            closeAllSheets();
-            
+            });
+            saveState(); e.target.reset(); closeAllSheets();
             if(!document.getElementById('view-dashboard').classList.contains('hidden') || !document.getElementById('view-stats').classList.contains('hidden')) renderDashboard();
             else renderLedger();
         });
@@ -693,35 +906,22 @@
             let dGross = 0, dComm = 0, dTip = 0, dExp = 0, dDist = 0, dDur = 0, dCount = 0;
 
             appState.rides.forEach(r => {
-                if (isSameDay(new Date(r.date), today)) {
-                    dGross += r.gross; dComm += r.comm; dTip += r.tip;
-                    dDist += r.distance; dDur += r.duration; dCount++;
-                }
+                if (isSameDay(new Date(r.date), today)) { dGross+=r.gross; dComm+=r.comm; dTip+=r.tip; dDist+=r.distance; dDur+=r.duration; dCount++; }
             });
+            appState.expenses.forEach(e => { if (isSameDay(new Date(e.date), today)) dExp+=e.amount; });
 
-            appState.expenses.forEach(e => {
-                if (isSameDay(new Date(e.date), today)) dExp += e.amount;
-            });
-
-            const totalIncome = dGross + dTip;
-            const netProfit = totalIncome - dComm - dExp;
+            const totalIncome = dGross + dTip; const netProfit = totalIncome - dComm - dExp;
             
             document.getElementById('dash-net').textContent = formatMoney(netProfit);
-            document.getElementById('dash-net').className = `text-4xl font-black bg-clip-text text-transparent tracking-tight ${netProfit >= 0 ? 'bg-gradient-to-r from-white to-gray-300' : 'bg-gradient-to-r from-brand-red to-rose-400'}`;
-            
+            document.getElementById('dash-net').className = `text-4xl font-black bg-clip-text text-transparent tracking-tight ${netProfit >= 0 ? 'bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-300' : 'bg-gradient-to-r from-brand-red to-rose-400'}`;
             document.getElementById('dash-gross').textContent = formatMoney(totalIncome);
             document.getElementById('dash-expenses').textContent = formatMoney(dExp + dComm);
             document.getElementById('dash-ride-count').textContent = dCount;
 
             const hrs = dDur / 60;
-            const perHr = hrs > 0 ? (netProfit / hrs) : 0;
-            document.getElementById('dash-per-hour').textContent = formatMoney(perHr);
-            
-            const perKm = dDist > 0 ? (netProfit / dDist) : 0;
-            document.getElementById('dash-per-km').textContent = formatMoney(perKm);
-
-            const fuelEst = (dDist / 100) * appState.settings.fuelRate * appState.settings.fuelPrice;
-            document.getElementById('dash-fuel-est').textContent = formatMoney(fuelEst);
+            document.getElementById('dash-per-hour').textContent = formatMoney(hrs > 0 ? (netProfit / hrs) : 0);
+            document.getElementById('dash-per-km').textContent = formatMoney(dDist > 0 ? (netProfit / dDist) : 0);
+            document.getElementById('dash-fuel-est').textContent = formatMoney((dDist / 100) * appState.settings.fuelRate * appState.settings.fuelPrice);
 
             const target = appState.settings.target;
             const percent = Math.min((netProfit / target) * 100, 100);
@@ -739,84 +939,47 @@
             const labels = [], incomeData = [], expenseData = [];
             
             for (let i = 6; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
-                labels.push(d.toLocaleDateString('en-US', { weekday: 'short' }));
+                const d = new Date(); d.setDate(d.getDate() - i);
+                const locale = (appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'ar-MA' : 'en-US';
+                labels.push(d.toLocaleDateString(locale, { weekday: 'short' }));
                 
                 let dayInc = 0, dayExp = 0;
-                
-                appState.rides.forEach(r => {
-                    if (isSameDay(new Date(r.date), d)) dayInc += (r.gross + r.tip - r.comm);
-                });
-                appState.expenses.forEach(e => {
-                    if (isSameDay(new Date(e.date), d)) dayExp += e.amount;
-                });
-
-                incomeData.push(dayInc);
-                expenseData.push(dayExp);
+                appState.rides.forEach(r => { if (isSameDay(new Date(r.date), d)) dayInc += (r.gross + r.tip - r.comm); });
+                appState.expenses.forEach(e => { if (isSameDay(new Date(e.date), d)) dayExp += e.amount; });
+                incomeData.push(dayInc); expenseData.push(dayExp);
             }
 
             if (myChart) myChart.destroy();
-
             let gradientInc = ctx.createLinearGradient(0, 0, 0, 400);
-            gradientInc.addColorStop(0, 'rgba(16, 185, 129, 0.9)'); 
-            gradientInc.addColorStop(1, 'rgba(16, 185, 129, 0.2)');
+            gradientInc.addColorStop(0, 'rgba(16, 185, 129, 0.9)'); gradientInc.addColorStop(1, 'rgba(16, 185, 129, 0.2)');
+
+            const langData = i18n[appState.settings.lang];
+            const isDark = appState.settings.theme === 'dark';
 
             myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [
-                        {
-                            label: 'Net Earnings',
-                            data: incomeData,
-                            backgroundColor: gradientInc,
-                            borderRadius: 6,
-                            borderSkipped: false,
-                            barPercentage: 0.6
-                        },
-                        {
-                            label: 'Expenses',
-                            data: expenseData,
-                            backgroundColor: 'rgba(244, 63, 94, 0.9)', 
-                            borderRadius: 6,
-                            borderSkipped: false,
-                            barPercentage: 0.6
-                        }
+                        { label: langData.netEarnings, data: incomeData, backgroundColor: gradientInc, borderRadius: 6, barPercentage: 0.6 },
+                        { label: langData.totalExpenses, data: expenseData, backgroundColor: 'rgba(244, 63, 94, 0.9)', borderRadius: 6, barPercentage: 0.6 }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
+                    responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
                     plugins: {
                         legend: { display: false },
-                        tooltip: {
-                            backgroundColor: 'rgba(11, 16, 30, 0.9)',
-                            titleColor: '#9ca3af',
-                            bodyColor: '#fff',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            boxPadding: 6,
-                            cornerRadius: 8,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + ' MAD';
-                                }
-                            }
+                        tooltip: { 
+                            backgroundColor: isDark ? 'rgba(11, 16, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)', 
+                            titleColor: isDark ? '#9ca3af' : '#6b7280', 
+                            bodyColor: isDark ? '#ffffff' : '#111827', 
+                            borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)', 
+                            borderWidth: 1, padding: 12, cornerRadius: 8, rtl: (appState.settings.lang === 'ar' || appState.settings.lang === 'ma') 
                         }
                     },
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: 'rgba(255, 255, 255, 0.03)', drawBorder: false },
-                            ticks: { color: '#64748b', font: {family: 'Inter'} }
-                        },
-                        x: {
-                            grid: { display: false, drawBorder: false },
-                            ticks: { color: '#94a3b8', font: {family: 'Inter'} }
-                        }
+                        y: { beginAtZero: true, grid: { color: isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0,0,0,0.03)', drawBorder: false }, ticks: { color: isDark ? '#64748b' : '#9ca3af' } },
+                        x: { grid: { display: false, drawBorder: false }, ticks: { color: isDark ? '#94a3b8' : '#6b7280' } }
                     }
                 }
             });
@@ -827,87 +990,81 @@
             currentFilter = type;
             ['all', 'ride', 'expense'].forEach(t => {
                 const btn = document.getElementById(`btn-filter-${t}`);
-                if(t === type) {
-                    btn.className = "px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-brand-blue text-white transition-all whitespace-nowrap shadow-lg shadow-brand-blue/20";
-                } else {
-                    btn.className = "px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-dark-800 text-gray-400 hover:text-white transition-all whitespace-nowrap border border-white/5";
-                }
+                if(t === type) btn.className = "px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-brand-blue text-white transition-all whitespace-nowrap shadow-lg shadow-brand-blue/20";
+                else btn.className = "px-5 py-2 rounded-full text-xs font-bold tracking-wide bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-brand-blue transition-all whitespace-nowrap border border-gray-200 dark:border-white/5 shadow-sm";
             });
             renderLedger();
         }
 
         function deleteEntry(id, type) {
-            if(confirm('Delete this entry forever?')) {
-                if(type === 'ride') {
-                    appState.rides = appState.rides.filter(r => r.id !== id);
-                } else {
-                    appState.expenses = appState.expenses.filter(e => e.id !== id);
-                }
-                saveState();
-                renderLedger();
+            if(confirm('Delete? / Supprimer? / تمسح؟ / هل تريد الحذف؟')) {
+                if(type === 'ride') appState.rides = appState.rides.filter(r => r.id !== id);
+                else appState.expenses = appState.expenses.filter(e => e.id !== id);
+                saveState(); renderLedger();
             }
         }
 
         function renderLedger() {
             const listEl = document.getElementById('ledger-list');
             listEl.innerHTML = '';
+            const langData = i18n[appState.settings.lang];
 
             let combined = [];
             if(currentFilter === 'all' || currentFilter === 'ride') combined.push(...appState.rides);
             if(currentFilter === 'all' || currentFilter === 'expense') combined.push(...appState.expenses);
-
             combined.sort((a, b) => new Date(b.date) - new Date(a.date));
 
             if (combined.length === 0) {
-                listEl.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-24 text-gray-500">
-                        <i class="fa-solid fa-folder-open text-5xl mb-4 opacity-40"></i>
-                        <p class="font-medium tracking-wide">No activity found.</p>
-                    </div>`;
+                listEl.innerHTML = `<div class="flex flex-col items-center justify-center py-24 text-gray-400"><i class="fa-solid fa-folder-open text-5xl mb-4 opacity-40"></i><p class="font-medium tracking-wide">${langData.noData}</p></div>`;
                 return;
             }
 
             combined.forEach((item, index) => {
                 const d = new Date(item.date);
-                const timeStr = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                const dateStr = d.toLocaleDateString([], {month: 'short', day: 'numeric'});
+                const locale = (appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'ar-MA' : 'en-US';
+                const timeStr = d.toLocaleTimeString(locale, {hour: '2-digit', minute:'2-digit'});
+                const dateStr = d.toLocaleDateString(locale, {month: 'short', day: 'numeric'});
                 
                 const isRide = item.type === 'ride';
                 const iconColor = isRide ? 'text-brand-green' : 'text-brand-red';
                 const iconBg = isRide ? 'bg-brand-green/10' : 'bg-brand-red/10';
+                const iconClass = !isRide ? (catIcons[item.category] || 'fa-receipt') : 'fa-car';
                 
-                let iconClass = 'fa-car';
-                if(!isRide) {
-                    const catIcons = { 'Fuel': 'fa-gas-pump', 'Wash':'fa-soap', 'Maintenance':'fa-wrench', 'Food':'fa-burger', 'Tolls':'fa-road', 'Mobile':'fa-mobile', 'Insurance':'fa-shield', 'Other':'fa-receipt' };
-                    iconClass = catIcons[item.category] || 'fa-receipt';
+                let displayTitle = isRide ? langData.rideTitle : item.category;
+                if(!isRide && appState.settings.lang === 'ma') {
+                    const maCats = {'Fuel':'مازوط', 'Wash':'غسيل', 'Maintenance':'ميكانيك', 'Tolls':'بياج', 'Food':'ماكلة', 'Mobile':'تعبئة', 'Insurance':'تأمين', 'Other':'أخرى'};
+                    displayTitle = maCats[item.category] || item.category;
+                } else if (!isRide && appState.settings.lang === 'ar') {
+                    const arCats = {'Fuel':'وقود', 'Wash':'غسيل', 'Maintenance':'صيانة', 'Tolls':'رسوم طرق', 'Food':'طعام', 'Mobile':'اتصالات', 'Insurance':'تأمين', 'Other':'أخرى'};
+                    displayTitle = arCats[item.category] || item.category;
+                } else if (!isRide && appState.settings.lang === 'fr') {
+                    const frCats = {'Fuel':'Carburant', 'Wash':'Lavage', 'Maintenance':'Entretien', 'Tolls':'Péage', 'Food':'Repas', 'Mobile':'Forfait', 'Insurance':'Assurance', 'Other':'Autre'};
+                    displayTitle = frCats[item.category] || item.category;
                 }
 
-                const title = isRide ? `Ride Data` : item.category;
-                const subText = isRide ? `${item.distance}km • ${item.duration}m` : (item.notes || 'Expense');
+                const subText = isRide ? `${item.distance}km • ${item.duration}m` : (item.notes || ((appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'مصروف' : 'Expense'));
                 const mainAmt = isRide ? item.net : item.amount;
-                const sign = isRide ? '+' : '-';
-                
                 const delay = Math.min(index * 0.05, 0.5);
 
                 const html = `
-                    <div class="glass-card rounded-[1.5rem] p-4 flex justify-between items-center group relative overflow-hidden opacity-0 animate-slide-up" style="animation-delay: ${delay}s">
-                        ${isRide ? `<div class="absolute top-0 left-0 w-1.5 h-full bg-brand-green"></div>` : `<div class="absolute top-0 left-0 w-1.5 h-full bg-brand-red"></div>`}
-                        <div class="flex items-center gap-4 pl-2">
+                    <div class="glass-card rounded-[1.5rem] p-4 flex justify-between items-center group relative overflow-hidden opacity-0 animate-slide-up" style="animation-delay: ${delay}s" dir="${(appState.settings.lang === 'ar' || appState.settings.lang === 'ma') ? 'rtl' : 'ltr'}">
+                        ${isRide ? `<div class="absolute top-0 start-0 w-1.5 h-full bg-brand-green"></div>` : `<div class="absolute top-0 start-0 w-1.5 h-full bg-brand-red"></div>`}
+                        <div class="flex items-center gap-4 ps-2">
                             <div class="w-12 h-12 rounded-2xl ${iconBg} flex items-center justify-center ${iconColor} text-lg shadow-inner">
                                 <i class="fa-solid ${iconClass}"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-100 text-sm tracking-wide mb-0.5">${title}</h4>
-                                <div class="text-[11px] text-gray-400 font-medium mb-1">${dateStr} • ${timeStr}</div>
-                                <div class="text-[10px] text-gray-500 bg-[#0B101E] px-2 py-0.5 rounded-md inline-block border border-white/5">${subText}</div>
+                                <h4 class="font-bold text-gray-900 dark:text-gray-100 text-sm tracking-wide mb-0.5">${displayTitle}</h4>
+                                <div class="text-[11px] text-gray-500 font-medium mb-1" dir="ltr">${dateStr} • ${timeStr}</div>
+                                <div class="text-[10px] text-gray-600 dark:text-gray-400 stat-box px-2 py-0.5 rounded-md inline-block" dir="auto">${subText}</div>
                             </div>
                         </div>
                         
-                        <div class="flex flex-col items-end justify-center pr-1">
-                            <div class="font-black text-base tracking-tight ${iconColor}">${sign}${formatMoney(mainAmt)}</div>
-                            ${isRide ? `<div class="text-[10px] text-gray-500 mt-1 font-medium">Gross: ${formatMoney(item.gross)}</div>` : ''}
+                        <div class="flex flex-col items-end justify-center pe-1">
+                            <div class="font-black text-base tracking-tight ${iconColor}" dir="ltr">${isRide ? '+' : '-'}${formatMoney(mainAmt)}</div>
+                            ${isRide ? `<div class="text-[10px] text-gray-500 mt-1 font-medium" dir="ltr">${langData.gross}: ${formatMoney(item.gross)}</div>` : ''}
                             
-                            <button onclick="deleteEntry('${item.id}', '${item.type}')" class="mt-3 bg-[#0B101E] w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:text-brand-red hover:bg-brand-red/10 transition-colors shadow-inner border border-white/5">
+                            <button onclick="deleteEntry('${item.id}', '${item.type}')" class="mt-3 stat-box w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:text-brand-red hover:bg-brand-red/10 transition-colors shadow-inner">
                                 <i class="fa-solid fa-trash text-xs"></i>
                             </button>
                         </div>

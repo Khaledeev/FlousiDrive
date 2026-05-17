@@ -159,7 +159,9 @@
         /* Platform badge pills */
         .platform-pill { border-radius: 999px; padding: 4px 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 4px; }
         .platform-indrive { background: rgba(52,211,153,0.15); color: #10B981; border: 1px solid rgba(52,211,153,0.3); }
-        .platform-bolt { background: rgba(253,224,71,0.15); color: #ca8a04; border: 1px solid rgba(253,224,71,0.3); }
+        .platform-uber { background: rgba(30,30,30,0.15); color: #1a1a1a; border: 1px solid rgba(30,30,30,0.3); }
+        html.dark .platform-uber { background: rgba(255,255,255,0.1); color: #e5e7eb; border: 1px solid rgba(255,255,255,0.2); }
+        .platform-yassir { background: rgba(255,90,0,0.15); color: #ea580c; border: 1px solid rgba(255,90,0,0.3); }
         .platform-careem { background: rgba(34,197,94,0.15); color: #16a34a; border: 1px solid rgba(34,197,94,0.3); }
         .platform-heetch { background: rgba(168,85,247,0.15); color: #7c3aed; border: 1px solid rgba(168,85,247,0.3); }
         .platform-yango { background: rgba(239,68,68,0.15); color: #dc2626; border: 1px solid rgba(239,68,68,0.3); }
@@ -177,6 +179,416 @@
         /* Tip calculator highlight */
         .tip-highlight { animation: tipGlow 1.5s ease-in-out infinite; }
         @keyframes tipGlow { 0%,100%{box-shadow:0 0 10px rgba(245,158,11,0.2)} 50%{box-shadow:0 0 20px rgba(245,158,11,0.5)} }
+
+        /* =============================================
+           CONFIRM MODAL
+        ============================================= */
+        #confirm-modal {
+            position: fixed; inset: 0; z-index: 200;
+            display: flex; align-items: flex-end; justify-content: center;
+            pointer-events: none; opacity: 0;
+            transition: opacity 0.25s ease;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        #confirm-modal.open { opacity: 1; pointer-events: auto; }
+        #confirm-modal-backdrop {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        #confirm-modal-box {
+            position: relative; z-index: 1;
+            background: var(--bg-sheet);
+            border-top-left-radius: 28px; border-top-right-radius: 28px;
+            width: 100%; max-width: 480px;
+            padding: 28px 24px calc(28px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.4);
+            border-top: 1px solid var(--border-card);
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+        #confirm-modal.open #confirm-modal-box { transform: translateY(0); }
+
+        /* =============================================
+           TOAST NOTIFICATION
+        ============================================= */
+        #toast {
+            position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px);
+            z-index: 300; pointer-events: none; opacity: 0;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+            white-space: nowrap;
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* =============================================
+           RICH ANIMATIONS — Noticeable & Polished
+        ============================================= */
+
+        /* Floating entrance for cards */
+        @keyframes floatIn {
+            0%  { opacity: 0; transform: translateY(24px) scale(0.97); }
+            60% { opacity: 1; transform: translateY(-4px) scale(1.005); }
+            100%{ opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .float-in { animation: floatIn 0.55s cubic-bezier(0.16,1,0.3,1) both; }
+
+        /* Shimmer loading skeleton */
+        @keyframes shimmerMove {
+            0%  { background-position: -400px 0; }
+            100%{ background-position: 400px 0; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #e2e8f0 25%, #f8fafc 50%, #e2e8f0 75%);
+            background-size: 400px 100%;
+            animation: shimmerMove 1.4s infinite;
+            border-radius: 6px;
+        }
+        html.dark .shimmer-text {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 400px 100%;
+        }
+
+        /* Bounce-in for stat numbers */
+        @keyframes bounceIn {
+            0%  { opacity: 0; transform: scale(0.4); }
+            55% { opacity: 1; transform: scale(1.1); }
+            75% { transform: scale(0.95); }
+            100%{ transform: scale(1); opacity: 1; }
+        }
+        .bounce-in { animation: bounceIn 0.65s cubic-bezier(0.16,1,0.3,1) both; }
+
+        /* Online banner pulse border */
+        @keyframes onlineBorderPulse {
+            0%,100%{ box-shadow: 0 0 0 0 rgba(16,185,129,0.4), 0 4px 16px rgba(16,185,129,0.15); }
+            50%    { box-shadow: 0 0 0 8px rgba(16,185,129,0), 0 8px 32px rgba(16,185,129,0.3); }
+        }
+        #shift-banner.flex { animation: onlineBorderPulse 2s ease-out infinite; }
+
+        /* Typing/scanning animation for online status */
+        @keyframes scanLine {
+            0%  { left: -100%; }
+            100%{ left: 200%; }
+        }
+        .scan-overlay {
+            position: absolute; top: 0; left: 0; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(16,185,129,0.15), transparent);
+            animation: scanLine 2.5s linear infinite;
+        }
+
+        /* Ripple effect on button press */
+        @keyframes ripple {
+            0%  { transform: scale(0); opacity: 0.5; }
+            100%{ transform: scale(4); opacity: 0; }
+        }
+        .ripple-container { position: relative; overflow: hidden; }
+        .ripple-circle {
+            position: absolute; border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            pointer-events: none;
+            animation: ripple 0.6s ease-out forwards;
+        }
+
+        /* Online mode loading dots */
+        @keyframes dotBlink {
+            0%,80%,100%{ opacity: 0; transform: scale(0.8); }
+            40%         { opacity: 1; transform: scale(1.1); }
+        }
+        .dot-1 { animation: dotBlink 1.4s ease-in-out 0s infinite; }
+        .dot-2 { animation: dotBlink 1.4s ease-in-out 0.2s infinite; }
+        .dot-3 { animation: dotBlink 1.4s ease-in-out 0.4s infinite; }
+
+        /* Radar sweep for online indicator */
+        @keyframes radarSweep {
+            0%  { transform: rotate(0deg); }
+            100%{ transform: rotate(360deg); }
+        }
+        .radar-sweep {
+            display: inline-block;
+            animation: radarSweep 2s linear infinite;
+        }
+
+        /* Platform pill wiggle on select */
+        @keyframes platWiggle {
+            0%,100%{ transform: rotate(0deg) scale(1); }
+            25%    { transform: rotate(-3deg) scale(1.05); }
+            75%    { transform: rotate(3deg) scale(1.05); }
+        }
+        .plat-selected-anim { animation: platWiggle 0.4s ease-out; }
+
+        /* Number count up animation */
+        @keyframes countUp {
+            from { clip-path: inset(100% 0 0 0); opacity: 0; }
+            to   { clip-path: inset(0% 0 0 0); opacity: 1; }
+        }
+
+        /* Card hover lift */
+        .glass-card { transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s, border-color 0.3s; }
+        .glass-card:hover { transform: translateY(-2px); }
+
+        /* Settings vehicle select styled option */
+        @keyframes selectOpen {
+            from { opacity: 0; transform: scaleY(0.9) translateY(-8px); }
+            to   { opacity: 1; transform: scaleY(1) translateY(0); }
+        }
+
+        /* Staggered card entrance */
+        #view-dashboard > *:nth-child(1)  { animation: floatIn 0.4s 0.04s both; }
+        #view-dashboard > *:nth-child(2)  { animation: floatIn 0.4s 0.08s both; }
+        #view-dashboard > *:nth-child(3)  { animation: floatIn 0.4s 0.12s both; }
+        #view-dashboard > *:nth-child(4)  { animation: floatIn 0.4s 0.16s both; }
+        #view-dashboard > *:nth-child(5)  { animation: floatIn 0.4s 0.20s both; }
+        #view-dashboard > *:nth-child(6)  { animation: floatIn 0.4s 0.24s both; }
+        #view-dashboard > *:nth-child(7)  { animation: floatIn 0.4s 0.28s both; }
+        #view-dashboard > *:nth-child(8)  { animation: floatIn 0.4s 0.32s both; }
+
+        /* =============================================
+           CUSTOM SELECT / VEHICLE / PLATFORM — Polished
+        ============================================= */
+        .custom-select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .custom-select-wrapper .app-input {
+            appearance: none; -webkit-appearance: none;
+            background-image: none !important;
+            padding-right: 3rem;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+        .custom-select-wrapper .app-input:focus {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.18), inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .custom-select-arrow {
+            position: absolute;
+            right: 1rem; top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            display: flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px;
+            border-radius: 8px;
+            background: rgba(59,130,246,0.1);
+            color: #3B82F6;
+            transition: transform 0.2s, background 0.2s;
+        }
+        html[dir="rtl"] .custom-select-arrow { right: auto; left: 1rem; }
+        .custom-select-wrapper .app-input:focus + .custom-select-arrow {
+            background: rgba(59,130,246,0.2);
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        /* Vehicle type visual cards */
+        .vehicle-card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .vehicle-card {
+            border-radius: 1rem;
+            padding: 12px 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            border: 2px solid var(--border-input);
+            background: var(--bg-input);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+            font-size: 11px; font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+            min-height: 80px;
+        }
+        .vehicle-card:active { transform: scale(0.94); }
+        .vehicle-card .veh-icon { font-size: 28px; line-height: 1; transition: transform 0.25s; }
+        .vehicle-card.selected {
+            border-color: #3B82F6;
+            background: rgba(59,130,246,0.08);
+            box-shadow: 0 4px 16px rgba(59,130,246,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .vehicle-card.selected .veh-icon { transform: scale(1.18) rotate(-5deg); }
+        .vehicle-card.selected .veh-label { color: #3B82F6; }
+        html.dark .vehicle-card { border-color: rgba(255,255,255,0.08); }
+
+        /* Platform card grid in settings */
+        .platform-card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .platform-card {
+            border-radius: 1rem;
+            padding: 14px 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            border: 2px solid var(--border-input);
+            background: var(--bg-input);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+            min-height: 90px;
+            position: relative; overflow: hidden;
+        }
+        .platform-card:active { transform: scale(0.94); }
+        .platform-card .plat-logo { font-size: 22px; font-weight: 900; line-height: 1; transition: transform 0.3s; }
+        .platform-card .plat-name { font-size: 11px; font-weight: 800; letter-spacing: 0.04em; transition: color 0.2s; }
+        .platform-card.selected {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        .platform-card.selected .plat-logo { transform: scale(1.2) rotate(-5deg); animation: platWiggle 0.4s ease-out; }
+        .platform-card.selected::before {
+            content: '✓';
+            position: absolute; top: 6px; right: 8px;
+            font-size: 11px; font-weight: 900;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: currentColor;
+            color: white;
+            opacity: 0.9;
+        }
+        html[dir="rtl"] .platform-card.selected::before { right: auto; left: 8px; }
+
+        /* InDrive */
+        .plat-card-indrive { border-color: rgba(16,185,129,0.25); }
+        .plat-card-indrive.selected { background: rgba(16,185,129,0.08); border-color: #10B981; color: #10B981; }
+        .plat-card-indrive.selected .plat-name { color: #10B981; }
+        /* Uber */
+        .plat-card-uber { border-color: rgba(30,30,30,0.15); }
+        html.dark .plat-card-uber { border-color: rgba(255,255,255,0.12); }
+        .plat-card-uber.selected { background: rgba(30,30,30,0.07); border-color: #1a1a1a; }
+        html.dark .plat-card-uber.selected { background: rgba(255,255,255,0.08); border-color: #e5e7eb; }
+        .plat-card-uber.selected .plat-name { color: #111; }
+        html.dark .plat-card-uber.selected .plat-name { color: #e5e7eb; }
+        /* Careem */
+        .plat-card-careem { border-color: rgba(34,197,94,0.2); }
+        .plat-card-careem.selected { background: rgba(34,197,94,0.08); border-color: #16a34a; color: #16a34a; }
+        .plat-card-careem.selected .plat-name { color: #16a34a; }
+        /* Heetch */
+        .plat-card-heetch { border-color: rgba(168,85,247,0.2); }
+        .plat-card-heetch.selected { background: rgba(168,85,247,0.08); border-color: #7c3aed; color: #7c3aed; }
+        .plat-card-heetch.selected .plat-name { color: #7c3aed; }
+        /* Yango */
+        .plat-card-yango { border-color: rgba(239,68,68,0.2); }
+        .plat-card-yango.selected { background: rgba(239,68,68,0.08); border-color: #dc2626; color: #dc2626; }
+        .plat-card-yango.selected .plat-name { color: #dc2626; }
+        /* Yassir */
+        .plat-card-yassir { border-color: rgba(255,90,0,0.2); }
+        .plat-card-yassir.selected { background: rgba(255,90,0,0.08); border-color: #ea580c; color: #ea580c; }
+        .plat-card-yassir.selected .plat-name { color: #ea580c; }
+        /* Other */
+        .plat-card-other { border-color: rgba(100,116,139,0.2); }
+        .plat-card-other.selected { background: rgba(100,116,139,0.08); border-color: #64748b; color: #64748b; }
+        .plat-card-other.selected .plat-name { color: #64748b; }
+
+
+
+        /* Page entrance animation */
+        @keyframes pageSlideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .page-enter { animation: pageSlideIn 0.35s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+        /* Card pop-in on dashboard */
+        @keyframes cardPop {
+            0%  { opacity: 0; transform: scale(0.96) translateY(8px); }
+            100%{ opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .card-pop { animation: cardPop 0.4s cubic-bezier(0.16,1,0.3,1) both; }
+        .card-pop:nth-child(1) { animation-delay: 0.03s; }
+        .card-pop:nth-child(2) { animation-delay: 0.07s; }
+        .card-pop:nth-child(3) { animation-delay: 0.11s; }
+        .card-pop:nth-child(4) { animation-delay: 0.15s; }
+        .card-pop:nth-child(5) { animation-delay: 0.19s; }
+        .card-pop:nth-child(6) { animation-delay: 0.23s; }
+        .card-pop:nth-child(7) { animation-delay: 0.27s; }
+        .card-pop:nth-child(8) { animation-delay: 0.31s; }
+
+        /* FAB pulse ring */
+        @keyframes fabRing {
+            0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.45), 0 8px 25px rgba(16,185,129,0.5); }
+            60%  { box-shadow: 0 0 0 14px rgba(16,185,129,0), 0 8px 25px rgba(16,185,129,0.5); }
+            100% { box-shadow: 0 0 0 0 rgba(16,185,129,0), 0 8px 25px rgba(16,185,129,0.5); }
+        }
+        .fab-btn { animation: fabRing 2.5s ease-out infinite; }
+        .fab-btn:active { animation: none; transform: scale(0.88); }
+
+        /* Nav active icon bounce */
+        @keyframes navBounce {
+            0%,100% { transform: translateY(0); }
+            40%     { transform: translateY(-5px); }
+        }
+        .nav-active-bounce { animation: navBounce 0.45s cubic-bezier(0.16,1,0.3,1); }
+
+        /* Number counter roll-up */
+        @keyframes rollUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .num-update { animation: rollUp 0.3s cubic-bezier(0.16,1,0.3,1); }
+
+        /* Shift toggle glow */
+        @keyframes shiftGlow {
+            0%,100% { box-shadow: 0 0 0 0 rgba(59,130,246,0.4); }
+            50%     { box-shadow: 0 0 0 6px rgba(59,130,246,0); }
+        }
+        #shift-toggle.bg-brand-blue { animation: shiftGlow 2s ease-out infinite; }
+
+        /* Ledger item slide-in */
+        @keyframes ledgerSlide {
+            from { opacity: 0; transform: translateX(-14px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        html[dir="rtl"] @keyframes ledgerSlide {
+            from { opacity: 0; transform: translateX(14px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        .ledger-item { animation: ledgerSlide 0.35s cubic-bezier(0.16,1,0.3,1) both; }
+
+        /* Header glow on city press */
+        @keyframes cityTap { 0%{transform:scale(1)} 50%{transform:scale(0.92)} 100%{transform:scale(1)} }
+        #header-city:active { animation: cityTap 0.2s ease; }
+
+        /* Goal bar shimmer */
+        @keyframes barShimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        #goal-bar {
+            background: linear-gradient(90deg, #3B82F6, #10B981, #3B82F6);
+            background-size: 200% auto;
+            animation: barShimmer 3s linear infinite;
+        }
+
+        /* Stat card number pulse after update */
+        .stat-updated { animation: rollUp 0.25s ease-out; }
+
+        /* Action sheet buttons press */
+        .action-btn:active { transform: scale(0.96); }
+
+        /* Bottom sheet drag handle */
+        .sheet-handle {
+            width: 40px; height: 5px; border-radius: 99px;
+            background: rgba(150,150,150,0.35);
+            margin: 0 auto 20px;
+            cursor: grab;
+        }
+
+        /* =============================================
+           RTL SHIFT TOGGLE FIX
+        ============================================= */
+        /* In RTL the knob translate must be mirrored */
+        html[dir="rtl"] #shift-knob { transform: translateX(-4px); }
+        html[dir="rtl"] #shift-toggle.bg-brand-blue #shift-knob { transform: translateX(-24px); }
+        html[dir="rtl"] #ramadan-knob { transform: translateX(-4px); }
+        html[dir="rtl"] #ramadan-toggle-btn .translate-x-5 { transform: translateX(-20px) !important; }
+
+        /* =============================================
+           SELECT ARROW RTL FIX
+        ============================================= */
+        html[dir="rtl"] select.app-input {
+            background-position: left 1rem center;
+            padding-right: 1rem;
+            padding-left: 2.5rem;
+        }
 
         /* City selector */
         .city-chip {
@@ -289,20 +701,57 @@
 
     <div id="modal-overlay" class="overlay" onclick="closeAllSheets()"></div>
 
+    <!-- ============ CONFIRM MODAL ============ -->
+    <div id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+        <div id="confirm-modal-backdrop" onclick="closeConfirmModal()"></div>
+        <div id="confirm-modal-box">
+            <div class="sheet-handle"></div>
+            <div class="flex items-center gap-4 mb-5">
+                <div id="confirm-icon-wrap" class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                    <i id="confirm-icon" class="fa-solid fa-trash"></i>
+                </div>
+                <div>
+                    <h3 id="confirm-title" class="text-lg font-black text-gray-900 dark:text-white tracking-tight mb-1">Delete Entry</h3>
+                    <p id="confirm-desc" class="text-sm text-gray-500 dark:text-gray-400 leading-snug font-medium">This action cannot be undone.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <button id="confirm-cancel-btn" onclick="closeConfirmModal()" class="w-full py-4 rounded-2xl font-bold text-sm bg-gray-100 dark:bg-[#1E293B] text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#2D3748] transition-all active:scale-95">
+                    Cancel
+                </button>
+                <button id="confirm-ok-btn" class="w-full py-4 rounded-2xl font-bold text-sm text-white transition-all active:scale-95">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TOAST ============ -->
+    <div id="toast" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2">
+        <i id="toast-icon" class="fa-solid fa-check-circle text-brand-green"></i>
+        <span id="toast-msg">Done</span>
+    </div>
+
     <main class="flex-1 w-full max-w-lg mx-auto relative px-4 pt-4 pb-36">
 
-        <section id="view-dashboard" class="space-y-5 animate-fade-in block">
+        <section id="view-dashboard" class="space-y-5 block">
 
-            <div id="shift-banner" class="hidden glass-card rounded-2xl p-3 flex justify-between items-center border border-brand-green/30 bg-brand-green/5">
-                <div class="flex items-center gap-2 text-brand-green text-sm font-bold tracking-wide">
+            <div id="shift-banner" class="hidden glass-card card-pop rounded-2xl p-3 flex justify-between items-center border border-brand-green/30 bg-brand-green/5 relative overflow-hidden">
+                <div class="scan-overlay"></div>
+                <div class="flex items-center gap-2 text-brand-green text-sm font-bold tracking-wide relative z-10">
                     <span class="relative flex h-3 w-3">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
                       <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
                     </span>
                     <span data-i18n="onlineStatus">ONLINE</span>
                     <span id="active-platform-badge" class="platform-pill platform-indrive ms-1">InDrive</span>
+                    <span class="flex items-center gap-0.5 ms-1 text-brand-green/70">
+                        <span class="dot-1 inline-block w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                        <span class="dot-2 inline-block w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                        <span class="dot-3 inline-block w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    </span>
                 </div>
-                <div id="shift-timer" class="text-sm font-mono tracking-widest text-gray-600 dark:text-gray-300">00:00:00</div>
+                <div id="shift-timer" class="text-sm font-mono tracking-widest text-gray-600 dark:text-gray-300 relative z-10">00:00:00</div>
             </div>
 
             <div id="ramadan-banner" class="hidden ramadan-banner rounded-2xl p-3 flex items-center gap-3">
@@ -314,7 +763,7 @@
                 <button onclick="dismissRamadan()" class="ms-auto text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xs"></i></button>
             </div>
 
-            <div class="glass-card rounded-[2rem] p-6 relative overflow-hidden">
+            <div class="glass-card card-pop rounded-[2rem] p-6 relative overflow-hidden">
                 <div class="absolute -top-20 end-[-5rem] w-48 h-48 bg-brand-blue/20 rounded-full blur-3xl"></div>
                 <div class="absolute -bottom-10 start-[-2.5rem] w-32 h-32 bg-brand-green/10 rounded-full blur-2xl"></div>
                 
@@ -581,22 +1030,63 @@
                 </div>
                 <div>
                     <label class="app-label" data-i18n="vehicleType">Vehicle Type</label>
-                    <select id="set-vehicle" class="app-input font-medium" onchange="saveSettings()">
-                        <option value="car_small">🚗 Small Car (Clio, Sandero, 208...)</option>
-                        <option value="car_mid">🚙 Mid Car (Logan, Tipo, Accent...)</option>
-                        <option value="car_suv">🚐 SUV / Minivan (Duster, Express, Jogger...)</option>
-                        <option value="moto">🏍️ Motorcycle / Scooter</option>
-                    </select>
+                    <div class="vehicle-card-grid mt-1" id="vehicle-card-grid">
+                        <button type="button" class="vehicle-card" data-vehicle="car_small" onclick="selectVehicleCard('car_small')">
+                            <span class="veh-icon">🚗</span>
+                            <span class="veh-label text-[11px] font-bold">Small Car</span>
+                            <span class="text-[9px] text-gray-400 font-medium">Clio, Sandero</span>
+                        </button>
+                        <button type="button" class="vehicle-card" data-vehicle="car_mid" onclick="selectVehicleCard('car_mid')">
+                            <span class="veh-icon">🚙</span>
+                            <span class="veh-label text-[11px] font-bold">Mid Car</span>
+                            <span class="text-[9px] text-gray-400 font-medium">Logan, Tipo</span>
+                        </button>
+                        <button type="button" class="vehicle-card" data-vehicle="car_suv" onclick="selectVehicleCard('car_suv')">
+                            <span class="veh-icon">🚐</span>
+                            <span class="veh-label text-[11px] font-bold">SUV / Minivan</span>
+                            <span class="text-[9px] text-gray-400 font-medium">Jogger, Express</span>
+                        </button>
+                        <button type="button" class="vehicle-card" data-vehicle="moto" onclick="selectVehicleCard('moto')">
+                            <span class="veh-icon">🏍️</span>
+                            <span class="veh-label text-[11px] font-bold">Moto / Scooter</span>
+                            <span class="text-[9px] text-gray-400 font-medium">Motorcycle</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="set-vehicle" value="car_mid">
                 </div>
                 <div>
                     <label class="app-label" data-i18n="activePlatform">Active Platform</label>
-                    <select id="set-platform" class="app-input font-medium" onchange="saveSettings()">
-                        <option value="InDrive">InDrive</option>
-						<option value="Careem">Careem</option>
-						<option value="Yango">Yango</option>
-                        <option value="Bolt">Uber</option>
-                        <option value="Other">Other / Independent</option>
-                    </select>
+                    <div class="platform-card-grid mt-1" id="settings-platform-grid">
+                        <button type="button" class="platform-card plat-card-indrive" data-plat="InDrive" onclick="selectSettingsPlatform('InDrive')">
+                            <span class="plat-logo" style="color:#10B981;font-size:18px;font-weight:900;">InDrive</span>
+                            <span class="plat-name text-gray-500">🟢 InDrive</span>
+                        </button>
+                        <button type="button" class="platform-card plat-card-uber" data-plat="Uber" onclick="selectSettingsPlatform('Uber')">
+                            <span class="plat-logo" style="font-size:20px;font-weight:900;" class="text-gray-900 dark:text-white">Uber</span>
+                            <span class="plat-name text-gray-500">🖤 Uber</span>
+                        </button>
+                        <button type="button" class="platform-card plat-card-careem" data-plat="Careem" onclick="selectSettingsPlatform('Careem')">
+                            <span class="plat-logo" style="color:#16a34a;font-size:18px;font-weight:900;">Careem</span>
+                            <span class="plat-name text-gray-500">🟩 Careem</span>
+                        </button>
+                        <button type="button" class="platform-card plat-card-heetch" data-plat="Heetch" onclick="selectSettingsPlatform('Heetch')">
+                            <span class="plat-logo" style="color:#7c3aed;font-size:18px;font-weight:900;">Heetch</span>
+                            <span class="plat-name text-gray-500">🟣 Heetch</span>
+                        </button>
+                        <button type="button" class="platform-card plat-card-yango" data-plat="Yango" onclick="selectSettingsPlatform('Yango')">
+                            <span class="plat-logo" style="color:#dc2626;font-size:18px;font-weight:900;">Yango</span>
+                            <span class="plat-name text-gray-500">🔴 Yango</span>
+                        </button>
+                        <button type="button" class="platform-card plat-card-yassir" data-plat="Yassir" onclick="selectSettingsPlatform('Yassir')">
+                            <span class="plat-logo" style="color:#ea580c;font-size:18px;font-weight:900;">Yassir</span>
+                            <span class="plat-name text-gray-500">🟠 Yassir</span>
+                        </button>
+                        <button type="button" class="platform-card plat-card-other" data-plat="Other" onclick="selectSettingsPlatform('Other')" style="grid-column:span 2;">
+                            <span class="plat-logo" style="color:#64748b;font-size:20px;">🚖</span>
+                            <span class="plat-name text-gray-500">Other / Independent</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="set-platform" value="InDrive">
                 </div>
             </div>
 
@@ -639,7 +1129,7 @@
                 </div>
                 <div>
                     <label class="app-label" data-i18n="setComm">Default Commission (%)</label>
-                    <input type="number" id="set-comm" class="app-input" value="20" step="0.1" onchange="saveSettings()" dir="ltr">
+                    <input type="number" id="set-comm" class="app-input" value="10" step="0.1" onchange="saveSettings()" dir="ltr">
                 </div>
                 <div>
                     <label class="app-label" data-i18n="setFuelRate">Avg Fuel Consumption (L/100km)</label>
@@ -647,7 +1137,7 @@
                 </div>
                 <div>
                     <label class="app-label" data-i18n="setFuelPrice">Avg Fuel Price (MAD per L)</label>
-                    <input type="number" id="set-fuel-price" class="app-input" value="11.93" step="0.01" onchange="saveSettings()" dir="ltr">
+                    <input type="number" id="set-fuel-price" class="app-input" value="14.50" step="0.01" onchange="saveSettings()" dir="ltr">
                 </div>
                 <div>
                     <label class="app-label" data-i18n="setWeeklyTarget">Weekly Income Target (MAD)</label>
@@ -744,9 +1234,11 @@
                     <label class="app-label" data-i18n="platformLabel">Platform</label>
                     <div class="flex flex-wrap gap-2" id="ride-platform-chips">
                         <button type="button" data-platform="InDrive" onclick="selectRidePlatform('InDrive')" class="ride-plat-chip platform-pill platform-indrive selected-plat border-2 border-brand-green px-3 py-1.5 text-[11px] font-black">🟢 InDrive</button>
-                        <button type="button" data-platform="Bolt" onclick="selectRidePlatform('Bolt')" class="ride-plat-chip platform-pill platform-bolt px-3 py-1.5 text-[11px] font-black">⚡ Careem</button>
-                        <button type="button" data-platform="Careem" onclick="selectRidePlatform('Careem')" class="ride-plat-chip platform-pill platform-careem px-3 py-1.5 text-[11px] font-black">🟩 Uber</button>
+                        <button type="button" data-platform="Uber" onclick="selectRidePlatform('Uber')" class="ride-plat-chip platform-pill platform-uber px-3 py-1.5 text-[11px] font-black">🖤 Uber</button>
+                        <button type="button" data-platform="Careem" onclick="selectRidePlatform('Careem')" class="ride-plat-chip platform-pill platform-careem px-3 py-1.5 text-[11px] font-black">🟩 Careem</button>
+                        <button type="button" data-platform="Heetch" onclick="selectRidePlatform('Heetch')" class="ride-plat-chip platform-pill platform-heetch px-3 py-1.5 text-[11px] font-black">🟣 Heetch</button>
                         <button type="button" data-platform="Yango" onclick="selectRidePlatform('Yango')" class="ride-plat-chip platform-pill platform-yango px-3 py-1.5 text-[11px] font-black">🔴 Yango</button>
+                        <button type="button" data-platform="Yassir" onclick="selectRidePlatform('Yassir')" class="ride-plat-chip platform-pill platform-yassir px-3 py-1.5 text-[11px] font-black">🟠 Yassir</button>
                         <button type="button" data-platform="Other" onclick="selectRidePlatform('Other')" class="ride-plat-chip platform-pill platform-other px-3 py-1.5 text-[11px] font-black">Other</button>
                     </div>
                     <input type="hidden" id="ride-platform" value="InDrive">
@@ -870,10 +1362,10 @@
                 <div>
                     <label class="app-label" data-i18n="fuelType">Fuel Type</label>
                     <select id="fuel-type" class="app-input font-medium" onchange="updateFuelPrice()">
-                        <option value="gasoil">Gasoil S50 (~11.93/L)</option>
-                        <option value="sp95">Essence SP95 (~13.57/L)</option>
-                        <option value="sp98">Essence SP98</option>
-                        <option value="gpl">GPL</option>
+                        <option value="gasoil">⛽ Gasoil S50 (~14.50/L)</option>
+                        <option value="sp95">⛽ Essence SP95 (~15.00/L)</option>
+                        <option value="sp98">⛽ Essence SP98</option>
+                        <option value="gpl">⛽ GPL</option>
                     </select>
                 </div>
                 <div>
@@ -882,7 +1374,7 @@
                 </div>
                 <div>
                     <label class="app-label" data-i18n="pricePerLiter">Price/Liter (MAD)</label>
-                    <input type="number" id="fuel-price-per-l" step="0.01" class="app-input" value="11.93" oninput="calcFuelTotal()" dir="ltr">
+                    <input type="number" id="fuel-price-per-l" step="0.01" class="app-input" value="14.50" oninput="calcFuelTotal()" dir="ltr">
                 </div>
                 <div>
                     <label class="app-label" data-i18n="totalCost">Total Cost</label>
@@ -1044,7 +1536,7 @@
         // STATE
         // =============================================
         const defaultSettings = {
-            target: 300, commRate: 20, fuelRate: 6.0, fuelPrice: 11.93,
+            target: 300, commRate: 10, fuelRate: 6.0, fuelPrice: 14.50,
             lang: 'en', theme: 'dark', city: 'Casa', driverName: '',
             vehicle: 'car_mid', platform: 'InDrive', weeklyTarget: 2000, ramadanMode: false
         };
@@ -1128,18 +1620,23 @@
             selectedRidePlatform = platform;
             document.getElementById('ride-platform').value = platform;
             document.querySelectorAll('.ride-plat-chip').forEach(btn => {
-                btn.classList.remove('border-2','border-brand-green','border-yellow-500','border-purple-500','border-red-500');
+                btn.classList.remove('border-2','border-brand-green','border-yellow-500','border-purple-500','border-red-500','border-orange-500','border-gray-900','border-gray-400');
                 btn.style.opacity = '0.6';
+                btn.style.transform = 'scale(1)';
             });
             const active = document.querySelector(`.ride-plat-chip[data-platform="${platform}"]`);
             if (active) { 
                 active.style.opacity = '1'; 
-                active.classList.add('border-2'); 
+                active.classList.add('border-2');
+                active.style.transform = 'scale(1.06)';
+                active.classList.add('plat-selected-anim');
+                setTimeout(() => active.classList.remove('plat-selected-anim'), 400);
                 if (platform==='InDrive') active.classList.add('border-brand-green');
-                else if (platform==='Bolt') active.classList.add('border-yellow-500');
+                else if (platform==='Uber') active.classList.add('border-gray-900');
                 else if (platform==='Careem') active.classList.add('border-green-600');
                 else if (platform==='Heetch') active.classList.add('border-purple-500');
                 else if (platform==='Yango') active.classList.add('border-red-500');
+                else if (platform==='Yassir') active.classList.add('border-orange-500');
                 else active.classList.add('border-gray-400');
             }
             
@@ -1157,7 +1654,7 @@
         }
 
         function getPlatformClass(p) {
-            const map = { 'InDrive':'platform-indrive', 'Bolt':'platform-bolt', 'Careem':'platform-careem', 'Heetch':'platform-heetch', 'Yango':'platform-yango', 'Other':'platform-other' };
+            const map = { 'InDrive':'platform-indrive', 'Bolt':'platform-uber', 'Uber':'platform-uber', 'Careem':'platform-careem', 'Heetch':'platform-heetch', 'Yango':'platform-yango', 'Yassir':'platform-yassir', 'Other':'platform-other' };
             return map[p] || 'platform-other';
         }
 
@@ -1183,9 +1680,9 @@
         // =============================================
         function updateFuelPrice() {
             const fuelPrices = {
-                'gasoil': 11.93,
-                'sp95': 13.57,
-                'sp98': 14.50,
+                'gasoil': 14.50,
+                'sp95': 15.00,
+                'sp98': 15.80,
                 'gpl': 5.50
             };
             const type = document.getElementById('fuel-type').value;
@@ -1216,6 +1713,8 @@
             });
             saveState(); e.target.reset(); document.getElementById('fuel-total-display').textContent = '0.00 MAD';
             closeAllSheets(); renderDashboard();
+            const l = appState.settings.lang;
+            showToast(l==='ma'?'تسجل الكاربيران ✓':l==='ar'?'تم تسجيل الوقود ✓':l==='fr'?'Plein enregistré ✓':'Fuel logged ✓', 'success');
         });
 
         // =============================================
@@ -1240,15 +1739,18 @@
             appState.settings.ramadanMode = !appState.settings.ramadanMode;
             const btn = document.getElementById('ramadan-toggle-btn');
             const knob = document.getElementById('ramadan-knob');
+            const isRTL = document.documentElement.dir === 'rtl';
             if (appState.settings.ramadanMode) {
                 btn.classList.add('bg-brand-gold');
                 btn.classList.remove('bg-gray-300','dark:bg-dark-700');
-                knob.classList.replace('translate-x-1','translate-x-5');
+                knob.classList.remove('translate-x-1','-translate-x-1');
+                knob.classList.add(isRTL ? '-translate-x-5' : 'translate-x-5');
                 document.getElementById('ramadan-banner').classList.remove('hidden');
             } else {
                 btn.classList.remove('bg-brand-gold');
                 btn.classList.add('bg-gray-300');
-                knob.classList.replace('translate-x-5','translate-x-1');
+                knob.classList.remove('translate-x-5','-translate-x-5');
+                knob.classList.add(isRTL ? '-translate-x-1' : 'translate-x-1');
                 document.getElementById('ramadan-banner').classList.add('hidden');
             }
             saveState();
@@ -1329,6 +1831,18 @@
             });
             const textEl = document.getElementById('theme-text');
             if(textEl) textEl.textContent = appState.settings.theme === 'light' ? i18n[lang].lightMode : i18n[lang].darkMode;
+
+            // Re-apply RTL-aware toggle knob positions after dir change
+            const shiftKnob = document.getElementById('shift-knob');
+            if (shiftKnob) setKnobPosition(shiftKnob, appState.shift.isActive);
+            const ramadanKnob = document.getElementById('ramadan-knob');
+            if (ramadanKnob) {
+                const isRTL = document.documentElement.dir === 'rtl';
+                ramadanKnob.classList.remove('translate-x-1','translate-x-5','-translate-x-1','-translate-x-5');
+                if (appState.settings.ramadanMode) ramadanKnob.classList.add(isRTL ? '-translate-x-5' : 'translate-x-5');
+                else ramadanKnob.classList.add(isRTL ? '-translate-x-1' : 'translate-x-1');
+            }
+
             if(!document.getElementById('view-dashboard').classList.contains('hidden') || !document.getElementById('view-stats').classList.contains('hidden')) renderDashboard();
             renderLedger();
             if(myChart) myChart.update();
@@ -1361,6 +1875,9 @@
             document.getElementById('set-vehicle').value = appState.settings.vehicle || 'car_mid';
             document.getElementById('set-platform').value = appState.settings.platform || 'InDrive';
             document.getElementById('set-weekly-target').value = appState.settings.weeklyTarget || 2000;
+            // Sync card grids
+            selectVehicleCard(appState.settings.vehicle || 'car_mid', true);
+            selectSettingsPlatform(appState.settings.platform || 'InDrive', true);
         }
         
         function saveSettings() {
@@ -1368,13 +1885,13 @@
             appState.settings.target = isNaN(t) ? 300 : t;
             
             const c = parseFloat(document.getElementById('set-comm').value);
-            appState.settings.commRate = isNaN(c) ? 20 : c;
+            appState.settings.commRate = isNaN(c) ? 10 : c;
             
             const fr = parseFloat(document.getElementById('set-fuel-rate').value);
             appState.settings.fuelRate = isNaN(fr) ? 6.0 : fr;
             
             const fp = parseFloat(document.getElementById('set-fuel-price').value);
-            appState.settings.fuelPrice = isNaN(fp) ? 11.93 : fp;
+            appState.settings.fuelPrice = isNaN(fp) ? 14.50 : fp;
             
             const wt = parseFloat(document.getElementById('set-weekly-target').value);
             appState.settings.weeklyTarget = isNaN(wt) ? 2000 : wt;
@@ -1390,10 +1907,25 @@
             }
         }
         
-        function factoryReset() {
-            if(confirm('Are you sure? / Vraiment? / هل أنت متأكد؟')) {
-                localStorage.removeItem('indriveProDataMorocco'); location.reload();
-            }
+        function selectVehicleCard(val, silent) {
+            document.getElementById('set-vehicle').value = val;
+            document.querySelectorAll('#vehicle-card-grid .vehicle-card').forEach(c => {
+                c.classList.toggle('selected', c.dataset.vehicle === val);
+            });
+            if (!silent) saveSettings();
+        }
+        
+        function selectSettingsPlatform(val, silent) {
+            document.getElementById('set-platform').value = val;
+            document.querySelectorAll('#settings-platform-grid .platform-card').forEach(c => {
+                const wasSelected = c.classList.contains('selected');
+                c.classList.toggle('selected', c.dataset.plat === val);
+                if (c.dataset.plat === val && !wasSelected) {
+                    c.classList.add('plat-selected-anim');
+                    setTimeout(() => c.classList.remove('plat-selected-anim'), 400);
+                }
+            });
+            if (!silent) saveSettings();
         }
         
         function autoCalcCommission(rate) {
@@ -1424,6 +1956,8 @@
             appState.rides.push(ride); saveState(); e.target.reset(); closeAllSheets();
             selectPayment('cash'); // reset payment UI
             renderDashboard(); if(currentFilter !== 'expense') renderLedger();
+            const l = appState.settings.lang;
+            showToast(l==='ma'?'تسجلات التوصيلة ✓':l==='ar'?'تم تسجيل الرحلة ✓':l==='fr'?'Trajet enregistré ✓':'Ride saved ✓');
         });
 
         document.getElementById('form-expense').addEventListener('submit', (e) => {
@@ -1436,6 +1970,8 @@
             });
             saveState(); e.target.reset(); closeAllSheets();
             renderDashboard(); if(currentFilter !== 'ride') renderLedger();
+            const l = appState.settings.lang;
+            showToast(l==='ma'?'تسجلات المصروف ✓':l==='ar'?'تم تسجيل المصروف ✓':l==='fr'?'Dépense enregistrée ✓':'Expense saved ✓');
         });
 
         // =============================================
@@ -1778,12 +2314,97 @@
             renderLedger();
         }
 
+        // =============================================
+        // CONFIRM MODAL (replaces all JS confirm/alert)
+        // =============================================
+        let _confirmCallback = null;
+
+        function showConfirm({ title, desc, icon = 'fa-trash', iconColor = 'text-brand-red', iconBg = 'bg-brand-red/10', okText = 'Delete', okColor = 'bg-brand-red', onConfirm }) {
+            const modal = document.getElementById('confirm-modal');
+            const cancelBtn = document.getElementById('confirm-cancel-btn');
+            const okBtn = document.getElementById('confirm-ok-btn');
+            const lang = appState.settings.lang;
+
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-desc').textContent = desc;
+            document.getElementById('confirm-icon').className = `fa-solid ${icon} ${iconColor}`;
+            document.getElementById('confirm-icon-wrap').className = `w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${iconBg}`;
+            okBtn.textContent = okText;
+            okBtn.className = `w-full py-4 rounded-2xl font-bold text-sm text-white transition-all active:scale-95 ${okColor}`;
+
+            // Localize cancel button
+            cancelBtn.textContent = lang === 'ar' || lang === 'ma' ? 'إلغاء' : lang === 'fr' ? 'Annuler' : 'Cancel';
+
+            _confirmCallback = onConfirm;
+            modal.classList.add('open');
+            document.body.classList.add('sheet-open');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirm-modal').classList.remove('open');
+            document.body.classList.remove('sheet-open');
+            _confirmCallback = null;
+        }
+
+        document.getElementById('confirm-ok-btn').addEventListener('click', () => {
+            if (_confirmCallback) _confirmCallback();
+            closeConfirmModal();
+        });
+
+        // =============================================
+        // TOAST
+        // =============================================
+        let _toastTimer = null;
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const msgEl = document.getElementById('toast-msg');
+            msgEl.textContent = msg;
+            icon.className = type === 'success'
+                ? 'fa-solid fa-check-circle text-brand-green'
+                : type === 'error'
+                ? 'fa-solid fa-circle-xmark text-brand-red'
+                : 'fa-solid fa-info-circle text-brand-blue';
+            toast.classList.add('show');
+            clearTimeout(_toastTimer);
+            _toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+        }
+
         function deleteEntry(id, type) {
-            if(confirm('Delete? / Supprimer? / تمسح؟')) {
-                if(type==='ride') appState.rides = appState.rides.filter(r => r.id !== id);
-                else appState.expenses = appState.expenses.filter(e => e.id !== id);
-                saveState(); renderLedger(); renderDashboard();
-            }
+            const lang = appState.settings.lang;
+            const isRide = type === 'ride';
+            showConfirm({
+                title: lang==='ma' ? (isRide?'تمسح هاد التوصيلة؟':'تمسح هاد المصروف؟')
+                     : lang==='ar' ? (isRide?'حذف هذه الرحلة؟':'حذف هذا المصروف؟')
+                     : lang==='fr' ? (isRide?'Supprimer ce trajet?':'Supprimer cette dépense?')
+                     : (isRide?'Delete this ride?':'Delete this expense?'),
+                desc: lang==='ma'?'هاد الشي ما يرجعش':lang==='ar'?'لا يمكن التراجع':lang==='fr'?'Action irréversible.':'This cannot be undone.',
+                icon: isRide ? 'fa-car' : 'fa-receipt',
+                iconColor: 'text-brand-red',
+                iconBg: 'bg-brand-red/10',
+                okText: lang==='ma'?'تمسح':lang==='ar'?'حذف':lang==='fr'?'Supprimer':'Delete',
+                okColor: 'bg-brand-red',
+                onConfirm: () => {
+                    if (isRide) appState.rides = appState.rides.filter(r => r.id !== id);
+                    else appState.expenses = appState.expenses.filter(e => e.id !== id);
+                    saveState(); renderLedger(); renderDashboard();
+                    showToast(lang==='ma'?'تمسحات ✓':lang==='ar'?'تم الحذف ✓':lang==='fr'?'Supprimé ✓':'Deleted ✓', 'success');
+                }
+            });
+        }
+
+        function factoryReset() {
+            const lang = appState.settings.lang;
+            showConfirm({
+                title: lang==='ma'?'تحاول تمسح كلشي؟':lang==='ar'?'حذف جميع البيانات؟':lang==='fr'?'Réinitialiser toutes les données?':'Reset all data?',
+                desc: lang==='ma'?'كل توصيلاتك ومصاريفك غادي تمشيو نهائياً. هاد الشي ما يرجعش.':lang==='ar'?'ستُحذف جميع الرحلات والنفقات نهائياً. لا يمكن التراجع.':lang==='fr'?'Tous vos trajets et dépenses seront supprimés définitivement.':'All rides and expenses will be permanently erased.',
+                icon: 'fa-triangle-exclamation',
+                iconColor: 'text-brand-red',
+                iconBg: 'bg-brand-red/10',
+                okText: lang==='ma'?'آه، تمسح':lang==='ar'?'نعم، احذف':lang==='fr'?'Oui, réinitialiser':'Yes, Reset All',
+                okColor: 'bg-brand-red',
+                onConfirm: () => { localStorage.removeItem('indriveProDataMorocco'); location.reload(); }
+            });
         }
 
         function renderLedger() {
@@ -1827,7 +2448,7 @@
                 const delay = Math.min(index*0.05,0.5);
 
                 listEl.insertAdjacentHTML('beforeend', `
-                    <div class="glass-card rounded-[1.5rem] p-4 flex justify-between items-center group relative overflow-hidden opacity-0 animate-slide-up" style="animation-delay:${delay}s" dir="${(appState.settings.lang==='ar'||appState.settings.lang==='ma')?'rtl':'ltr'}">
+                    <div class="glass-card ledger-item rounded-[1.5rem] p-4 flex justify-between items-center group relative overflow-hidden" style="animation-delay:${delay}s" dir="${(appState.settings.lang==='ar'||appState.settings.lang==='ma')?'rtl':'ltr'}">
                         ${isRide?`<div class="absolute top-0 start-0 w-1.5 h-full bg-brand-green"></div>`:`<div class="absolute top-0 start-0 w-1.5 h-full bg-brand-red"></div>`}
                         <div class="flex items-center gap-4 ps-2">
                             <div class="w-11 h-11 rounded-2xl ${iconBg} flex items-center justify-center ${iconColor} text-base shadow-inner">
@@ -1859,18 +2480,32 @@
         const views = ['dashboard','ledger','stats','settings'];
         function navigate(targetId) {
             views.forEach(v => {
-                document.getElementById(`view-${v}`).classList.add('hidden');
-                document.getElementById(`view-${v}`).classList.remove('animate-fade-in');
+                const viewEl = document.getElementById(`view-${v}`);
+                viewEl.classList.add('hidden');
+                viewEl.classList.remove('page-enter');
                 const nav = document.getElementById(`nav-${v}`);
                 nav.classList.remove('text-brand-blue','bg-brand-blue/15');
                 nav.classList.add('text-gray-500');
             });
             const targetView = document.getElementById(`view-${targetId}`);
             targetView.classList.remove('hidden');
-            targetView.classList.add('animate-fade-in');
+            // Trigger reflow for animation restart
+            void targetView.offsetWidth;
+            targetView.classList.add('page-enter');
+
             const activeNav = document.getElementById(`nav-${targetId}`);
             activeNav.classList.remove('text-gray-500');
             activeNav.classList.add('text-brand-blue','bg-brand-blue/15');
+
+            // Bounce the nav icon
+            const icon = activeNav.querySelector('i');
+            if (icon) {
+                icon.classList.remove('nav-active-bounce');
+                void icon.offsetWidth;
+                icon.classList.add('nav-active-bounce');
+                setTimeout(() => icon.classList.remove('nav-active-bounce'), 500);
+            }
+
             if (targetId==='dashboard'||targetId==='stats') renderDashboard();
             if (targetId==='ledger') renderLedger();
             window.scrollTo({top:0, behavior:'smooth'});
@@ -1912,36 +2547,126 @@
         // =============================================
         // SHIFT
         // =============================================
+        function setKnobPosition(knob, isOn) {
+            const isRTL = document.documentElement.dir === 'rtl';
+            // Clear all translate classes
+            knob.classList.remove('translate-x-1','translate-x-6','-translate-x-1','-translate-x-6');
+            if (isOn) {
+                knob.classList.add(isRTL ? '-translate-x-6' : 'translate-x-6');
+            } else {
+                knob.classList.add(isRTL ? '-translate-x-1' : 'translate-x-1');
+            }
+        }
+
         function toggleShift() {
             const knob = document.getElementById('shift-knob');
             const toggle = document.getElementById('shift-toggle');
             if(appState.shift.isActive) {
                 appState.shift.isActive = false; appState.shift.startTime = null;
                 clearInterval(shiftInterval);
-                knob.classList.replace('translate-x-6','translate-x-1');
-                toggle.classList.replace('bg-brand-blue','bg-gray-300');
-                if(document.documentElement.classList.contains('dark')) toggle.classList.replace('bg-brand-blue','bg-dark-700');
+                setKnobPosition(knob, false);
+                toggle.classList.remove('bg-brand-blue');
+                toggle.classList.add(document.documentElement.classList.contains('dark') ? 'bg-dark-700' : 'bg-gray-300');
                 document.getElementById('shift-banner').classList.add('hidden');
+                showToast('You are now OFFLINE 🔴', 'error');
             } else {
                 appState.shift.isActive = true; appState.shift.startTime = Date.now();
-                knob.classList.replace('translate-x-1','translate-x-6');
+                setKnobPosition(knob, true);
                 toggle.classList.remove('bg-gray-300','bg-dark-700');
                 toggle.classList.add('bg-brand-blue');
-                document.getElementById('shift-banner').classList.remove('hidden');
+                // Animate the banner entrance
+                const banner = document.getElementById('shift-banner');
+                banner.classList.remove('hidden');
+                banner.style.animation = 'none';
+                void banner.offsetWidth;
+                banner.style.animation = 'floatIn 0.5s cubic-bezier(0.16,1,0.3,1) both';
+                // Show animated online sequence
+                showOnlineSequence();
                 startShiftTimer();
             }
             saveState();
+        }
+
+        function showOnlineSequence() {
+            // Create fullscreen animated online overlay
+            const overlay = document.createElement('div');
+            overlay.id = 'online-anim-overlay';
+            overlay.style.cssText = `
+                position:fixed;inset:0;z-index:500;
+                background: rgba(16,185,129,0.97);
+                display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+                animation: onlineOverlayIn 0.3s ease-out both;
+            `;
+            const platform = appState.settings.platform || 'InDrive';
+            overlay.innerHTML = `
+                <style>
+                    @keyframes onlineOverlayIn {
+                        from { opacity:0; transform:scale(0.95); }
+                        to   { opacity:1; transform:scale(1); }
+                    }
+                    @keyframes onlineOverlayOut {
+                        from { opacity:1; transform:scale(1); }
+                        to   { opacity:0; transform:scale(1.05); }
+                    }
+                    @keyframes radarRingExpand {
+                        0%  { transform:scale(0.4); opacity:0.8; }
+                        100%{ transform:scale(3); opacity:0; }
+                    }
+                    @keyframes carDrive {
+                        0%  { transform: translateX(-120px); opacity:0; }
+                        20% { opacity:1; }
+                        80% { opacity:1; }
+                        100%{ transform: translateX(120px); opacity:0; }
+                    }
+                    @keyframes checkBounce {
+                        0%  { transform:scale(0) rotate(-30deg); }
+                        60% { transform:scale(1.2) rotate(5deg); }
+                        100%{ transform:scale(1) rotate(0deg); }
+                    }
+                    .radar-ring {
+                        position:absolute; width:80px; height:80px; border-radius:50%;
+                        border: 3px solid rgba(255,255,255,0.6);
+                        animation: radarRingExpand 1.5s ease-out infinite;
+                    }
+                    .radar-ring:nth-child(2){ animation-delay:0.5s; }
+                    .radar-ring:nth-child(3){ animation-delay:1s; }
+                </style>
+                <div style="position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center;">
+                    <div class="radar-ring"></div>
+                    <div class="radar-ring"></div>
+                    <div class="radar-ring"></div>
+                    <div style="width:80px;height:80px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:checkBounce 0.6s 0.3s cubic-bezier(0.16,1,0.3,1) both;border:3px solid rgba(255,255,255,0.5);">
+                        <span style="font-size:36px;animation:checkBounce 0.5s 0.5s both;">🚗</span>
+                    </div>
+                </div>
+                <div style="color:white;font-size:28px;font-weight:900;letter-spacing:0.1em;text-shadow:0 2px 10px rgba(0,0,0,0.2);">YOU'RE ONLINE</div>
+                <div style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:700;letter-spacing:0.05em;">Looking for rides on ${platform}</div>
+                <div style="display:flex;gap:8px;margin-top:4px;">
+                    <span style="background:rgba(255,255,255,0.25);color:white;padding:6px 16px;border-radius:999px;font-size:12px;font-weight:800;animation:carDrive 2s 0.5s ease-in-out both;">🛣️ Shift Started</span>
+                </div>
+                <div style="display:flex;gap:6px;margin-top:8px;">
+                    <span style="width:10px;height:10px;background:white;border-radius:50%;animation:dotBlink 1.4s 0s infinite;opacity:0;"></span>
+                    <span style="width:10px;height:10px;background:white;border-radius:50%;animation:dotBlink 1.4s 0.2s infinite;opacity:0;"></span>
+                    <span style="width:10px;height:10px;background:white;border-radius:50%;animation:dotBlink 1.4s 0.4s infinite;opacity:0;"></span>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            // Auto-dismiss after 2.2s
+            setTimeout(() => {
+                overlay.style.animation = 'onlineOverlayOut 0.4s ease-in forwards';
+                setTimeout(() => overlay.remove(), 380);
+            }, 2200);
         }
         function checkShiftStatus() {
             const knob = document.getElementById('shift-knob');
             const toggle = document.getElementById('shift-toggle');
             if(appState.shift.isActive) {
-                knob.classList.replace('translate-x-1','translate-x-6');
+                setKnobPosition(knob, true);
                 toggle.classList.remove('bg-gray-300','bg-dark-700');
                 toggle.classList.add('bg-brand-blue');
                 document.getElementById('shift-banner').classList.remove('hidden');
                 startShiftTimer();
-            } else { appState.shift.totalSecondsToday = 0; }
+            } else { appState.shift.totalSecondsToday = 0; setKnobPosition(knob, false); }
         }
         function startShiftTimer() {
             clearInterval(shiftInterval);
@@ -2103,10 +2828,10 @@
             badgeEl.innerHTML = '⚠️ Offline';
             badgeEl.style.background = 'rgba(244,63,94,0.1)';
             badgeEl.style.color = '#F43F5E';
-            // Fall back to last known prices
+            // Fall back to default prices
             document.getElementById('fuel-gasoil').textContent = '14.50 MAD/L';
             document.getElementById('fuel-essence').textContent = '15.00 MAD/L';
-            if (noteEl) noteEl.textContent = 'Could not fetch live prices — showing last known rates';
+            if (noteEl) noteEl.textContent = 'Could not fetch live prices — showing default rates';
             const liveEl = document.getElementById('live-fuel-ai');
             if (liveEl) liveEl.textContent = 'Unavailable — showing defaults';
         }
@@ -2243,27 +2968,62 @@
             });
         })();
         function exportToCSV() {
-            let csv = "data:text/csv;charset=utf-8,Type,Platform,Payment,Date,Amount,Commission,Net,Distance,Duration,Category,Notes\n";
-            const combined = [...appState.rides,...appState.expenses].sort((a,b) => new Date(b.date)-new Date(a.date));
+            // Helper: wrap a value in quotes and escape any inner quotes
+            const q = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+
+            // Helper: format date as "YYYY-MM-DD HH:MM" — no commas, safe for CSV
+            const fmtDate = (raw) => {
+                const d = new Date(raw);
+                if (isNaN(d)) return q(raw);
+                const pad = (n) => String(n).padStart(2, '0');
+                return q(
+                    `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ` +
+                    `${pad(d.getHours())}:${pad(d.getMinutes())}`
+                );
+            };
+
+            const headers = [
+                'Type', 'Platform', 'Payment', 'Date',
+                'Gross (MAD)', 'Commission (MAD)', 'Tip (MAD)', 'Net (MAD)',
+                'Distance (km)', 'Duration (min)', 'Category', 'Notes'
+            ].map(q).join(',');
+
+            let csv = 'data:text/csv;charset=utf-8,' + headers + '\n';
+
+            const combined = [...appState.rides, ...appState.expenses]
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+
             combined.forEach(item => {
-                const isRide = item.type==='ride';
-                const net = isRide ? (item.net !== undefined ? item.net : (item.gross+(item.tip||0)-item.comm)) : (-item.amount);
+                const isRide = item.type === 'ride';
+                const gross    = isRide ? (item.gross  ?? 0)          : (item.amount ?? 0);
+                const comm     = isRide ? (item.comm   ?? 0)          : 0;
+                const tip      = isRide ? (item.tip    ?? 0)          : 0;
+                const net      = isRide
+                    ? (item.net !== undefined ? item.net : gross + tip - comm)
+                    : -(item.amount ?? 0);
+
                 csv += [
-                    item.type, isRide?(item.platform||''):'', isRide?(item.payment||''):'',
-                    new Date(item.date).toLocaleString(),
-                    isRide?item.gross:item.amount,
-                    isRide?item.comm:0,
-                    net,
-                    isRide?(item.distance||0):0,
-                    isRide?(item.duration||0):0,
-                    isRide?'Ride':item.category,
-                    `"${item.notes||''}"`
+                    q(item.type),
+                    q(isRide ? (item.platform || '') : ''),
+                    q(isRide ? (item.payment  || '') : ''),
+                    fmtDate(item.date),
+                    gross.toFixed(2),
+                    comm.toFixed(2),
+                    tip.toFixed(2),
+                    net.toFixed(2),
+                    isRide ? (item.distance ?? 0).toFixed(1) : '0',
+                    isRide ? (item.duration ?? 0)            : '0',
+                    q(isRide ? 'Ride' : (item.category || '')),
+                    q(item.notes || '')
                 ].join(',') + '\n';
             });
+
             const link = document.createElement('a');
             link.href = encodeURI(csv);
-            link.download = `FlousiDrive_${appState.settings.city||'MA'}_${new Date().toISOString().split('T')[0]}.csv`;
-            document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            link.download = `FlousiDrive_${appState.settings.city || 'MA'}_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
